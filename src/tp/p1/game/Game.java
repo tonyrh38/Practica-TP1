@@ -21,34 +21,25 @@ public class Game {
 		this(level, System.currentTimeMillis());
 	}
 	public Game(Level level, long seed) {
-		this(8, 4, level, seed);
-	}
-	
-	public Game(int width, int height, Level level) {	
-		this(width, height, level, System.currentTimeMillis());
-	}
-	
-	public Game(int width, int height, Level level, long seed) {
-		this.seed = seed;
 		this.level = level;
-		
-		this.reset(width, height);
-		
-		this.gamePrinter = new ReleasePrinter(this);
+		this.seed = seed;
+		this.reset();
 	}
-	
 	public void reset() {
-		reset(this.getWidth(), this.getHeight());
+		this.cycleCounter = 0;
+		this.puntuation = 0;
+		this.rand = new Random(this.seed);
+		
+		this.regularShipList = new RegularShipList();
+		this.destroyerShipList = new DestroyerShipList();
+		this.bombList = new BombList();
 	}
 	
-	public void reset(int width, int height) {
-		this.cycleCount = 0;
-		
-		this.rand = new Random(this.seed);		
+	/*public void reset(int width, int height) {
 		this.sunManager = new SunManager(this, this.rand, 50);
 		this.zombieManager = new ZombieManager(this.level, this.rand);
 		this.board = new Board(width, height, this.level.getMaxZombies());
-	}
+	}*/
 
 	
 }
