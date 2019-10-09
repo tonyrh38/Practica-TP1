@@ -23,6 +23,6 @@ public class Main {
 		
 			System.exit(0);
 		}
-
+		else System.exit(1);
 	}
 }

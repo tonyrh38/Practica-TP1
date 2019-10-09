@@ -9,35 +9,55 @@ public class Controller {
 	private Scanner in;
 	private static final String PROMPT = "> ";
 	
-	Controller(Game game){
+	public Controller(Game game){
 		this.game = game;
 		this.gamePrinter= new GamePrinter(game, 8, 9);
 		this.in = new Scanner(System.in);
 	}
 
 	public void run() {
-		this.gamePrinter.encodeGame(game);	
 		
-		while(!this.game.jugadorDerrotado() && !this.game.zombiesDerrotados() ) {
+		this.draw();
+		
+		while(!this.game.playerDefeated() && !this.game.enemyDefeated() ) {
 			
-			System.out.print(Controller.PROMPT);
+			this.userCommand();
+			this.computerAction();
+			this.update();
+			/*System.out.print(Controller.PROMPT);
 			String[]  words = this.in.nextLine().toLowerCase().trim().split("\\s+");
 			
-			try {
 				Command command = CommandParser.parseCommand(words);
 				// Note: Command can't be null because parseCommand can throw an UnknownCommandException
 				if (command.execute(game))
 					this.game.print();
-			} catch (CommandExecuteException | CommandParseException e) {
-				System.out.println(e.getMessage());
-			}
 		}
 		
 		if (this.game.jugadorDerrotado() ) {
 			this.game.printGameOver();
 		} else {
 			this.game.printWin();
+		}*/
 		}
+	}
+	
+	private void draw() {
+		System.out.println("Life: " + this.game.getVidaUCM());
+		System.out.println("Number of cycles: " + this.game.getCycleCounter());
+		System.out.println("Points: " + this.game.getPuntuation());
+		System.out.println("Remaining aliens: " );
+		System.out.println("Shockwave: " + this.game.getShockwaveUCM());
+		
+		System.out.println(this.gamePrinter.toString());
+	}
+	private void userCommand() {
+		
+	}
+	private void computerAction() {
+		
+	}
+	private void update() {
+		
 	}
 	
 	/** Imprime una línea en la terminal */
