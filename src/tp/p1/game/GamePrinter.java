@@ -12,17 +12,56 @@ public class GamePrinter {
 	
 	public GamePrinter (Game game, int rows, int cols) {
 		this.numRows = rows;
-		this.numCols = cols;		
+		this.numCols = cols;
+		initBoard(rows,cols);
 		encodeGame(game);
 	}
 	
-	private void encodeGame(Game game) {
-		board = new String[numRows][numCols];
-		for(int i = 0; i < numRows; i++) {
-			for(int j = 0; j < numCols; j++) {
-				board[i][j] =  game.characterAtToString(i, j);
+	private void initBoard(int rows, int cols) {
+		this.board = new String[numRows][numCols];
+		for(int i = 0; i < cols; i++) {
+			for(int  j = 0; j < rows; j++) {
+				board[i][j] = " ";
 			}
 		}
+	}
+	
+	private void printInfo(Game game) {
+		System.out.println("Life: " + game.getVidaUCM());
+		System.out.println("Number of cycles: " + game.getCycleCounter());
+		System.out.println("Points: " + game.getPuntuation());
+		System.out.println("Remaining aliens: " + game.getRemaining());
+		System.out.println("Shockwave: " + game.getShockwaveUCM());
+	}
+	
+	private void encodeGame(Game game) {
+		encodeDestroyerShip(game);
+		encodeRegularShip(game);
+		encodeBomb(game);
+		encodeUCMShip(game);
+		encodeOvni(game);
+		
+	}
+	private void encodeDestroyerShip(Game game) {
+		for(int i = 0; i < game.getDestroyerShipList().getTam();i++) {
+			
+		}
+	}
+	private void encodeRegularShip(Game game) {
+		for(int i = 0; i < game.getRegularShipList().getTam();i++) {
+					
+				}
+	}
+	private void encodeBomb(Game game) {
+		for(int i = 0; i < game.getBombList().getTam();i++) {
+					
+				}
+		}
+	private void encodeUCMShip(Game game) {
+		
+	}
+	private void encodeOvni(Game game) {
+		
 	}
 	
 	public String toString() {
@@ -49,4 +88,11 @@ public class GamePrinter {
 		}
 		return str.toString();
 	}
+	
+	public void printGame(Game game) {
+		this.encodeGame(game);
+		this.printInfo(game);
+		System.out.println(this.toString());		
+	}
+
 }

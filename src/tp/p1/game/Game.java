@@ -38,6 +38,16 @@ public class Game {
 		this.bombList = new BombList();
 	}
 	
+	public DestroyerShipList getDestroyerShipList() {
+		return destroyerShipList;
+	}
+	public RegularShipList getRegularShipList() {
+		return regularShipList;
+	}
+	public BombList getBombList() {
+		return bombList;
+	}
+	
 	public int getCycleCounter() {
 		return cycleCounter;
 	}
@@ -73,18 +83,17 @@ public class Game {
 		this.ucmShip.setShockwave(sw);
 	}
 	
+	public int getRemaining() {
+		return this.getDestroyerShipList().getTam() + this.regularShipList.getTam();
+	}
+	
 	public boolean playerDefeated() {
 		if(this.getVidaUCM() == 0) return true;
 		else return false;
 	}
 	public boolean enemyDefeated() {
-		if(this.regularShipList.getTam() == 0 && this.destroyerShipList.getTam() == 0) return true;
+		if(this.regularShipList.getTam() == 0 && this.getDestroyerShipList().getTam() == 0) return true;
 		else return false;
-	}
-	
-	public String characterAtToString(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	

@@ -17,7 +17,7 @@ public class Controller {
 
 	public void run() {
 		
-		this.draw();
+		this.gamePrinter.printGame(game);
 		
 		while(!this.game.playerDefeated() && !this.game.enemyDefeated() ) {
 			
@@ -40,16 +40,6 @@ public class Controller {
 		}*/
 		}
 	}
-	
-	private void draw() {
-		System.out.println("Life: " + this.game.getVidaUCM());
-		System.out.println("Number of cycles: " + this.game.getCycleCounter());
-		System.out.println("Points: " + this.game.getPuntuation());
-		System.out.println("Remaining aliens: " );
-		System.out.println("Shockwave: " + this.game.getShockwaveUCM());
-		
-		System.out.println(this.gamePrinter.toString());
-	}
 	private void userCommand() {
 		
 	}
@@ -69,5 +59,4 @@ public class Controller {
 	public void print(String line) {
 		System.out.print(line);
 	}
-
 }

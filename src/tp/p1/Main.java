@@ -7,7 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		Game game;
-		if (args.length < 1 || args.length > 2) {
+		if (args.length == 1 || args.length == 2) {
 		
 			Level level = Level.valueOf(args[0]);
 		
