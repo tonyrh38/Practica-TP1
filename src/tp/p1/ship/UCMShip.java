@@ -52,5 +52,9 @@ public class UCMShip {
 		}
 		public void setShockwave(boolean shockwave) {
 			this._shockwave = shockwave;
-		}	
+		}
+		
+		public void damage() {
+			setVida(getVida() - 1);
+		}
 }

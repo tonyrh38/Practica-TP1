@@ -25,9 +25,6 @@ public class Controller {
 			this.userCommand();
 			this.computerAction();
 			this.update();	
-			/*Command command = CommandParser.parseCommand(words);
-				if (command.execute(game))
-					this.game.print();*/
 		}
 		
 		/*if (this.game.jugadorDerrotado() ) {
@@ -72,10 +69,13 @@ public class Controller {
 		
 	}
 	private void computerAction() {
-		int random = game.getRand();
-		
+		game.getDestroyerShipList().dropBomb(game);
+		game.createOvni();		
 	}
 	private void update() {
+		game.moveBombs();
+		game.moveShips();
+		game.moveOvni();
 		this.gamePrinter.printGame(game);
 	}
 	

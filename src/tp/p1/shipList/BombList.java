@@ -24,4 +24,7 @@ public class BombList {
 	public void insertIn(int pos, Bomb bomb) {
 		this.list[pos] = bomb;
 	}
+	public void destroyBomb(int pos) {
+		this.list[pos] = null;
+	}
 }

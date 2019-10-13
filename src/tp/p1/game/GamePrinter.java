@@ -63,12 +63,17 @@ public class GamePrinter {
 		}
 	}
 	private void encodeBomb(Game game) {
-		for(int i = 0; i < game.getBombList().getTam();i++) {
+		for(int i = 0; i < game.getBombList().getTam() - 1;i++) {
 			if(game.getBombList().getPos(i) != null) {
 				int x = game.getBombList().getPos(i).getX();
 				int y = game.getBombList().getPos(i).getY();
 				board[x][y] = ".";
 			}
+		}
+		if((game.getBombList().getPos(game.getBombList().getTam() - 1) != null)) {
+			int x = game.getBombList().getPos(game.getBombList().getTam() - 1).getX();
+			int y = game.getBombList().getPos(game.getBombList().getTam() - 1).getY();
+			board[x][y] = "oo";
 		}
 	}
 	private void encodeUCMShip(Game game) {
