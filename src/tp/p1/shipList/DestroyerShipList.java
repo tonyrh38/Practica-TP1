@@ -35,4 +35,8 @@ public class DestroyerShipList {
 	public int getTam() {
 		return this.tam;
 	}
+	
+	public DestroyerShip getPos(int pos) {
+		return this.list[pos];
+	}
 }

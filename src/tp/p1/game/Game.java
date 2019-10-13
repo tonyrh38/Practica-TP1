@@ -35,7 +35,7 @@ public class Game {
 		this.ucmShip = new UCMShip();
 		this.regularShipList = new RegularShipList(this.getLevel());
 		this.destroyerShipList = new DestroyerShipList(this.getLevel());
-		this.bombList = new BombList();
+		this.bombList = new BombList(this.getLevel());
 	}
 	
 	public DestroyerShipList getDestroyerShipList() {
@@ -57,14 +57,17 @@ public class Game {
 	public Level getLevel() {
 		return level;
 	}
-	public int getVidaUCM() {
-		return this.ucmShip.getVida();
-	}
-	public int getDañoUCM() {
-		return this.ucmShip.getDaño();
+	public UCMShip getUCMShip() {
+		return this.ucmShip;
 	}
 	public boolean getShockwaveUCM() {
 		return this.ucmShip.getShockwave();
+	}
+	public Ovni getOvni() {
+		return this.ovni;
+	}
+	public int getRand() {
+		return rand.nextInt() % 10;
 	}
 	
 	public void setCycleCounter(int cycleCounter) {
@@ -82,13 +85,24 @@ public class Game {
 	public void setShockwaveUCM(boolean sw) {
 		this.ucmShip.setShockwave(sw);
 	}
+	public void setOvni(Ovni ovni) {
+		 this.ovni = ovni;
+	}
+	public void setPlayerDefeated() {
+		this.getUCMShip().setVida(0);
+	}
 	
 	public int getRemaining() {
 		return this.getDestroyerShipList().getTam() + this.regularShipList.getTam();
 	}
 	
+	public boolean isOvni() {
+		if(this.ovni != null) return true;
+		else return false;
+	}
+	
 	public boolean playerDefeated() {
-		if(this.getVidaUCM() == 0) return true;
+		if(this.getUCMShip().getVida() == 0) return true;
 		else return false;
 	}
 	public boolean enemyDefeated() {

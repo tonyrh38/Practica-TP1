@@ -1,11 +1,13 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class DestroyerShip {
 	//Atributos
 			private int _x;
 			private int _y;
 			private int _vida;
-			private int _daño;
+			private boolean _reload;
 			private int _puntos;
 			
 	//Metodos
@@ -15,7 +17,7 @@ public class DestroyerShip {
 			this.setX(x);
 			this.setY(y);
 			this.setVida(1);
-			this.setDaño(1);
+			this._reload = false;
 			this.setPuntos(10);
 		}
 		
@@ -29,8 +31,8 @@ public class DestroyerShip {
 		public int getVida() {
 			return _vida;
 		}
-		public int getDaño() {
-			return _daño;
+		public boolean getReload() {
+			return _reload;
 		}
 		public int getPuntos() {
 			return _puntos;
@@ -46,11 +48,17 @@ public class DestroyerShip {
 		public void setVida(int vida) {
 			this._vida = vida;
 		}
-		public void setDaño(int daño) {
-			this._daño = daño;
+		public void setReload() {
+			this._reload = !this._reload;
 		}
 		public void setPuntos(int puntos) {
 			this._puntos = puntos;
 		}
 		
+		public void damage(Game game) {
+			this.setVida(this.getVida() - 1);
+			if(this.getVida() == 0) {
+				game.setPuntuation(game.getPuntuation() + this.getPuntos());
+			}
+		}
 }

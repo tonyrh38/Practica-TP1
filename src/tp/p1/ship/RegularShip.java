@@ -1,5 +1,7 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class RegularShip {
 	
 	//Atributos
@@ -46,4 +48,10 @@ public class RegularShip {
 			this._puntos = puntos;
 		}
 		
+		public void damage(Game game) {
+			this.setVida(this.getVida() - 1);
+			if(this.getVida() == 0) {
+				game.setPuntuation(game.getPuntuation() + this.getPuntos());
+			}
+		}
 }

@@ -13,21 +13,21 @@ public class GamePrinter {
 	public GamePrinter (Game game, int rows, int cols) {
 		this.numRows = rows;
 		this.numCols = cols;
+		this.board = new String[numRows][numCols];
 		initBoard(rows,cols);
 		encodeGame(game);
 	}
 	
 	private void initBoard(int rows, int cols) {
-		this.board = new String[numRows][numCols];
-		for(int i = 0; i < cols; i++) {
-			for(int  j = 0; j < rows; j++) {
+		for(int i = 0; i < rows; i++) {
+			for(int  j = 0; j < cols; j++) {
 				board[i][j] = " ";
 			}
 		}
 	}
 	
 	private void printInfo(Game game) {
-		System.out.println("Life: " + game.getVidaUCM());
+		System.out.println("Life: " + game.getUCMShip().getVida());
 		System.out.println("Number of cycles: " + game.getCycleCounter());
 		System.out.println("Points: " + game.getPuntuation());
 		System.out.println("Remaining aliens: " + game.getRemaining());
@@ -35,33 +35,58 @@ public class GamePrinter {
 	}
 	
 	private void encodeGame(Game game) {
+		initBoard(numRows,numCols);
 		encodeDestroyerShip(game);
 		encodeRegularShip(game);
 		encodeBomb(game);
 		encodeUCMShip(game);
-		encodeOvni(game);
-		
+		encodeOvni(game);	
 	}
 	private void encodeDestroyerShip(Game game) {
-		for(int i = 0; i < game.getDestroyerShipList().getTam();i++) {
-			
+		int tam = game.getDestroyerShipList().getTam();
+		for(int i = 0; i < tam;i++) {
+			if(game.getDestroyerShipList().getPos(i).getVida() != 0) {
+				int x = game.getDestroyerShipList().getPos(i).getX();
+				int y = game.getDestroyerShipList().getPos(i).getY();
+				board[x][y] = "D[" + game.getDestroyerShipList().getPos(i).getVida() + "]";
+			}
 		}
 	}
 	private void encodeRegularShip(Game game) {
-		for(int i = 0; i < game.getRegularShipList().getTam();i++) {
-					
-				}
+		int tam = game.getRegularShipList().getTam();
+		for(int i = 0; i < tam;i++) {
+			if(game.getRegularShipList().getPos(i).getVida() != 0) {
+				int x = game.getRegularShipList().getPos(i).getX();
+				int y = game.getRegularShipList().getPos(i).getY();
+				board[x][y] = "C[" + game.getRegularShipList().getPos(i).getVida() + "]";
+			}
+		}
 	}
 	private void encodeBomb(Game game) {
 		for(int i = 0; i < game.getBombList().getTam();i++) {
-					
-				}
+			if(game.getBombList().getPos(i) != null) {
+				int x = game.getBombList().getPos(i).getX();
+				int y = game.getBombList().getPos(i).getY();
+				board[x][y] = ".";
+			}
 		}
+	}
 	private void encodeUCMShip(Game game) {
-		
+		int x = game.getUCMShip().getX();
+		int y = game.getUCMShip().getY();
+		if(game.getUCMShip().getVida() > 0) {
+			board[x][y] = "^_^";
+		}
+		else {
+			board[x][y] = "!xx!";
+		}
 	}
 	private void encodeOvni(Game game) {
-		
+		if(game.isOvni()) {
+			int x = game.getOvni().getX();
+			int y = game.getOvni().getY();
+			board[x][y] = "O[" + game.getOvni().getVida() + "]";
+		}
 	}
 	
 	public String toString() {

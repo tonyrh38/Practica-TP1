@@ -21,12 +21,16 @@ public class RegularShipList {
 		}
 		if(level.name() != "EASY") {
 			for(int i = 0; i < 4; i++) {
-				list[i] = new RegularShip(2,3 + i);
+				list[4 + i] = new RegularShip(2,3 + i);
 			}
 		}	
 	}
 	
 	public int getTam() {
 		return this.tam;
+	}
+
+	public RegularShip getPos(int i) {
+		return this.list[i];
 	}
 }

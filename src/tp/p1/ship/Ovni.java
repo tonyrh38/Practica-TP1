@@ -1,5 +1,7 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class Ovni {
 	//Atributos
 	private int _x;
@@ -44,5 +46,12 @@ public class Ovni {
 		public void setPuntos(int puntos) {
 			this._puntos = puntos;
 		}
-	
+		
+		public void damage(Game game) {
+			this.setVida(this.getVida() - 1);
+			if(this.getVida() == 0) {
+				game.setPuntuation(game.getPuntuation() + this.getPuntos());
+				game.setOvni(null);
+			}
+		}
 }
