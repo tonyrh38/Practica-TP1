@@ -27,11 +27,11 @@ public class Controller {
 			this.update();	
 		}
 		
-		/*if (this.game.jugadorDerrotado() ) {
+		if (this.game.playerDefeated() ) {
 			this.game.printGameOver();
 		} else {
 			this.game.printWin();
-		}*/
+		}
 	}
 	private void userCommand() {
 		boolean command = true;
@@ -62,7 +62,7 @@ public class Controller {
 				exit();
 			}
 			else {
-				System.out.print("Comando erroneo o no reconocido.");
+				System.out.print("Comando erróneo o no reconocido.");
 				command = false;
 			}
 		}while(!command);
@@ -76,6 +76,7 @@ public class Controller {
 		game.moveBombs();
 		game.moveShips();
 		game.moveOvni();
+		game.setCycleCounter(game.getCycleCounter() + 1);
 		this.gamePrinter.printGame(game);
 	}
 	
@@ -83,24 +84,23 @@ public class Controller {
 		if((dir.equals("left") || dir.equals("right")) && (pos.equals("1") || pos.equals("2"))) {
 			int move = (dir.equals("left"))? -1 : 1;
 			int num = (pos.equals("1"))? 1 : 2;
-			int op = game.getUCMShip().getY() + move * num;
+			int op = game.getUCMShip().getX() + move * num;
 			if(op >= 0 && op <= 8) {
-				game.getUCMShip().setY(op);
+				game.getUCMShip().setX(op);
 			}
 			else if(op - 1 == 8) {
-				game.getUCMShip().setY(op - 1);
+				game.getUCMShip().setX(op - 1);
 			}
 			else if(op + 1 == 0) {
-				game.getUCMShip().setY(op + 1);
-			}
-				
+				game.getUCMShip().setX(op + 1);
+			}				
 			return true;
 		}
 		else return false;
 	}
 	private void shoot() {
 		int pos = game.getBombList().getTam() - 1;
-		if(game.getBombList().getPos(pos) != null) {
+		if(game.getBombList().getPos(pos) == null) {
 			int x = game.getUCMShip().getX();
 			int y = game.getUCMShip().getY();
 			Bomb bomb = new Bomb(x,y);
@@ -144,15 +144,5 @@ public class Controller {
 		System.out.println("help: Prints this help message.");
 		System.out.println("exit: Terminates the program.");
 		System.out.println("[none]: Skips one cycle.");
-	}
-	
-	/** Imprime una línea en la terminal */
-	public void println(String line) {
-		System.out.println(line);
-	}
-	
-	/** Imprime en la terminal sin salto de línea */
-	public void print(String line) {
-		System.out.print(line);
 	}
 }

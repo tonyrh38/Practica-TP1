@@ -36,9 +36,9 @@ public class GamePrinter {
 	
 	private void encodeGame(Game game) {
 		initBoard(numRows,numCols);
+		encodeBomb(game);
 		encodeDestroyerShip(game);
 		encodeRegularShip(game);
-		encodeBomb(game);
 		encodeUCMShip(game);
 		encodeOvni(game);	
 	}
@@ -48,7 +48,7 @@ public class GamePrinter {
 			if(game.getDestroyerShipList().getPos(i).getVida() != 0) {
 				int x = game.getDestroyerShipList().getPos(i).getX();
 				int y = game.getDestroyerShipList().getPos(i).getY();
-				board[x][y] = "D[" + game.getDestroyerShipList().getPos(i).getVida() + "]";
+				board[y][x] = "D[" + game.getDestroyerShipList().getPos(i).getVida() + "]";
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class GamePrinter {
 			if(game.getRegularShipList().getPos(i).getVida() != 0) {
 				int x = game.getRegularShipList().getPos(i).getX();
 				int y = game.getRegularShipList().getPos(i).getY();
-				board[x][y] = "C[" + game.getRegularShipList().getPos(i).getVida() + "]";
+				board[y][x] = "C[" + game.getRegularShipList().getPos(i).getVida() + "]";
 			}
 		}
 	}
@@ -67,30 +67,30 @@ public class GamePrinter {
 			if(game.getBombList().getPos(i) != null) {
 				int x = game.getBombList().getPos(i).getX();
 				int y = game.getBombList().getPos(i).getY();
-				board[x][y] = ".";
+				board[y][x] = ".";
 			}
 		}
 		if((game.getBombList().getPos(game.getBombList().getTam() - 1) != null)) {
 			int x = game.getBombList().getPos(game.getBombList().getTam() - 1).getX();
 			int y = game.getBombList().getPos(game.getBombList().getTam() - 1).getY();
-			board[x][y] = "oo";
+			board[y][x] = "oo";
 		}
 	}
 	private void encodeUCMShip(Game game) {
 		int x = game.getUCMShip().getX();
 		int y = game.getUCMShip().getY();
 		if(game.getUCMShip().getVida() > 0) {
-			board[x][y] = "^_^";
+			board[y][x] = "^_^";
 		}
 		else {
-			board[x][y] = "!xx!";
+			board[y][x] = "!xx!";
 		}
 	}
 	private void encodeOvni(Game game) {
 		if(game.isOvni()) {
 			int x = game.getOvni().getX();
 			int y = game.getOvni().getY();
-			board[x][y] = "O[" + game.getOvni().getVida() + "]";
+			board[y][x] = "O[" + game.getOvni().getVida() + "]";
 		}
 	}
 	

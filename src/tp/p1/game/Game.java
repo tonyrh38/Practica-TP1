@@ -11,6 +11,7 @@ public class Game {
 	private Level level;
 	private long seed;
 	private boolean movement;
+	private boolean abajo;
 
 	private UCMShip ucmShip;
 	private RegularShipList regularShipList;
@@ -33,6 +34,7 @@ public class Game {
 		this.setPuntuation(0);
 		this.rand = new Random(this.seed);
 		this.setMovement(true);
+		this.abajo = false;
 		
 		this.ucmShip = new UCMShip();
 		this.regularShipList = new RegularShipList(this.getLevel());
@@ -69,7 +71,8 @@ public class Game {
 		return this.ovni;
 	}
 	public int getRand() {
-		return rand.nextInt() % 10;
+		int num = rand.nextInt(10);
+		return num;
 	}
 	public boolean getMovement() {
 		return movement;
@@ -105,7 +108,7 @@ public class Game {
 	}
 	
 	public void createOvni() {
-		if(!isOvni() && getRand()/10 <= level.getOvni()) {
+		if(!isOvni() && getRand() <= level.getOvni() * 10) {
 			Ovni ovni = new Ovni();
 			setOvni(ovni);
 		}
@@ -145,6 +148,9 @@ public class Game {
 			}
 			if(!found) {
 				getBombList().getPos(getBombList().getTam() - 1).setY(playerBomb.getY() - 1);
+				if(getBombList().getPos(getBombList().getTam() - 1).getY() < 0) {
+					getBombList().insertIn(getBombList().getTam() - 1, null);
+				}
 			}
 		}
 		
@@ -167,39 +173,43 @@ public class Game {
 		int m = getDestroyerShipList().getTam();
 		for(int i = 0; i < n && !found; i++) {
 			if(getRegularShipList().getPos(i).getX() == 8 || getRegularShipList().getPos(i).getX() == 0) {
-				setMovement(!getMovement());
 				found = true;
 			}
 			if(i < m) {
 				if(getDestroyerShipList().getPos(i).getX() == 8 || getDestroyerShipList().getPos(i).getX() == 0) {
-					setMovement(!getMovement());
 					found = true;
 				}
 			}
 		}
-		if(!found) {
-			if(getMovement()) {
+		if(getCycleCounter() % getLevel().getVel() == 0) {
+			if(!found || abajo) {
+				if(getMovement()) {
+					for(int i = 0; i < n; i++) {
+						getRegularShipList().getPos(i).setX(getRegularShipList().getPos(i).getX() + 1);
+						if(i < m) {
+							getDestroyerShipList().getPos(i).setX(getDestroyerShipList().getPos(i).getX() + 1);
+						}
+					}
+				}
+				else {
+					for(int i = 0; i < n; i++) {
+						getRegularShipList().getPos(i).setX(getRegularShipList().getPos(i).getX() - 1);
+						if(i < m) {
+							getDestroyerShipList().getPos(i).setX(getDestroyerShipList().getPos(i).getX() - 1);
+						}
+					}
+				}
+				if(abajo) abajo = false;
+			}
+			else {
 				for(int i = 0; i < n; i++) {
 					getRegularShipList().getPos(i).setY(getRegularShipList().getPos(i).getY() + 1);
 					if(i < m) {
 						getDestroyerShipList().getPos(i).setY(getDestroyerShipList().getPos(i).getY() + 1);
 					}
 				}
-			}
-			else {
-				for(int i = 0; i < n; i++) {
-					getRegularShipList().getPos(i).setY(getRegularShipList().getPos(i).getY() - 1);
-					if(i < m) {
-						getDestroyerShipList().getPos(i).setY(getDestroyerShipList().getPos(i).getY() - 1);
-					}
-				}
-			}
-		}else {
-			for(int i = 0; i < n; i++) {
-				getRegularShipList().getPos(i).setX(getRegularShipList().getPos(i).getX() + 1);
-				if(i < m) {
-					getDestroyerShipList().getPos(i).setX(getDestroyerShipList().getPos(i).getX() + 1);
-				}
+				if(!abajo)setMovement(!getMovement());
+				abajo = true;
 			}
 		}
 	}
@@ -211,23 +221,27 @@ public class Game {
 			else setOvni(null);
 		}
 	}
-	
 	public boolean playerDefeated() {
-		if(this.getUCMShip().getVida() == 0) return true;
+		boolean found = false;
+		int n = getRegularShipList().getTam();
+		int m = getDestroyerShipList().getTam();
+		for(int i = 0; i < n && !found; i++) {
+			if(getRegularShipList().getPos(i).getY() == 7) found = true;
+			if(i < m) {
+				if(getDestroyerShipList().getPos(i).getY() == 7) found = true;
+			}
+		}
+		if(this.getUCMShip().getVida() == 0 || found) return true;
 		else return false;
 	}
 	public boolean enemyDefeated() {
 		if(this.regularShipList.getTam() == 0 && this.getDestroyerShipList().getTam() == 0) return true;
 		else return false;
 	}
-	
-	
-	
-	/*public void reset(int width, int height) {
-		this.sunManager = new SunManager(this, this.rand, 50);
-		this.zombieManager = new ZombieManager(this.level, this.rand);
-		this.board = new Board(width, height, this.level.getMaxZombies());
-	}*/
-
-	
+	public void printGameOver() {
+		System.out.println("Game Over.");
+	}
+	public void printWin() {
+		System.out.println("Win.");
+	}
 }

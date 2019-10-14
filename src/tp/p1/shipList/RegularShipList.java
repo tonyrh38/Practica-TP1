@@ -17,11 +17,11 @@ public class RegularShipList {
 	private void initArray(Level level) {
 		
 		for(int i = 0; i < 4; i++) {
-			list[i] = new RegularShip(1,3 + i);
+			list[i] = new RegularShip(3 + i,1);
 		}
 		if(level.name() != "EASY") {
 			for(int i = 0; i < 4; i++) {
-				list[4 + i] = new RegularShip(2,3 + i);
+				list[4 + i] = new RegularShip(3 + i,2);
 			}
 		}	
 	}

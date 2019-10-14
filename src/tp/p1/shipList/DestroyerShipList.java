@@ -19,17 +19,17 @@ public class DestroyerShipList {
 		
 		if(level.name() == "EASY") {
 			for(int i = 0; i < 2; i++) {
-				list[i] = new DestroyerShip(2,4 + i);
+				list[i] = new DestroyerShip(4 + i,2);
 			}
 		}
 		if(level.name() == "HARD") {
 			for(int i = 0; i < 2; i++) {
-				list[i] = new DestroyerShip(3,4 + i);
+				list[i] = new DestroyerShip(4 + i,3);
 			}
 		}
 		if(level.name() == "INSANE") {
 			for(int i = 0; i < 4; i++) {
-				list[i] = new DestroyerShip(3,3 + i);
+				list[i] = new DestroyerShip(3 + i,3);
 			}
 		}
 	}
@@ -45,8 +45,8 @@ public class DestroyerShipList {
 		int n = game.getDestroyerShipList().getTam();
 		for(int i = 0; i < n; i++ ) {
 			if(game.getBombList().getPos(i) == null) {
-				if(game.getRand() / 10 <= game.getLevel().getFreq()) {
-					Bomb bomb = new Bomb(game.getDestroyerShipList().getPos(i).getX(),game.getDestroyerShipList().getPos(i).getX());
+				if(game.getRand() <= game.getLevel().getFreq() * 10) {
+					Bomb bomb = new Bomb(game.getDestroyerShipList().getPos(i).getX(),game.getDestroyerShipList().getPos(i).getY());
 					game.getBombList().insertIn(i, bomb);
 				}
 			}

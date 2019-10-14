@@ -13,8 +13,8 @@ public class UCMShip {
 	
 	//Constructor
 		public UCMShip() {
-			this.setX(7);
-			this.setY(4);
+			this.setX(4);
+			this.setY(7);
 			this.setVida(3);
 			this.setDaño(1);
 			this.setShockwave(false);
