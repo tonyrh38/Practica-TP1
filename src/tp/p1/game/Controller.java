@@ -28,14 +28,15 @@ public class Controller {
 		}
 		
 		if (this.game.playerDefeated() ) {
-			this.game.printGameOver();
+			this.gamePrinter.printGameOver();
 		} else {
-			this.game.printWin();
+			this.gamePrinter.printWin();
 		}
 	}
 	private void userCommand() {
-		boolean command = true;
+		boolean command;
 		do {
+			command = true;
 			System.out.print(Controller.PROMPT);
 			String[]  words = this.in.nextLine().toLowerCase().trim().split("\\s+");
 			if(words[0].equals("move") ||words[0].equals("m") && words.length == 3) {
@@ -69,13 +70,14 @@ public class Controller {
 		
 	}
 	private void computerAction() {
-		game.getDestroyerShipList().dropBomb(game);
+		game.getDestroyerShipList().dropBomb(game.getRand(), game.getBombList());
 		game.createOvni();		
 	}
 	private void update() {
 		game.moveBombs();
 		game.moveShips();
 		game.moveOvni();
+		game.calculatePuntuation();
 		game.setCycleCounter(game.getCycleCounter() + 1);
 		this.gamePrinter.printGame(game);
 	}
@@ -84,15 +86,15 @@ public class Controller {
 		if((dir.equals("left") || dir.equals("right")) && (pos.equals("1") || pos.equals("2"))) {
 			int move = (dir.equals("left"))? -1 : 1;
 			int num = (pos.equals("1"))? 1 : 2;
-			int op = game.getUCMShip().getX() + move * num;
+			int op = game.getXUCMShip() + move * num;
 			if(op >= 0 && op <= 8) {
-				game.getUCMShip().setX(op);
+				game.setXUCMShip(op);
 			}
 			else if(op - 1 == 8) {
-				game.getUCMShip().setX(op - 1);
+				game.setXUCMShip(op - 1);
 			}
 			else if(op + 1 == 0) {
-				game.getUCMShip().setX(op + 1);
+				game.setXUCMShip(op + 1);
 			}				
 			return true;
 		}
@@ -100,27 +102,21 @@ public class Controller {
 	}
 	private void shoot() {
 		int pos = game.getBombList().getTam() - 1;
-		if(game.getBombList().getPos(pos) == null) {
-			int x = game.getUCMShip().getX();
-			int y = game.getUCMShip().getY();
+		if(game.getBombList().isPosNull(pos)) {
+			int x = game.getXUCMShip();
+			int y = game.getYUCMShip();
 			Bomb bomb = new Bomb(x,y);
 			game.getBombList().insertIn(pos, bomb);
 		}
 	}
 	private void shockwave() {
-		if(game.getUCMShip().getShockwave()) {
-			int n = game.getRegularShipList().getTam();
-			int m = game.getDestroyerShipList().getTam();
-			for(int i = 0; i < n ; i++) {
-				game.getRegularShipList().getPos(i).damage(game);
-				if( i < m) {
-					game.getDestroyerShipList().getPos(i).damage(game);
-				}
+		if(game.getShockwaveUCMShip()) {
+			game.getDestroyerShipList().damageAll();
+			game.getRegularShipList().damageAll();
+			if(game.isOvni()) {
+				game.damageOvni();
 			}
-			if(game.getOvni() != null) {
-				game.getOvni().damage(game);
-			}
-			game.getUCMShip().setShockwave(false);
+			game.setShockwaveUCMShip(false);
 		}
 	}
 	private void reset() {

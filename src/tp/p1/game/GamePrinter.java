@@ -1,5 +1,6 @@
 package tp.p1.game;
 
+import tp.p1.shipList.*;
 import tp.p1.util.MyStringUtils;
 
 public class GamePrinter {
@@ -27,71 +28,65 @@ public class GamePrinter {
 	}
 	
 	private void printInfo(Game game) {
-		System.out.println("Life: " + game.getUCMShip().getVida());
+		System.out.println("Life: " + game.getVidaUCMShip());
 		System.out.println("Number of cycles: " + game.getCycleCounter());
 		System.out.println("Points: " + game.getPuntuation());
 		System.out.println("Remaining aliens: " + game.getRemaining());
-		System.out.println("Shockwave: " + game.getShockwaveUCM());
+		System.out.println("Shockwave: " + game.getShockwaveUCMShip());
 	}
 	
 	private void encodeGame(Game game) {
 		initBoard(numRows,numCols);
-		encodeBomb(game);
-		encodeDestroyerShip(game);
-		encodeRegularShip(game);
-		encodeUCMShip(game);
-		encodeOvni(game);	
+		encodeBomb(game.getBombList());
+		encodeDestroyerShip(game.getDestroyerShipList());
+		encodeRegularShip(game.getRegularShipList());
+		encodeUCMShip(game.getXUCMShip(),game.getYUCMShip(),game.getVidaUCMShip());
+		if(game.isOvni()) {
+			encodeOvni(game.getXOvni(),game.getYOvni(),game.getVidaOvni());	
+		}
 	}
-	private void encodeDestroyerShip(Game game) {
-		int tam = game.getDestroyerShipList().getTam();
-		for(int i = 0; i < tam;i++) {
-			if(game.getDestroyerShipList().getPos(i).getVida() != 0) {
-				int x = game.getDestroyerShipList().getPos(i).getX();
-				int y = game.getDestroyerShipList().getPos(i).getY();
-				board[y][x] = "D[" + game.getDestroyerShipList().getPos(i).getVida() + "]";
+	private void encodeDestroyerShip(DestroyerShipList desShipList) {
+		for(int i = 0; i < desShipList.getTam();i++) {
+			if(desShipList.getVidaPos(i) != 0) {
+				int x = desShipList.getXPos(i);
+				int y = desShipList.getYPos(i);
+				board[y][x] = "D[" + desShipList.getVidaPos(i) + "]";
 			}
 		}
 	}
-	private void encodeRegularShip(Game game) {
-		int tam = game.getRegularShipList().getTam();
-		for(int i = 0; i < tam;i++) {
-			if(game.getRegularShipList().getPos(i).getVida() != 0) {
-				int x = game.getRegularShipList().getPos(i).getX();
-				int y = game.getRegularShipList().getPos(i).getY();
-				board[y][x] = "C[" + game.getRegularShipList().getPos(i).getVida() + "]";
+	private void encodeRegularShip(RegularShipList regShipList) {
+		for(int i = 0; i < regShipList.getTam();i++) {
+			if(regShipList.getVidaPos(i) != 0) {
+				int x = regShipList.getXPos(i);
+				int y = regShipList.getYPos(i);
+				board[y][x] = "C[" + regShipList.getVidaPos(i) + "]";
 			}
 		}
 	}
-	private void encodeBomb(Game game) {
-		for(int i = 0; i < game.getBombList().getTam() - 1;i++) {
-			if(game.getBombList().getPos(i) != null) {
-				int x = game.getBombList().getPos(i).getX();
-				int y = game.getBombList().getPos(i).getY();
+	private void encodeBomb(BombList bombList) {
+		for(int i = 0; i < bombList.getTam() - 1;i++) {
+			if(!bombList.isPosNull(i)) {
+				int x = bombList.getXPos(i);
+				int y = bombList.getYPos(i);
 				board[y][x] = ".";
 			}
 		}
-		if((game.getBombList().getPos(game.getBombList().getTam() - 1) != null)) {
-			int x = game.getBombList().getPos(game.getBombList().getTam() - 1).getX();
-			int y = game.getBombList().getPos(game.getBombList().getTam() - 1).getY();
+		if(!bombList.isPosNull(bombList.getPosPlayer())) {
+			int x = bombList.getXPos(bombList.getPosPlayer());
+			int y = bombList.getYPos(bombList.getPosPlayer());
 			board[y][x] = "oo";
 		}
 	}
-	private void encodeUCMShip(Game game) {
-		int x = game.getUCMShip().getX();
-		int y = game.getUCMShip().getY();
-		if(game.getUCMShip().getVida() > 0) {
+	private void encodeUCMShip(int x, int y, int vida) {
+		if(vida > 0) {
 			board[y][x] = "^_^";
 		}
 		else {
 			board[y][x] = "!xx!";
 		}
 	}
-	private void encodeOvni(Game game) {
-		if(game.isOvni()) {
-			int x = game.getOvni().getX();
-			int y = game.getOvni().getY();
-			board[y][x] = "O[" + game.getOvni().getVida() + "]";
-		}
+	private void encodeOvni(int x, int y, int vida) {	
+		board[y][x] = "O[" + vida + "]";
 	}
 	
 	public String toString() {
@@ -123,6 +118,12 @@ public class GamePrinter {
 		this.encodeGame(game);
 		this.printInfo(game);
 		System.out.println(this.toString());		
+	}
+	public void printGameOver() {
+		System.out.println("Game Over.");
+	}
+	public void printWin() {
+		System.out.println("Win.");
 	}
 
 }

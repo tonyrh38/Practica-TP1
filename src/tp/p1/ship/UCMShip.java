@@ -55,6 +55,6 @@ public class UCMShip {
 		}
 		
 		public void damage() {
-			setVida(getVida() - 1);
+			this.setVida(this.getVida() - 1);
 		}
 }

@@ -7,8 +7,10 @@ public class BombList {
 	
 	private Bomb list[];
 	private int tam;
+	private int posPlayer;
 
 	public BombList(Level level) {
+		this.posPlayer = level.getDestroyerShip();
 		this.tam = level.getDestroyerShip() + 1;
 		list = new Bomb[this.tam];
 	}
@@ -16,9 +18,19 @@ public class BombList {
 	public int getTam() {
 		return this.tam;
 	}
+	public int getPosPlayer() {
+		return this.posPlayer;
+	}
 
-	public Bomb getPos(int i) {
-		return this.list[i];
+	public int getXPos(int i) {
+		return this.list[i].getX();
+	}
+	public int getYPos(int i) {
+		return this.list[i].getY();
+	}
+	
+	public boolean isPosNull(int pos) {
+		return this.list[pos] == null;
 	}
 	
 	public void insertIn(int pos, Bomb bomb) {
