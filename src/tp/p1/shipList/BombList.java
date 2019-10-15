@@ -22,11 +22,15 @@ public class BombList {
 		return this.posPlayer;
 	}
 
-	public int getXPos(int i) {
-		return this.list[i].getX();
+	public int getXPos(int pos) {
+		return this.list[pos].getX();
 	}
-	public int getYPos(int i) {
-		return this.list[i].getY();
+	public int getYPos(int pos) {
+		return this.list[pos].getY();
+	}
+	
+	public void setYPos(int pos, int y) {
+		this.list[pos].setY(y);
 	}
 	
 	public boolean isPosNull(int pos) {
@@ -38,5 +42,11 @@ public class BombList {
 	}
 	public void destroyBomb(int pos) {
 		this.list[pos] = null;
+	}
+
+	public void movePlayerBomb() {
+		int posPlayer = this.getPosPlayer();
+		if(posPlayer > 0) this.setYPos(posPlayer, this.getYPos(posPlayer) - 1);
+		else this.destroyBomb(posPlayer);
 	}
 }

@@ -154,7 +154,13 @@ public class Game {
 	}
 	
 	public void moveBombs() {
-
+		/* Avanzar misil del jugador
+		 * 	· Si choca con una nave o con un proyectil, actualizar vida
+		 * Avanzar los proyectiles enemigos
+		 * 	· Si impacta contra el jugador, actualizar vida
+		 * Avanzar naves enemigas
+		 * Avanzar ovni*/
+		this.getBombList().movePlayerBomb();
 		Bomb playerBomb = getBombList().getPos(getBombList().getTam() - 1);
 		if( playerBomb != null) {
 			boolean found = false;
