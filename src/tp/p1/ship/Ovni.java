@@ -6,15 +6,15 @@ public class Ovni {
 	private int _y;
 	private int _vida;
 	private int _puntos;
+	private boolean enable;
 	
 	//Metodos
 
 	//Constructor
 		public Ovni() {
-			this.setX(8);
-			this.setY(0);
 			this.setVida(1);
 			this.setPuntos(25);
+			this.setEnable(false);
 		}
 	
 	//Getters
@@ -30,6 +30,9 @@ public class Ovni {
 		public int getPuntos() {
 			return _puntos;
 		}
+		public boolean getEnable() {
+			return enable;
+		}
 	
 	//Setters
 		public void setX(int x) {
@@ -44,10 +47,12 @@ public class Ovni {
 		public void setPuntos(int puntos) {
 			this._puntos = puntos;
 		}
-		
-		public void damage() {
-			if(this.getVida() > 0) {
-				this.setVida(this.getVida() - 1);
+		public void setEnable(boolean set) {
+			this.enable = set;
+			if(set) {
+				this.setVida(1);
+				this.setX(8);
+				this.setY(0);
 			}
 		}
 }

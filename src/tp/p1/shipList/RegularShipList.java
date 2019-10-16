@@ -33,14 +33,21 @@ public class RegularShipList {
 	public int getVidaPos(int pos) {
 		return this.list[pos].getVida();
 	}
-	public int getYPos(int pos) {
-		return this.list[pos].getY();
-	}
 	public int getXPos(int pos) {
 		return this.list[pos].getX();
 	}
+	public int getYPos(int pos) {
+		return this.list[pos].getY();
+	}
 	public int getPuntPos(int pos) {
 		return this.list[pos].getPuntos();
+	}
+	
+	public void setXPos(int pos, int x) {
+		this.list[pos].setX(x);
+	}
+	public void setYPos(int pos, int y) {
+		this.list[pos].setY(y);
 	}
 	
 	public int getRegularRemaining() {
@@ -53,7 +60,7 @@ public class RegularShipList {
 	public boolean RegularshipWins() {
 		boolean win = false;
 			for(int i = 0; i < this.getTam(); i++) {
-				if(this.getYPos(i) == 7) win = true;
+				if(this.getVidaPos(i) > 0 && this.getYPos(i) == 7) win = true;
 			}
 		return win;
 	}
@@ -76,5 +83,37 @@ public class RegularShipList {
 			}
 		}
 		return points;
+	}
+
+	public boolean impactBomb(int xBombPlayer, int yBombPlayer) {
+		boolean impacted = false;
+		for(int i = 0; i < this.getTam() && !impacted; i++) {
+			if(this.getVidaPos(i) > 0 && this.getXPos(i) == xBombPlayer && this.getYPos(i) == yBombPlayer) {
+				this.damagePos(i);
+				impacted = true;
+			}
+		}
+		return impacted;
+	}
+	
+	public boolean isWall() {
+		boolean wall = false;
+		for(int i = 0; i < this.getTam() && !wall; i++) {
+			if(this.getVidaPos(i) > 0 && (this.getXPos(i) == 0 || this.getXPos(i) == 8)) wall = true;
+		}
+		return wall;
+	}
+	
+	public void moveLateralShips(boolean direction) {
+		int dir = (direction)? 1 : -1;
+		for(int i = 0; i < this.getTam(); i++) {
+			this.setXPos(i, this.getXPos(i) + dir);
+		}
+	}
+	
+	public void moveDownShips() {
+		for(int i = 0; i < this.getTam(); i++) {
+			this.setYPos(i, this.getYPos(i) + 1);
+		}
 	}
 }

@@ -113,7 +113,7 @@ public class Controller {
 		if(game.getShockwaveUCMShip()) {
 			game.getDestroyerShipList().damageAll();
 			game.getRegularShipList().damageAll();
-			if(game.isOvni()) {
+			if(game.getEnableOvni()) {
 				game.damageOvni();
 			}
 			game.setShockwaveUCMShip(false);

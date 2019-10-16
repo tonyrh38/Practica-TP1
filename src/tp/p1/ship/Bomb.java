@@ -4,12 +4,12 @@ public class Bomb {
 	
 	private int x;
 	private int y;
-	private int daño;
+	private int damage;
 	
 	public Bomb(int x, int y) {
 		this.setX(x);
 		this.setY(y);
-		this.daño = 1;
+		this.damage = 1;
 	}
 
 	public int getX() {
@@ -26,8 +26,8 @@ public class Bomb {
 		this.y = y;
 	}
 
-	public int getDaño() {
-		return daño;
+	public int getDamage() {
+		return damage;
 	}
 
 }

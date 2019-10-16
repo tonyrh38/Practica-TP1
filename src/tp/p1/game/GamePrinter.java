@@ -41,13 +41,13 @@ public class GamePrinter {
 		encodeDestroyerShip(game.getDestroyerShipList());
 		encodeRegularShip(game.getRegularShipList());
 		encodeUCMShip(game.getXUCMShip(),game.getYUCMShip(),game.getVidaUCMShip());
-		if(game.isOvni()) {
+		if(game.getEnableOvni()) {
 			encodeOvni(game.getXOvni(),game.getYOvni(),game.getVidaOvni());	
 		}
 	}
 	private void encodeDestroyerShip(DestroyerShipList desShipList) {
 		for(int i = 0; i < desShipList.getTam();i++) {
-			if(desShipList.getVidaPos(i) != 0) {
+			if(desShipList.getVidaPos(i) > 0) {
 				int x = desShipList.getXPos(i);
 				int y = desShipList.getYPos(i);
 				board[y][x] = "D[" + desShipList.getVidaPos(i) + "]";
@@ -56,7 +56,7 @@ public class GamePrinter {
 	}
 	private void encodeRegularShip(RegularShipList regShipList) {
 		for(int i = 0; i < regShipList.getTam();i++) {
-			if(regShipList.getVidaPos(i) != 0) {
+			if(regShipList.getVidaPos(i) > 0) {
 				int x = regShipList.getXPos(i);
 				int y = regShipList.getYPos(i);
 				board[y][x] = "C[" + regShipList.getVidaPos(i) + "]";

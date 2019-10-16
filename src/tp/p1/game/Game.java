@@ -8,10 +8,11 @@ public class Game {
 	
 	private int cycleCounter;
 	private int puntuation;
+	private int ovnisDestroyed;
 	private Level level;
 	private long seed;
 	private boolean movement;
-	private boolean abajo;
+	private boolean down;
 
 	private UCMShip ucmShip;
 	private RegularShipList regularShipList;
@@ -32,14 +33,16 @@ public class Game {
 	public void reset() {
 		this.setCycleCounter(0);
 		this.setPuntuation(0);
+		this.setOvnisDestroyed(0);
 		this.rand = new Random(this.seed);
 		this.setMovement(true);
-		this.abajo = false;
+		this.down = false;
 		
 		this.ucmShip = new UCMShip();
 		this.regularShipList = new RegularShipList(this.getLevel());
 		this.destroyerShipList = new DestroyerShipList(this.getLevel());
 		this.bombList = new BombList(this.getLevel());
+		this.ovni = new Ovni();
 	}
 	
 	public DestroyerShipList getDestroyerShipList() {
@@ -60,6 +63,9 @@ public class Game {
 	}
 	public Level getLevel() {
 		return level;
+	}
+	public int getOvnisDestroyed() {
+		return this.ovnisDestroyed;
 	}
 	public int getVidaUCMShip() {
 		return this.ucmShip.getVida();
@@ -94,6 +100,9 @@ public class Game {
 	public boolean getMovement() {
 		return movement;
 	}
+	public boolean getDown() {
+		return this.down;
+	}
 	
 	public void setCycleCounter(int cycleCounter) {
 		this.cycleCounter = cycleCounter;
@@ -104,14 +113,14 @@ public class Game {
 	public void calculatePuntuation() {
 		int points = this.getDestroyerShipList().calculatePuntuation();
 		points += this.getRegularShipList().calculatePuntuation();
-		if(this.isOvni() && this.getVidaOvni() == 0) {
-			points += this.getPuntOvni();
-			this.setShockwaveUCMShip(true);
-		}
+		points += this.getPuntOvni() * this.getOvnisDestroyed();
 		this.setPuntuation(points);
 	}
 	public void setLevel(Level level) {
 		this.level = level;
+	}
+	public void setOvnisDestroyed(int num) {
+		this.ovnisDestroyed = num;
 	}
 	public void setVidaUCMShip(int vida) {
 		this.ucmShip.setVida(vida);
@@ -122,14 +131,25 @@ public class Game {
 	public void setShockwaveUCMShip(boolean sw) {
 		this.ucmShip.setShockwave(sw);
 	}
-	public void setOvni(Ovni ovni) {
-		 this.ovni = ovni;
+	public boolean getEnableOvni() {
+		 return this.ovni.getEnable();
+	}
+	public void setEnableOvni(boolean set) {
+		this.ovni.setEnable(set);
 	}
 	public void setXOvni(int x) {
 		this.ovni.setX(x);
 	}
+	public void setDown(boolean down) {
+		this.down = down;
+	}
 	public void damageOvni() {
-		this.ovni.damage();
+		this.setEnableOvni(false);
+		this.setOvnisDestroyed(this.getOvnisDestroyed() + 1);
+		this.setShockwaveUCMShip(true);
+	}
+	public void damagePlayer() {
+		this.ucmShip.damage();
 	}
 	public void setPlayerDefeated() {
 		setVidaUCMShip(0);
@@ -143,127 +163,72 @@ public class Game {
 	}
 	
 	public void createOvni() {
-		if(!this.isOvni() && this.getRand().nextInt(10) <= this.getFreqOvni() * 10) {
-			Ovni ovni = new Ovni();
-			this.setOvni(ovni);
+		if(!getEnableOvni() && this.getRand().nextInt(10) <= this.getFreqOvni() * 10) {
+			this.setEnableOvni(true);
 		}
 	}
-	public boolean isOvni() {
-		if(this.ovni != null) return true;
+	public boolean impactBombOvni(int x, int y) {
+		if(getEnableOvni() && this.getXOvni() == x && this.getYOvni() == y) {
+			this.damageOvni();
+			return true;
+		}
 		else return false;
 	}
-	
-	public void moveBombs() {
-		/* Avanzar misil del jugador
-		 * 	· Si choca con una nave o con un proyectil, actualizar vida
-		 * Avanzar los proyectiles enemigos
-		 * 	· Si impacta contra el jugador, actualizar vida
-		 * Avanzar naves enemigas
-		 * Avanzar ovni*/
-		this.getBombList().movePlayerBomb();
-		Bomb playerBomb = getBombList().getPos(getBombList().getTam() - 1);
-		if( playerBomb != null) {
-			boolean found = false;
-			for(int i = 0; i < getBombList().getTam() - 1 && !found;i++) {
-				if(getBombList().getPos(i) != null) {
-					if(getBombList().getPos(i).getX() == playerBomb.getX() && getBombList().getPos(i).getY() == playerBomb.getY() - 1) {
-						getBombList().destroyBomb(i);
-						getBombList().destroyBomb(getBombList().getTam() - 1);
-						found = true;
-					}
-				}
-			}
-			for(int i = 0; i < getDestroyerShipList().getTam() && !found; i++) {
-				if(getDestroyerShipList().getPos(i).getX() == playerBomb.getX() && getDestroyerShipList().getPos(i).getY() == playerBomb.getY() - 1) {
-					getDestroyerShipList().getPos(i).damage(this);
-					getBombList().destroyBomb(getBombList().getTam() - 1);
-					found = true;
-				}
-			}
-			for(int i = 0; i < getRegularShipList().getTam() && !found; i++) {
-				if(getRegularShipList().getPos(i).getX() == playerBomb.getX() && getRegularShipList().getPos(i).getY() == playerBomb.getY() - 1) {
-					getRegularShipList().getPos(i).damage(this);
-					getBombList().destroyBomb(getBombList().getTam() - 1);
-					found = true;
-				}
-			}
-			if(!found) {
-				getBombList().getPos(getBombList().getTam() - 1).setY(playerBomb.getY() - 1);
-				if(getBombList().getPos(getBombList().getTam() - 1).getY() < 0) {
-					getBombList().insertIn(getBombList().getTam() - 1, null);
-				}
+	public void moveBombs() {		
+		//Avanzar proyectil del jugador
+		if (!this.getBombList().isPlayerBombNull()) {
+			this.getBombList().movePlayerBomb();
+			int x = this.getBombList().getXBombPlayer();
+			int y = this.getBombList().getYBombPlayer();
+			if(this.getDestroyerShipList().impactBomb(x, y) || this.getRegularShipList().impactBomb(x, y) ||
+			this.impactBombOvni(x, y) || this.getBombList().impactBomb()){
+				this.getBombList().destroyBomb(this.getBombList().getPosPlayer());
 			}
 		}
-		
-		for( int i = 0; i < getBombList().getTam() - 1; i++) {
-			if(getBombList().getPos(i) != null) {
-				if(getBombList().getPos(i).getY() == 7 ) {
-					if(getBombList().getPos(i).getX() == getUCMShip().getX()) getUCMShip().damage();
-					getBombList().destroyBomb(i);
-				}
-				else {
-					getBombList().getPos(i).setY(getBombList().getPos(i).getY() + 1);
-				}
-			}
+		//Avanzar bombas enemigas
+		this.getBombList().moveShipBombs();
+		int x = this.getXUCMShip();
+		int y = this.getYUCMShip();
+		if(this.getBombList().impactBombPlayer(x,y)) {
+			this.damagePlayer();
 		}
 	}
 
+	
 	public void moveShips() {
-		boolean found = false;
-		int n = getRegularShipList().getTam();
-		int m = getDestroyerShipList().getTam();
-		for(int i = 0; i < n && !found; i++) {
-			if(getRegularShipList().getPos(i).getX() == 8 || getRegularShipList().getPos(i).getX() == 0) {
-				found = true;
-			}
-			if(i < m) {
-				if(getDestroyerShipList().getPos(i).getX() == 8 || getDestroyerShipList().getPos(i).getX() == 0) {
-					found = true;
-				}
-			}
-		}
-		if(getCycleCounter() % getLevel().getVel() == 0) {
-			if(!found || abajo) {
-				if(getMovement()) {
-					for(int i = 0; i < n; i++) {
-						getRegularShipList().getPos(i).setX(getRegularShipList().getPos(i).getX() + 1);
-						if(i < m) {
-							getDestroyerShipList().getPos(i).setX(getDestroyerShipList().getPos(i).getX() + 1);
-						}
-					}
+		
+		boolean found = this.getRegularShipList().isWall() || this.getDestroyerShipList().isWall();
+		
+		if(this.getCycleCounter() % this.getLevel().getVel() == 0) {
+			if(found) {
+				if(this.getDown()) {
+					this.getRegularShipList().moveLateralShips(this.getMovement());
+					this.getDestroyerShipList().moveLateralShips(this.getMovement());
+					this.setDown(false);
 				}
 				else {
-					for(int i = 0; i < n; i++) {
-						getRegularShipList().getPos(i).setX(getRegularShipList().getPos(i).getX() - 1);
-						if(i < m) {
-							getDestroyerShipList().getPos(i).setX(getDestroyerShipList().getPos(i).getX() - 1);
-						}
-					}
+					this.getRegularShipList().moveDownShips();
+					this.getDestroyerShipList().moveDownShips();
+					this.setDown(true);
+					this.setMovement(!this.getMovement());
 				}
-				if(abajo) abajo = false;
 			}
 			else {
-				for(int i = 0; i < n; i++) {
-					getRegularShipList().getPos(i).setY(getRegularShipList().getPos(i).getY() + 1);
-					if(i < m) {
-						getDestroyerShipList().getPos(i).setY(getDestroyerShipList().getPos(i).getY() + 1);
-					}
-				}
-				if(!abajo)setMovement(!getMovement());
-				abajo = true;
+				this.getRegularShipList().moveLateralShips(this.getMovement());
+				this.getDestroyerShipList().moveLateralShips(this.getMovement());
 			}
 		}
 	}
 	public void moveOvni() {
-		if(isOvni()) {
+		if(this.getEnableOvni()) {
 			if(getXOvni() > 0) {
 				setXOvni(getXOvni() - 1);
 			}
-			else setOvni(null);
+			else setEnableOvni(false);
 		}
 	}
 	public boolean playerDefeated() {
-		if(this.getVidaUCMShip() == 0 || this.getDestroyerShipList().DestroyershipWins() || this.getRegularShipList().RegularshipWins()) return true;
+		if(this.getVidaUCMShip() <= 0 || this.getDestroyerShipList().DestroyershipWins() || this.getRegularShipList().RegularshipWins()) return true;
 		else return false;
 	}
 	public boolean enemyDefeated() {

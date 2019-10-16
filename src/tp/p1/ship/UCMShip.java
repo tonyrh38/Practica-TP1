@@ -6,7 +6,7 @@ public class UCMShip {
 		private int _x;
 		private int _y;
 		private int _vida;
-		private int _daño;
+		private int _damage;
 		private boolean _shockwave;
 	
 	//Metodos
@@ -30,8 +30,8 @@ public class UCMShip {
 		public int getVida() {
 			return _vida;
 		}
-		public int getDaño() {
-			return _daño;
+		public int getDamage() {
+			return _damage;
 		}
 		public boolean getShockwave() {
 			return _shockwave;
@@ -47,14 +47,14 @@ public class UCMShip {
 		public void setVida(int vida) {
 			this._vida = vida;
 		}
-		public void setDaño(int daño) {
-			this._daño = daño;
+		public void setDaño(int damage) {
+			this._damage = damage;
 		}
 		public void setShockwave(boolean shockwave) {
 			this._shockwave = shockwave;
 		}
 		
 		public void damage() {
-			this.setVida(this.getVida() - 1);
+			if(this.getVida() > 0) this.setVida(this.getVida() - 1);
 		}
 }
