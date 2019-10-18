@@ -4,7 +4,7 @@ import java.util.Scanner;
 import tp.p1.ship.Bomb;
 
 public class Controller {
-	// A ver que pasa ahora
+	
 	private Game game;
 	private GamePrinter gamePrinter;
 	private Scanner in;
