@@ -16,7 +16,7 @@ public class DestroyerShipList {
 	// Metodos	
 	
 	// Constructor
-		public DestroyerShipList( Game game, Level level) {
+		public DestroyerShipList(Level level,  Game game) {
 			this._tam = level.getDestroyerShip();
 			this._freq = level.getFreq();
 			this._list = new DestroyerShip[this._tam];
@@ -41,6 +41,26 @@ public class DestroyerShipList {
 					this._list[i] = new DestroyerShip(3 + i,3, game);
 				}
 			}
+		}
+		
+		public boolean isShipIn(int i, int j) {
+			int idx = 0;
+			boolean found = false;
+			while(idx < this._tam && !found) {
+				found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
+			}
+			return found;
+		}
+		public String shipInToString(int i, int j) {
+			int idx = 0, position = 0;
+			boolean found = false;
+			while(idx < this._tam && !found) {
+				if(this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i) {
+					position = idx;
+					found = true;
+				}
+			}
+			return this._list[position].toString();
 		}
 		public void update() {
 			// Completar
@@ -123,4 +143,6 @@ public class DestroyerShipList {
 			this.setYPos(i, this.getYPos(i) + 1);
 		}
 	}
+
+	
 }

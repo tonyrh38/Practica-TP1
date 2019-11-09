@@ -52,6 +52,9 @@ public class DestroyerShip {
 		}
 		
 	// Logica
+		public String toString() {
+			return "D["+ this._vida +"]";
+		}
 		public void damage() {
 			if(this.getVida() > 0) {
 				this.setVida(this.getVida() - 1);

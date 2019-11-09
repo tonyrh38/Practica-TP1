@@ -61,7 +61,15 @@ public class Ovni {
 			}
 		}
 	// Logica
+		public boolean isOvniIn(int i, int j) {
+			return this._x == j && this._y == i;
+		}
+		public String toString() {
+			return "O["+ this._vida +"]";
+		}
 		public void update() {
 			
 		}
+
+		
 }

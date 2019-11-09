@@ -36,7 +36,13 @@ public class Laser {
 	}
 	
 	// Logica
+	public boolean isLaserIn(int i, int j) {
+		return this._x == j && this._y == i;
+	}
+	public String toString() {
+		return "oo";
+	}
 	public void update() {
 		
-	}
+	}	
 }

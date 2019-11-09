@@ -6,136 +6,89 @@ import tp.p1.shipList.*;
 
 public class Game {
 	
-	private int cycleCounter;
-	private int puntuation;
-	private int ovnisDestroyed;
-	private Level level;
-	private long seed;
-	private boolean movement;
-	private boolean down;
-
-	private UCMShip ucmShip;
-	private RegularShipList regularShipList;
-	private DestroyerShipList destroyerShipList;
-	private BombList bombList;
-	private Ovni ovni;
+	// Atributos
+		private static int X_SIZE = 9;
+		private static int Y_SIZE = 8;
 	
-	private Random rand;
-	
-	public Game(Level level) {
-		this(level, System.currentTimeMillis());
-	}
-	public Game(Level level, long seed) {
-		this.setLevel(level);
-		this.seed = seed;
-		this.reset();
-	}
-	public void reset() {
-		this.setCycleCounter(0);
-		this.setPuntuation(0);
-		this.setOvnisDestroyed(0);
-		this.rand = new Random(this.seed);
-		this.setMovement(true);
-		this.down = false;
+		private int _cycleCounter;
+		private int _puntuation;
+		private Level _level;
+		private long _seed;
+		private Random _rand;
 		
-		this.ucmShip = new UCMShip();
-		this.regularShipList = new RegularShipList(this.getLevel());
-		this.destroyerShipList = new DestroyerShipList(this.getLevel());
-		this.bombList = new BombList(this.getLevel());
-		this.ovni = new Ovni();
-	}
+		private boolean _movement;
+		private boolean _down;
 	
-	public DestroyerShipList getDestroyerShipList() {
-		return destroyerShipList;
-	}
-	public RegularShipList getRegularShipList() {
-		return regularShipList;
-	}
-	public BombList getBombList() {
-		return bombList;
-	}
+		private UCMShip _ucmShip;
+		private RegularShipList _regularShipList;
+		private DestroyerShipList _destroyerShipList;
+		private BombList _bombList;
+		private Ovni _ovni;
 	
-	public int getCycleCounter() {
-		return cycleCounter;
-	}
-	public int getPuntuation() {
-		return puntuation;
-	}
-	public Level getLevel() {
-		return level;
-	}
-	public int getOvnisDestroyed() {
-		return this.ovnisDestroyed;
-	}
-	public int getVidaUCMShip() {
-		return this.ucmShip.getVida();
-	}
-	public int getXUCMShip() {
-		return this.ucmShip.getX();
-	}
-	public int getYUCMShip() {
-		return this.ucmShip.getY();
-	}
-	public boolean getShockwaveUCMShip() {
-		return this.ucmShip.getShockwave();
-	}
-	public int getVidaOvni() {
-		return this.ovni.getVida();
-	}
-	public int getXOvni() {
-		return this.ovni.getX();
-	}
-	public int getYOvni() {
-		return this.ovni.getY();
-	}
-	public int getPuntOvni() {
-		return this.ovni.getPuntos();
-	}
-	public double getFreqOvni() {
-		return this.getLevel().getOvni();
-	}
-	public Random getRand() {
-		return this.rand;
-	}
-	public boolean getMovement() {
-		return movement;
-	}
-	public boolean getDown() {
-		return this.down;
-	}
+	// Metodos
 	
-	public void setCycleCounter(int cycleCounter) {
-		this.cycleCounter = cycleCounter;
-	}
-	public void setPuntuation(int puntuation) {
-		this.puntuation = puntuation;
-	}
-	public void calculatePuntuation() {
-		int points = this.getDestroyerShipList().calculatePuntuation();
-		points += this.getRegularShipList().calculatePuntuation();
-		points += this.getPuntOvni() * this.getOvnisDestroyed();
-		this.setPuntuation(points);
-	}
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-	public void setOvnisDestroyed(int num) {
-		this.ovnisDestroyed = num;
-	}
-	public void setVidaUCMShip(int vida) {
-		this.ucmShip.setVida(vida);
-	}
-	public void setXUCMShip(int x) {
-		this.ucmShip.setX(x);
-	}
+	// Constructores
+		public Game(Level level) {
+			this(level, System.currentTimeMillis());
+		}
+		public Game(Level level, long seed) {
+			this._level = level;
+			this._seed = seed;
+			this._reset();
+		}
+	// Logica
+		private void _reset() {
+			this._cycleCounter = 0;
+			this._puntuation = 0;
+			this._rand = new Random(this._seed);
+			
+			this._movement = true;
+			this._down = false;
+			
+			this._ucmShip = new UCMShip(this);
+			this._regularShipList = new RegularShipList(this._level, this);
+			this._destroyerShipList = new DestroyerShipList(this._level, this);
+			this._bombList = new BombList(this._level);
+		}
+		
+		public String characterAtToString(int i, int j) {
+			if(this._ucmShip.isPlayerIn(i,j)) {return this._ucmShip.toString();}
+			else if(this._regularShipList.isShipIn(i,j)) {return this._regularShipList.shipInToString(i, j);}
+			else if(this._destroyerShipList.isShipIn(i,j)) {return this._destroyerShipList.shipInToString(i,j);}
+			else if(this._ovni != null && this._ovni.isOvniIn(i,j)) {return this._ovni.toString();}
+			else if(this._ucmShip.isLaserIn(i,j)) {return this._ucmShip.laserToString();}
+			else if(this._)
+			else return "";
+		}
+
+		public void draw() {
+			// TODO Auto-generated method stub
+			
+		}
+		public void computerAction() {
+			// TODO Auto-generated method stub
+			
+		}
+		public void update() {
+			// TODO Auto-generated method stub
+			
+		}
+		public void printWin() {
+			// TODO Auto-generated method stub
+			
+		}
+		public void printGameOver() {
+			// TODO Auto-generated method stub
+			
+		}
 	public void setShockwaveUCMShip(boolean sw) {
-		this.ucmShip.setShockwave(sw);
+		this._ucmShip.setShockwave(sw);
 	}
 	public boolean getEnableOvni() {
-		 return this.ovni.getEnable();
+		 return this._ovni.getEnable();
 	}
 	public void setEnableOvni(boolean set) {
-		this.ovni.setEnable(set);
+		this._ovni.setEnable(set);
 	}
 	public void setXOvni(int x) {
 		this.ovni.setX(x);
@@ -234,29 +187,5 @@ public class Game {
 	public boolean enemyDefeated() {
 		if(this.getRegularShipList().getRegularRemaining() == 0 && this.getDestroyerShipList().getDestroyerRemaining() == 0) return true;
 		else return false;
-	}
-	public String characterAtToString(int i, int j) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public void draw() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void computerAction() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void update() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void printGameOver() {
-		// TODO Auto-generated method stub
-		
-	}
-	public void printWin() {
-		// TODO Auto-generated method stub
-		
 	}
 }

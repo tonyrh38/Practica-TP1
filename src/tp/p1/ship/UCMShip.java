@@ -10,6 +10,7 @@ public class UCMShip {
 		private int _vida;
 		private int _damage;
 		private boolean _shockwave;
+		private Laser _laser;
 		
 		private Game _game;
 	
@@ -64,7 +65,25 @@ public class UCMShip {
 		}
 		
 	// Logica
+		public boolean isPlayerIn(int i, int j) {
+			return this._x == j && this._y == i;
+		}
+		public String toString() {
+			return "^__^";
+		}
+		public boolean isLaserIn(int i, int j) {
+			return this._laser.isLaserIn(i,j);
+		}
+		public String laserToString() {
+			return this._laser.toString();
+		}
 		public void update() {
 			
 		}
+
+		
+
+		
+
+		
 }

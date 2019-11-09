@@ -9,7 +9,6 @@ public class RegularShip {
 		private int _y;
 		private int _vida;
 		private int _puntos;
-		private Laser _laser;
 		
 		private Game _game;
 		
@@ -53,6 +52,9 @@ public class RegularShip {
 		}
 		
 	// Logica
+		public String toString() {
+			return "C["+ this._vida +"]";
+		}
 		public void damage() {
 			if(this.getVida() > 0) {
 				this.setVida(this.getVida() - 1);
