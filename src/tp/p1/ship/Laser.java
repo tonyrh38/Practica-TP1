@@ -1,6 +1,6 @@
 package tp.p1.ship;
 
-public class Bomb {
+public class Laser {
 	
 	// Atributos
 		private int _x;
@@ -10,7 +10,7 @@ public class Bomb {
 	// Metodos
 	
 	// Constructor	
-		public Bomb(int x, int y) {
+		public Laser(int x, int y) {
 			this.setX(x);
 			this.setY(y);
 			this._damage = 1;

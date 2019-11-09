@@ -1,68 +1,50 @@
 package tp.p1.shipList;
 
 import java.util.Random;
-
+import tp.p1.game.Game;
 import tp.p1.game.Level;
 import tp.p1.ship.Bomb;
 import tp.p1.ship.DestroyerShip;
 
 public class DestroyerShipList {
 	
-	private DestroyerShip list[];
-	private int tam;
-	private double freq;
+	// Atributos
+		private DestroyerShip _list[];
+		private int _tam;
+		private double _freq;
 	
-	public DestroyerShipList(Level level) {
-		this.tam = level.getDestroyerShip();
-		this.freq = level.getFreq();
-		list = new DestroyerShip[this.tam];
-		this.initArray(level);
-	}
-	private void initArray(Level level) {
-		
-		if(level.name() == "EASY") {
-			for(int i = 0; i < 2; i++) {
-				list[i] = new DestroyerShip(4 + i,2);
+	// Metodos	
+	
+	// Constructor
+		public DestroyerShipList( Game game, Level level) {
+			this._tam = level.getDestroyerShip();
+			this._freq = level.getFreq();
+			this._list = new DestroyerShip[this._tam];
+			this._initArray(level, game);
+		}
+	
+	// Logica
+		private void _initArray(Level level, Game game) {
+			
+			if(level.name() == "EASY") {
+				for(int i = 0; i < 2; i++) {
+					this._list[i] = new DestroyerShip(4 + i,2, game);
+				}
+			}
+			if(level.name() == "HARD") {
+				for(int i = 0; i < 2; i++) {
+					this._list[i] = new DestroyerShip(4 + i,3, game);
+				}
+			}
+			if(level.name() == "INSANE") {
+				for(int i = 0; i < 4; i++) {
+					this._list[i] = new DestroyerShip(3 + i,3, game);
+				}
 			}
 		}
-		if(level.name() == "HARD") {
-			for(int i = 0; i < 2; i++) {
-				list[i] = new DestroyerShip(4 + i,3);
-			}
+		public void update() {
+			// Completar
 		}
-		if(level.name() == "INSANE") {
-			for(int i = 0; i < 4; i++) {
-				list[i] = new DestroyerShip(3 + i,3);
-			}
-		}
-	}
-	
-	public int getTam() {
-		return this.tam;
-	}
-	private double getFreq() {
-		return this.freq;
-	}
-	
-	public int getVidaPos(int pos) {
-		return this.list[pos].getVida();
-	}
-	public int getXPos(int pos) {
-		return this.list[pos].getX();
-	}
-	public int getYPos(int pos) {
-		return this.list[pos].getY();
-	}
-	public int getPuntPos(int pos) {
-		return this.list[pos].getPuntos();
-	}
-	
-	public void setXPos(int pos, int x) {
-		this.list[pos].setX(x);
-	}
-	public void setYPos(int pos, int y) {
-		this.list[pos].setY(y);
-	}
 	
 	public int getDestroyerRemaining() {
 		int remaining = 0;

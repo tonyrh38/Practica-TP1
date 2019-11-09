@@ -1,23 +1,28 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class Ovni {
-	//Atributos
+	// Atributos
 	private int _x;
 	private int _y;
 	private int _vida;
 	private int _puntos;
-	private boolean enable;
+	private boolean _enable;
 	
-	//Metodos
+	private Game _game;
+	
+	// Metodos
 
-	//Constructor
-		public Ovni() {
+	// Constructor
+		public Ovni(Game game) {
 			this.setVida(1);
 			this.setPuntos(25);
 			this.setEnable(false);
+			this._game = game;
 		}
 	
-	//Getters
+	// Getters
 		public int getX() {
 			return _x;
 		}
@@ -31,10 +36,10 @@ public class Ovni {
 			return _puntos;
 		}
 		public boolean getEnable() {
-			return enable;
+			return _enable;
 		}
 	
-	//Setters
+	// Setters
 		public void setX(int x) {
 			this._x = x;
 		}
@@ -48,11 +53,15 @@ public class Ovni {
 			this._puntos = puntos;
 		}
 		public void setEnable(boolean set) {
-			this.enable = set;
+			this._enable = set;
 			if(set) {
 				this.setVida(1);
 				this.setX(8);
 				this.setY(0);
 			}
+		}
+	// Logica
+		public void update() {
+			
 		}
 }

@@ -1,55 +1,39 @@
 package tp.p1.shipList;
 
+import tp.p1.game.Game;
 import tp.p1.game.Level;
 import tp.p1.ship.RegularShip;
 
 public class RegularShipList {
 	
-	private RegularShip list[];
-	private int tam;
+	// Atributos	
+		private RegularShip _list[];
+		private int _tam;
 	
-	public RegularShipList(Level level) {
-		this.tam = level.getRegularShip();
-		this.list = new RegularShip[this.tam];
-		this.initArray(level);
-	}
-	
-	private void initArray(Level level) {
+	// Metodos
+		
+	// Constructor
+		public RegularShipList(Level level, Game game) {
+			this._tam = level.getRegularShip();
+			this._list = new RegularShip[this._tam];
+			this._initArray(level, game);
+		}
+		
+	// Logica
+	private void _initArray(Level level, Game game) {
 		
 		for(int i = 0; i < 4; i++) {
-			list[i] = new RegularShip(3 + i,1);
+			this._list[i] = new RegularShip(3 + i,1, game);
 		}
 		if(level.name() != "EASY") {
 			for(int i = 0; i < 4; i++) {
-				list[4 + i] = new RegularShip(3 + i,2);
+				this._list[4 + i] = new RegularShip(3 + i,2, game);
 			}
 		}	
 	}
-	
-	public int getTam() {
-		return this.tam;
+	public void update() {
+		//Completar
 	}
-
-	public int getVidaPos(int pos) {
-		return this.list[pos].getVida();
-	}
-	public int getXPos(int pos) {
-		return this.list[pos].getX();
-	}
-	public int getYPos(int pos) {
-		return this.list[pos].getY();
-	}
-	public int getPuntPos(int pos) {
-		return this.list[pos].getPuntos();
-	}
-	
-	public void setXPos(int pos, int x) {
-		this.list[pos].setX(x);
-	}
-	public void setYPos(int pos, int y) {
-		this.list[pos].setY(y);
-	}
-	
 	public int getRegularRemaining() {
 		int remaining = 0;
 		for(int i = 0; i < this.getTam();i++) {

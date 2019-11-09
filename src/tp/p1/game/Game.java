@@ -235,4 +235,28 @@ public class Game {
 		if(this.getRegularShipList().getRegularRemaining() == 0 && this.getDestroyerShipList().getDestroyerRemaining() == 0) return true;
 		else return false;
 	}
+	public String characterAtToString(int i, int j) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void computerAction() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void printGameOver() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void printWin() {
+		// TODO Auto-generated method stub
+		
+	}
 }

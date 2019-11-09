@@ -1,55 +1,33 @@
 package tp.p1.shipList;
 
 import tp.p1.game.Level;
-import tp.p1.ship.*;
+import tp.p1.ship.Bomb;
+
 
 public class BombList {
 	
-	private Bomb list[];
-	private int tam;
-	private int posPlayer;
-
-	public BombList(Level level) {
-		this.posPlayer = level.getDestroyerShip();
-		this.tam = level.getDestroyerShip() + 1;
-		list = new Bomb[this.tam];
+	// Atributos
+		private Bomb _list[];
+		private int _tam;
+		
+	// Metodos
+		
+	//Constructor
+		public BombList(Level level) {
+			this._tam = level.getDestroyerShip() + 1;
+			this._list = new Bomb[this._tam];
+		}
+		
+	// Logica
+	private boolean _isPosNull(int pos) {
+		return this._list[pos] == null;
 	}
-
-	public int getTam() {
-		return this.tam;
+	public void update() {
+		// Completar
 	}
-	public int getPosPlayer() {
-		return this.posPlayer;
-	}
-
-	public int getXPos(int pos) {
-		return this.list[pos].getX();
-	}
-	public int getYPos(int pos) {
-		return this.list[pos].getY();
-	}
-	
-	public int getXBombPlayer() {
-		return this.list[this.getPosPlayer()].getX();
-	}
-	public int getYBombPlayer() {
-		return this.list[this.getPosPlayer()].getY();
-	}
-	
-	public void setYPos(int pos, int y) {
-		this.list[pos].setY(y);
-	}
-	
-	public boolean isPosNull(int pos) {
-		return this.list[pos] == null;
-	}
-	
-	public boolean isPlayerBombNull() {
-		return this.list[this.getPosPlayer()] == null;
-	}
-	
-	public void insertIn(int pos, Bomb bomb) {
-		this.list[pos] = bomb;
+	public void insert(Bomb bomb) {
+		// Completar
+		this._list[0] = bomb;
 	}
 	public void destroyBomb(int pos) {
 		this.list[pos] = null;

@@ -1,26 +1,31 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class UCMShip {
 	
-	//Atributos
+	// Atributos
 		private int _x;
 		private int _y;
 		private int _vida;
 		private int _damage;
 		private boolean _shockwave;
+		
+		private Game _game;
 	
-	//Metodos
+	// Metodos
 	
-	//Constructor
-		public UCMShip() {
+	// Constructor
+		public UCMShip(Game game) {
 			this.setX(4);
 			this.setY(7);
 			this.setVida(3);
 			this.setDaño(1);
 			this.setShockwave(false);
+			this._game = game;
 		}
 	
-	//Getters 
+	// Getters 
 		public int getX() {
 			return this._x;
 		}
@@ -37,7 +42,7 @@ public class UCMShip {
 			return _shockwave;
 		}
 	
-	//Setters
+	// Setters
 		public void setX(int x) {
 			this._x = x;
 		}
@@ -56,5 +61,10 @@ public class UCMShip {
 		
 		public void damage() {
 			if(this.getVida() > 0) this.setVida(this.getVida() - 1);
+		}
+		
+	// Logica
+		public void update() {
+			
 		}
 }

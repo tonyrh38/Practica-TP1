@@ -1,24 +1,30 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class RegularShip {
 	
-	//Atributos
+	// Atributos
 		private int _x;
 		private int _y;
 		private int _vida;
 		private int _puntos;
+		private Laser _laser;
 		
-	//Metodos
+		private Game _game;
+		
+	// Metodos
 	
-	//Constructor
-		public RegularShip(int x, int y) {
+	// Constructor
+		public RegularShip(int x, int y, Game game) {
 			this.setX(x);
 			this.setY(y);
 			this.setVida(2);
 			this.setPuntos(5);
+			this._game = game;
 		}
 		
-	//Getters
+	// Getters
 		public int getX() {
 			return _x;
 		}
@@ -32,7 +38,7 @@ public class RegularShip {
 			return _puntos;
 		}
 		
-	//Setters
+	// Setters
 		public void setX(int x) {
 			this._x = x;
 		}
@@ -46,9 +52,13 @@ public class RegularShip {
 			this._puntos = puntos;
 		}
 		
+	// Logica
 		public void damage() {
 			if(this.getVida() > 0) {
 				this.setVida(this.getVida() - 1);
 			}
+		}
+		public void update() {
+			
 		}
 }
