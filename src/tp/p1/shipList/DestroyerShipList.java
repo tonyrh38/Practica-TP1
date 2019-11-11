@@ -62,17 +62,23 @@ public class DestroyerShipList {
 			}
 			return this._list[position].toString();
 		}
+		public int getDestroyerRemaining() {
+			int remaining = 0;
+			for(int i = 0; i < this._tam;i++) {
+				if(this._list[i] != null) remaining++;
+			}
+			return remaining;
+		}
+		public void dropBombs(Random rand) {
+			for(int i = 0; i < this._tam; i++ ) {
+				if(rand.nextInt(10) <= this._freq * 10) {
+					this._list[i].dropBomb();
+				}
+			}
+		}
 		public void update() {
 			// Completar
 		}
-	
-	public int getDestroyerRemaining() {
-		int remaining = 0;
-		for(int i = 0; i < this.getTam();i++) {
-			if(this.getVidaPos(i) > 0) remaining++;
-		}
-		return remaining;
-	}
 	public boolean DestroyershipWins() {
 		boolean win = false;
 			for(int i = 0; i < this.getTam(); i++) {
@@ -91,16 +97,7 @@ public class DestroyerShipList {
 		}
 	}
 	
-	public void dropBomb(Random rand, BombList bombList) {
-		for(int i = 0; i < this.getTam(); i++ ) {
-			if(bombList.isPosNull(i)) {
-				if(rand.nextInt(10) <= this.getFreq() * 10) {
-					Bomb bomb = new Bomb(this.getXPos(i),this.getYPos(i));
-					bombList.insertIn(i, bomb);
-				}
-			}
-		}
-	}
+	
 	
 	public int calculatePuntuation() {
 		int points = 0;

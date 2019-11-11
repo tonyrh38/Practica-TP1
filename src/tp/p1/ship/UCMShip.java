@@ -77,13 +77,10 @@ public class UCMShip {
 		public String laserToString() {
 			return this._laser.toString();
 		}
+		public void updateLaser() {
+			this._laser.update();
+		}
 		public void update() {
 			
-		}
-
-		
-
-		
-
-		
+		}	
 }

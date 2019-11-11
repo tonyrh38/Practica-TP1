@@ -51,16 +51,17 @@ public class RegularShipList {
 		}
 		return this._list[position].toString();
 	}
-	public void update() {
-		//Completar
-	}
 	public int getRegularRemaining() {
 		int remaining = 0;
-		for(int i = 0; i < this.getTam();i++) {
-			if(this.getVidaPos(i) > 0) remaining++;
+		for(int i = 0; i < this._tam;i++) {
+			if(this._list[i] != null) remaining++;
 		}
 		return remaining;
 	}
+	public void update() {
+		//Completar
+	}
+	
 	public boolean RegularshipWins() {
 		boolean win = false;
 			for(int i = 0; i < this.getTam(); i++) {

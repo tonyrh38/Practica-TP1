@@ -36,6 +36,9 @@ public class Bomb {
 	}
 	
 	// Logica
+	public String toString() {
+		return ".";
+	}
 	public void update() {
 		
 	}

@@ -28,24 +28,24 @@ public class Controller {
 					command = move(words[1],words[2]);
 				}
 				else if (words[0].equals("shoot") ||words[0].equals("s")) {
-					shoot();
+					this._shoot();
 				}
 				else if (words[0].equals("shockwave") ||words[0].equals("w")) {
-					shockwave();
+					this._shockwave();
 				}
 				else if (words[0].equals("none") ||words[0].equals("n")) {
 				}
 				else if (words[0].equals("list") ||words[0].equals("l")) {
-					list();
+					this._list();
 				}
 				else if (words[0].equals("reset") ||words[0].equals("r")) {
-					reset();
+					this._reset();
 				}
 				else if (words[0].equals("help") ||words[0].equals("h")) {
-					help();
+					this._help();
 				}
 				else if (words[0].equals("exit") ||words[0].equals("e")) {
-					exit();
+					this._exit();
 				}
 				else {
 					System.out.print("Comando erróneo o no reconocido.");

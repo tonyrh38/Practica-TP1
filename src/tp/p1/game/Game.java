@@ -50,6 +50,14 @@ public class Game {
 			this._destroyerShipList = new DestroyerShipList(this._level, this);
 			this._bombList = new BombList(this._level);
 		}
+		private int _getRemaining() {
+			return this._destroyerShipList.getDestroyerRemaining() + this._regularShipList.getRegularRemaining();
+		}
+		private void _createOvni() {
+			if(this._ovni == null && this._rand.nextInt(10) <= this._level.getOvni() * 10) {
+				this._ovni = new Ovni(this);
+			}
+		}
 		
 		public String characterAtToString(int i, int j) {
 			if(this._ucmShip.isPlayerIn(i,j)) {return this._ucmShip.toString();}
@@ -57,20 +65,29 @@ public class Game {
 			else if(this._destroyerShipList.isShipIn(i,j)) {return this._destroyerShipList.shipInToString(i,j);}
 			else if(this._ovni != null && this._ovni.isOvniIn(i,j)) {return this._ovni.toString();}
 			else if(this._ucmShip.isLaserIn(i,j)) {return this._ucmShip.laserToString();}
-			else if(this._)
+			else if(this._bombList.isBombIn(i,j)) {return this._bombList.bombInToString(i,j);}
 			else return "";
 		}
 
 		public void draw() {
-			// TODO Auto-generated method stub
+			GamePrinter gp = new GamePrinter(this, Y_SIZE, X_SIZE);
 			
+			System.out.print("Life: " + this._ucmShip.getVida());
+			System.out.print("Number of cycles: " + this._cycleCounter);
+			System.out.print("Points:" + this._puntuation);
+			System.out.print("Remaining aliens: " + this._getRemaining());
+			System.out.print("ShockWave: " + this._ucmShip.getShockwave());
+			System.out.print(gp.toString());
+		}
+		public void insertBomb(Bomb bomb) {
+			this._bombList.insert(bomb);
 		}
 		public void computerAction() {
-			// TODO Auto-generated method stub
-			
+			this._destroyerShipList.dropBombs(this._rand);
+			this._createOvni();
 		}
 		public void update() {
-			// TODO Auto-generated method stub
+			this._ucmShip.updateLaser();
 			
 		}
 		public void printWin() {
@@ -81,21 +98,6 @@ public class Game {
 			// TODO Auto-generated method stub
 			
 		}
-	public void setShockwaveUCMShip(boolean sw) {
-		this._ucmShip.setShockwave(sw);
-	}
-	public boolean getEnableOvni() {
-		 return this._ovni.getEnable();
-	}
-	public void setEnableOvni(boolean set) {
-		this._ovni.setEnable(set);
-	}
-	public void setXOvni(int x) {
-		this.ovni.setX(x);
-	}
-	public void setDown(boolean down) {
-		this.down = down;
-	}
 	public void damageOvni() {
 		this.setEnableOvni(false);
 		this.setOvnisDestroyed(this.getOvnisDestroyed() + 1);
@@ -111,15 +113,6 @@ public class Game {
 		this.movement = movement;
 	}
 	
-	public int getRemaining() {
-		return this.getDestroyerShipList().getDestroyerRemaining() + this.getRegularShipList().getRegularRemaining();
-	}
-	
-	public void createOvni() {
-		if(!getEnableOvni() && this.getRand().nextInt(10) <= this.getFreqOvni() * 10) {
-			this.setEnableOvni(true);
-		}
-	}
 	public boolean impactBombOvni(int x, int y) {
 		if(getEnableOvni() && this.getXOvni() == x && this.getYOvni() == y) {
 			this.damageOvni();

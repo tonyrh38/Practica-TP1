@@ -14,21 +14,45 @@ public class BombList {
 		
 	//Constructor
 		public BombList(Level level) {
-			this._tam = level.getDestroyerShip() + 1;
+			this._tam = level.getDestroyerShip();
 			this._list = new Bomb[this._tam];
 		}
 		
-	// Logica
-	private boolean _isPosNull(int pos) {
-		return this._list[pos] == null;
+	// Logica	
+	public boolean isBombIn(int i, int j) {
+		int idx = 0;
+		boolean found = false;
+		while(idx < this._tam && !found) {
+			found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
+		}
+		return found;
+	}
+	public String bombInToString(int i, int j) {
+		int idx = 0, position = 0;
+		boolean found = false;
+		while(idx < this._tam && !found) {
+			if(this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i) {
+				position = idx;
+				found = true;
+			}
+		}
+		return this._list[position].toString();
+	}	
+	public void insert(Bomb bomb) {
+		int i = 0;
+		boolean inserted = false;
+		while(i < this._tam && !inserted) {
+			if(this._list[i] == null) {
+				this._list[i] = bomb;
+				inserted = true;
+			}
+			i++;
+		}
 	}
 	public void update() {
 		// Completar
 	}
-	public void insert(Bomb bomb) {
-		// Completar
-		this._list[0] = bomb;
-	}
+	
 	public void destroyBomb(int pos) {
 		this.list[pos] = null;
 	}
@@ -69,5 +93,7 @@ public class BombList {
 		return impacted;
 	}
 
+	
+	
 	
 }

@@ -8,7 +8,6 @@ public class Ovni {
 	private int _y;
 	private int _vida;
 	private int _puntos;
-	private boolean _enable;
 	
 	private Game _game;
 	
@@ -18,7 +17,6 @@ public class Ovni {
 		public Ovni(Game game) {
 			this.setVida(1);
 			this.setPuntos(25);
-			this.setEnable(false);
 			this._game = game;
 		}
 	
@@ -35,9 +33,6 @@ public class Ovni {
 		public int getPuntos() {
 			return _puntos;
 		}
-		public boolean getEnable() {
-			return _enable;
-		}
 	
 	// Setters
 		public void setX(int x) {
@@ -52,14 +47,7 @@ public class Ovni {
 		public void setPuntos(int puntos) {
 			this._puntos = puntos;
 		}
-		public void setEnable(boolean set) {
-			this._enable = set;
-			if(set) {
-				this.setVida(1);
-				this.setX(8);
-				this.setY(0);
-			}
-		}
+		
 	// Logica
 		public boolean isOvniIn(int i, int j) {
 			return this._x == j && this._y == i;

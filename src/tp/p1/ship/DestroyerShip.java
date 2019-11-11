@@ -55,6 +55,12 @@ public class DestroyerShip {
 		public String toString() {
 			return "D["+ this._vida +"]";
 		}
+		public void dropBomb() {
+			if(this._bomb != null) {
+				Bomb bomb = new Bomb(this._x,this._y);
+				this._game.insertBomb(bomb);
+			}
+		}
 		public void damage() {
 			if(this.getVida() > 0) {
 				this.setVida(this.getVida() - 1);
