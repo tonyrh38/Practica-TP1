@@ -78,7 +78,7 @@ public class UCMShip {
 			return this._laser.toString();
 		}
 		public void updateLaser() {
-			this._laser.update();
+			if(this._laser != null)	this._laser.update();
 		}
 		public void update() {
 			

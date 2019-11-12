@@ -43,6 +43,6 @@ public class Laser {
 		return "oo";
 	}
 	public void update() {
-		
+		if()
 	}	
 }
