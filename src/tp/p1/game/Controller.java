@@ -25,7 +25,7 @@ public class Controller {
 				System.out.print(Controller.PROMPT);
 				String[]  words = this._in.nextLine().toLowerCase().trim().split("\\s+");
 				if(words[0].equals("move") ||words[0].equals("m") && words.length == 3) {
-					command = move(words[1],words[2]);
+					command = this._move(words[1],words[2]);
 				}
 				else if (words[0].equals("shoot") ||words[0].equals("s")) {
 					this._shoot();

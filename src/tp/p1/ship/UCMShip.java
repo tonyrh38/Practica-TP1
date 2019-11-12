@@ -60,10 +60,6 @@ public class UCMShip {
 			this._shockwave = shockwave;
 		}
 		
-		public void damage() {
-			if(this.getVida() > 0) this.setVida(this.getVida() - 1);
-		}
-		
 	// Logica
 		public boolean isPlayerIn(int i, int j) {
 			return this._x == j && this._y == i;
@@ -78,9 +74,17 @@ public class UCMShip {
 			return this._laser.toString();
 		}
 		public void updateLaser() {
-			if(this._laser != null)	this._laser.update();
+			if(this._laser != null)	{
+				if(!this._laser.update()) {
+					// En caso de que el laser ya no se deba mostrar por pantalla, se elimina
+					this._laser = null;
+				}
+			}
 		}
 		public void update() {
 			
 		}	
+		public void damage() {
+			if(this.getVida() > 0) this.setVida(this.getVida() - 1);
+		}
 }

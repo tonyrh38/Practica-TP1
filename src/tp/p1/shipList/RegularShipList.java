@@ -58,6 +58,17 @@ public class RegularShipList {
 		}
 		return remaining;
 	}
+	public boolean impactLaser(int x, int y) {
+		boolean impacted = false;
+		for(int i = 0; i < this._tam && !impacted; i++) {
+			if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
+				this._list[i].damage();
+				if(this._list[i].isDestroyed()) this._list[i] = null;
+				impacted = true;
+			}
+		}
+		return impacted;
+	}
 	public void update() {
 		//Completar
 	}
@@ -68,12 +79,7 @@ public class RegularShipList {
 				if(this.getVidaPos(i) > 0 && this.getYPos(i) == 7) win = true;
 			}
 		return win;
-	}
-	
-	public void damagePos(int i) {
-		this.list[i].damage();
-	}
-	
+	}	
 	public void damageAll() {
 		for(int i = 0; i < this.getTam(); i++) {
 			this.damagePos(i);
@@ -90,16 +96,7 @@ public class RegularShipList {
 		return points;
 	}
 
-	public boolean impactBomb(int xBombPlayer, int yBombPlayer) {
-		boolean impacted = false;
-		for(int i = 0; i < this.getTam() && !impacted; i++) {
-			if(this.getVidaPos(i) > 0 && this.getXPos(i) == xBombPlayer && this.getYPos(i) == yBombPlayer) {
-				this.damagePos(i);
-				impacted = true;
-			}
-		}
-		return impacted;
-	}
+	
 	
 	public boolean isWall() {
 		boolean wall = false;

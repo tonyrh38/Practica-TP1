@@ -7,8 +7,8 @@ import tp.p1.shipList.*;
 public class Game {
 	
 	// Atributos
-		private static int X_SIZE = 9;
-		private static int Y_SIZE = 8;
+		static final int X_SIZE = 9;
+		static final int Y_SIZE = 8;
 	
 		private int _cycleCounter;
 		private int _puntuation;
@@ -36,6 +36,15 @@ public class Game {
 			this._seed = seed;
 			this._reset();
 		}
+		
+	// Getters
+		public int getX_SIZE() {
+			return X_SIZE;
+		}
+		public int getY_SIZE() {
+			return Y_SIZE;
+		}
+		
 	// Logica
 		private void _reset() {
 			this._cycleCounter = 0;
@@ -58,7 +67,7 @@ public class Game {
 				this._ovni = new Ovni(this);
 			}
 		}
-		
+	
 		public String characterAtToString(int i, int j) {
 			if(this._ucmShip.isPlayerIn(i,j)) {return this._ucmShip.toString();}
 			else if(this._regularShipList.isShipIn(i,j)) {return this._regularShipList.shipInToString(i, j);}
@@ -68,7 +77,6 @@ public class Game {
 			else if(this._bombList.isBombIn(i,j)) {return this._bombList.bombInToString(i,j);}
 			else return "";
 		}
-
 		public void draw() {
 			GamePrinter gp = new GamePrinter(this, Y_SIZE, X_SIZE);
 			
@@ -85,6 +93,10 @@ public class Game {
 		public void computerAction() {
 			this._destroyerShipList.dropBombs(this._rand);
 			this._createOvni();
+		}
+		public boolean impactLaser(int x, int y) {
+			return this._regularShipList.impactLaser(x,y) || this._destroyerShipList.impactLaser(x,y) ||
+					this._bombList.impactLaser(x,y) || this._ovni.impactLaser(x,y);
 		}
 		public void update() {
 			this._ucmShip.updateLaser();

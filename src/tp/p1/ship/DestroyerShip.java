@@ -62,9 +62,10 @@ public class DestroyerShip {
 			}
 		}
 		public void damage() {
-			if(this.getVida() > 0) {
-				this.setVida(this.getVida() - 1);
-			}
+			this.setVida(this.getVida() - 1);
+		}
+		public boolean isDestroyed() {
+			return this._vida <= 0;
 		}
 		public void update() {
 			

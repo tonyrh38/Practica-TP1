@@ -76,6 +76,17 @@ public class DestroyerShipList {
 				}
 			}
 		}
+		public boolean impactLaser(int x, int y) {
+			boolean impacted = false;
+			for(int i = 0; i < this._tam && !impacted; i++) {
+				if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
+					this._list[i].damage();
+					if(this._list[i].isDestroyed()) this._list[i] = null;
+					impacted = true;
+				}
+			}
+			return impacted;
+		}
 		public void update() {
 			// Completar
 		}
@@ -109,17 +120,6 @@ public class DestroyerShipList {
 		return points;
 	}
 
-	public boolean impactBomb(int xBombPlayer, int yBombPlayer) {
-		boolean impacted = false;
-		for(int i = 0; i < this.getTam() && !impacted; i++) {
-			if(this.getVidaPos(i) > 0 && this.getXPos(i) == xBombPlayer && this.getYPos(i) == yBombPlayer) {
-				this.damagePos(i);
-				impacted = true;
-			}
-		}
-		return impacted;
-	}
-	
 	public boolean isWall() {
 		boolean wall = false;
 		for(int i = 0; i < this.getTam() && !wall; i++) {

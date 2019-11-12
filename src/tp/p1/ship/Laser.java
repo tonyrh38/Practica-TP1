@@ -1,19 +1,24 @@
 package tp.p1.ship;
 
+import tp.p1.game.Game;
+
 public class Laser {
 	
 	// Atributos
 		private int _x;
 		private int _y;
 		private int _damage;
+		
+		private Game _game;
 	
 	// Metodos
 	
 	// Constructor	
-		public Laser(int x, int y) {
-			this.setX(x);
-			this.setY(y);
+		public Laser(int x, int y, Game game) {
+			this._x = x;
+			this._y = y;
 			this._damage = 1;
+			this._game = game;
 		}
 	
 	// Getters
@@ -42,7 +47,15 @@ public class Laser {
 	public String toString() {
 		return "oo";
 	}
-	public void update() {
-		if()
+	public boolean update() {
+		this._y--;
+		if(this._y > 0) {
+			// Si el laser sigue vivo, se devuelve true
+			return !this._game.impactLaser(this._x, this._y);
+		}
+		else {
+			// Si el laser se sale de rango, se devuelve false
+			return false;
+		}
 	}	
 }
