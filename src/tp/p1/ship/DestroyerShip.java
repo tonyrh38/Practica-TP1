@@ -65,7 +65,17 @@ public class DestroyerShip {
 			this.setVida(this.getVida() - 1);
 		}
 		public boolean isDestroyed() {
-			return this._vida <= 0;
+			if(this._vida <= 0) {
+				this._game.updatePuntuation(this._puntos);
+				return true;
+			}
+			else return false;
+		}
+		public boolean isBombIn(int x, int y) {
+			return this._bomb.getX() == x && this._bomb.getY() == y;
+		}
+		public void destroyBomb() {
+			this._bomb = null;
 		}
 		public void update() {
 			

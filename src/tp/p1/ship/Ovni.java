@@ -55,9 +55,18 @@ public class Ovni {
 		public String toString() {
 			return "O["+ this._vida +"]";
 		}
+		public boolean impactLaser(int x, int y) {
+			if(this._x == x && this._y == y) {
+				this._game.updatePuntuation(this._puntos);
+				return true;
+			}
+			else return false;
+		}
 		public void update() {
 			
 		}
+
+		
 
 		
 }

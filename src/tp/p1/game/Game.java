@@ -94,12 +94,29 @@ public class Game {
 			this._destroyerShipList.dropBombs(this._rand);
 			this._createOvni();
 		}
+		public void updatePuntuation(int points) {
+			this._puntuation+= points;
+		}
 		public boolean impactLaser(int x, int y) {
-			return this._regularShipList.impactLaser(x,y) || this._destroyerShipList.impactLaser(x,y) ||
-					this._bombList.impactLaser(x,y) || this._ovni.impactLaser(x,y);
+			if(this._regularShipList.impactLaser(x,y)) return true;
+			else if(this._destroyerShipList.impactLaser(x,y)) return true;
+			else if(this._bombList.impactLaser(x,y)) {
+				this._destroyerShipList.destroyBombIn(x,y);
+				return true;
+			}
+			else if(this._ovni.impactLaser(x,y)) {
+				this._ovni = null;
+				return true;
+			}
+			else return false;
+		}
+		public boolean impactBomb(int _x, int _y) {
+			// TODO Auto-generated method stub
+			return false;
 		}
 		public void update() {
 			this._ucmShip.updateLaser();
+			this._bombList.update();
 			
 		}
 		public void printWin() {
@@ -110,27 +127,11 @@ public class Game {
 			// TODO Auto-generated method stub
 			
 		}
-	public void damageOvni() {
-		this.setEnableOvni(false);
-		this.setOvnisDestroyed(this.getOvnisDestroyed() + 1);
-		this.setShockwaveUCMShip(true);
-	}
-	public void damagePlayer() {
-		this.ucmShip.damage();
-	}
 	public void setPlayerDefeated() {
 		setVidaUCMShip(0);
 	}
 	public void setMovement(boolean movement) {
 		this.movement = movement;
-	}
-	
-	public boolean impactBombOvni(int x, int y) {
-		if(getEnableOvni() && this.getXOvni() == x && this.getYOvni() == y) {
-			this.damageOvni();
-			return true;
-		}
-		else return false;
 	}
 	public void moveBombs() {		
 		//Avanzar proyectil del jugador

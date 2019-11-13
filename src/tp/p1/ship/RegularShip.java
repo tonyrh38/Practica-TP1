@@ -59,7 +59,11 @@ public class RegularShip {
 			this.setVida(this.getVida() - 1);
 		}
 		public boolean isDestroyed() {
-			return this._vida <= 0;
+			if(this._vida <= 0) {
+				this._game.updatePuntuation(this._puntos);
+				return true;
+			}
+			else return false;
 		}
 		public void update() {
 			

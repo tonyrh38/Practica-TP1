@@ -49,30 +49,31 @@ public class BombList {
 			i++;
 		}
 	}
-	public void update() {
-		// Completar
+	public boolean impactLaser(int x, int y) {
+		boolean impacted = false;
+		for(int i = 0; i < this._tam && !impacted; i++) {
+			if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
+				this._list[i] = null;
+				impacted = true;
+			}
+		}
+		return impacted;
 	}
-	
-	public void destroyBomb(int pos) {
-		this.list[pos] = null;
+	public void update() {
+		for(int i = 0; i < this._tam; i++) {
+			if(this._list[i] != null)	{
+				if(!this._list[i].update()) {
+					// En caso de que la bomba ya no se deba mostrar por pantalla, se elimina
+					this._list[i] = null;
+				}
+			}
+		}
 	}
 
 	public void movePlayerBomb() {
 		int posPlayer = this.getPosPlayer();
 		if(this.getYBombPlayer() > 0) this.setYPos(posPlayer, this.getYBombPlayer() - 1);
 		else this.destroyBomb(posPlayer);
-	}
-	
-	public boolean impactBomb() {
-		boolean impacted = false;
-		for(int i = 0; i < this.getTam() - 1 && !impacted; i++) {
-			if(!this.isPosNull(i) && this.getXPos(i) == this.getXBombPlayer() && this.getYPos(i) == this.getYBombPlayer()) {
-				this.destroyBomb(i);
-				impacted = true;
-			}
-		}
-		
-		return impacted;
 	}
 	
 	public void moveShipBombs() {
@@ -92,6 +93,8 @@ public class BombList {
 		}
 		return impacted;
 	}
+
+	
 
 	
 	

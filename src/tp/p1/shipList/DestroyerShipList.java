@@ -81,11 +81,20 @@ public class DestroyerShipList {
 			for(int i = 0; i < this._tam && !impacted; i++) {
 				if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
 					this._list[i].damage();
-					if(this._list[i].isDestroyed()) this._list[i] = null;
+					if(this._list[i].isDestroyed())	this._list[i] = null;
 					impacted = true;
 				}
 			}
 			return impacted;
+		}
+		public void destroyBombIn(int x, int y) {
+			boolean destroyed = false;
+			for(int i = 0; i < this._tam && !destroyed; i++) {
+				if(this._list[i] != null && this._list[i].isBombIn(x,y)) {
+					this._list[i].destroyBomb();
+					destroyed = true;
+				}
+			}
 		}
 		public void update() {
 			// Completar
@@ -139,7 +148,5 @@ public class DestroyerShipList {
 		for(int i = 0; i < this.getTam(); i++) {
 			this.setYPos(i, this.getYPos(i) + 1);
 		}
-	}
-
-	
+	}	
 }
