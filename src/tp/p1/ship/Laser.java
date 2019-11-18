@@ -47,6 +47,9 @@ public class Laser {
 	public String toString() {
 		return "oo";
 	}
+	public boolean impactBomb(int x, int y) {
+		return this._x == x && this._y == y;
+	}
 	public boolean update() {
 		this._y--;
 		if(this._y > 0) {

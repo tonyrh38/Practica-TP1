@@ -110,9 +110,8 @@ public class Game {
 			}
 			else return false;
 		}
-		public boolean impactBomb(int _x, int _y) {
-			// TODO Auto-generated method stub
-			return false;
+		public boolean impactBomb(int x, int y) {
+			return this._ucmShip.impactBomb(x,y);
 		}
 		public void update() {
 			this._ucmShip.updateLaser();

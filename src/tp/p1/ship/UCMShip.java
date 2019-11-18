@@ -65,7 +65,8 @@ public class UCMShip {
 			return this._x == j && this._y == i;
 		}
 		public String toString() {
-			return "^__^";
+			if(this._vida > 0) return "^__^";
+			else return "!xx!";
 		}
 		public boolean isLaserIn(int i, int j) {
 			return this._laser.isLaserIn(i,j);
@@ -80,6 +81,17 @@ public class UCMShip {
 					this._laser = null;
 				}
 			}
+		}
+		public boolean impactBomb(int x, int y) {
+			if(this._laser != null && this._laser.impactBomb(x,y)) {
+				this._laser = null;
+				return true;
+			}
+			else if(this._x == x && this._y == y) {
+				this._vida--;
+				return true;
+			}
+			else return false;
 		}
 		public void update() {
 			
