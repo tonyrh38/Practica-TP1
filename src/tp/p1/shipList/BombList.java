@@ -68,35 +68,5 @@ public class BombList {
 				}
 			}
 		}
-	}
-
-	public void movePlayerBomb() {
-		int posPlayer = this.getPosPlayer();
-		if(this.getYBombPlayer() > 0) this.setYPos(posPlayer, this.getYBombPlayer() - 1);
-		else this.destroyBomb(posPlayer);
-	}
-	
-	public void moveShipBombs() {
-		for(int i = 0; i < this.getTam() - 1; i++) {
-			if(!this.isPosNull(i) && this.getYPos(i) < 7) this.setYPos(i, this.getYPos(i) + 1);
-			else this.destroyBomb(i);
-		}	
-	}
-
-	public boolean impactBombPlayer(int x, int y) {
-		boolean impacted = false;
-		for(int i = 0; i < this.getTam() - 1; i++) {
-			if(!this.isPosNull(i) && this.getXPos(i) == x && this.getYPos(i) == y) {
-				this.destroyBomb(i);
-				impacted = true;
-			}
-		}
-		return impacted;
-	}
-
-	
-
-	
-	
-	
+	}	
 }

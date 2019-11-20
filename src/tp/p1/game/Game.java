@@ -116,6 +116,8 @@ public class Game {
 		public void update() {
 			this._ucmShip.updateLaser();
 			this._bombList.update();
+			this._regularShipList.update(this._movement, this._down);
+			this._destroyerShipList.update(this._movement, this._down);
 			
 		}
 		public void printWin() {
@@ -128,31 +130,7 @@ public class Game {
 		}
 	public void setPlayerDefeated() {
 		setVidaUCMShip(0);
-	}
-	public void setMovement(boolean movement) {
-		this.movement = movement;
-	}
-	public void moveBombs() {		
-		//Avanzar proyectil del jugador
-		if (!this.getBombList().isPlayerBombNull()) {
-			this.getBombList().movePlayerBomb();
-			int x = this.getBombList().getXBombPlayer();
-			int y = this.getBombList().getYBombPlayer();
-			if(this.getDestroyerShipList().impactBomb(x, y) || this.getRegularShipList().impactBomb(x, y) ||
-			this.impactBombOvni(x, y) || this.getBombList().impactBomb()){
-				this.getBombList().destroyBomb(this.getBombList().getPosPlayer());
-			}
-		}
-		//Avanzar bombas enemigas
-		this.getBombList().moveShipBombs();
-		int x = this.getXUCMShip();
-		int y = this.getYUCMShip();
-		if(this.getBombList().impactBombPlayer(x,y)) {
-			this.damagePlayer();
-		}
-	}
-
-	
+	}	
 	public void moveShips() {
 		
 		boolean found = this.getRegularShipList().isWall() || this.getDestroyerShipList().isWall();
