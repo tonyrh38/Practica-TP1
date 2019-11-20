@@ -67,6 +67,17 @@ public class Game {
 				this._ovni = new Ovni(this);
 			}
 		}
+		private void _checkShipMovement() {
+			if((this._regularShipList.isOnWall() || this._destroyerShipList.isOnWall())) {
+				if(this._down) {
+					this._down = false;
+					this._movement = !this._movement;
+				}
+				else {
+					this._down = true;
+				}
+			}
+		}
 	
 		public String characterAtToString(int i, int j) {
 			if(this._ucmShip.isPlayerIn(i,j)) {return this._ucmShip.toString();}
@@ -116,59 +127,32 @@ public class Game {
 		public void update() {
 			this._ucmShip.updateLaser();
 			this._bombList.update();
-			this._regularShipList.update(this._movement, this._down);
-			this._destroyerShipList.update(this._movement, this._down);
-			
+			if(this._cycleCounter % this._level.getVel() == 0) {
+				this._checkShipMovement();
+				this._regularShipList.update(this._movement, this._down);
+				this._destroyerShipList.update(this._movement, this._down);
+			}
+			if (this._ovni != null) {
+				this._ovni.update();
+				if(this._ovni.isOvniIn(-1,0)) {
+					this._ovni = null;
+				}
+			}
+			this._cycleCounter++;
 		}
 		public void printWin() {
-			// TODO Auto-generated method stub
-			
+			System.out.println("Player wins.");
 		}
 		public void printGameOver() {
-			// TODO Auto-generated method stub
+			System.out.println("Aliens win.");
+		}
+		public void setPlayerDefeated() {
 			
 		}
-	public void setPlayerDefeated() {
-		setVidaUCMShip(0);
-	}	
-	public void moveShips() {
-		
-		boolean found = this.getRegularShipList().isWall() || this.getDestroyerShipList().isWall();
-		
-		if(this.getCycleCounter() % this.getLevel().getVel() == 0) {
-			if(found) {
-				if(this.getDown()) {
-					this.getRegularShipList().moveLateralShips(this.getMovement());
-					this.getDestroyerShipList().moveLateralShips(this.getMovement());
-					this.setDown(false);
-				}
-				else {
-					this.getRegularShipList().moveDownShips();
-					this.getDestroyerShipList().moveDownShips();
-					this.setDown(true);
-					this.setMovement(!this.getMovement());
-				}
-			}
-			else {
-				this.getRegularShipList().moveLateralShips(this.getMovement());
-				this.getDestroyerShipList().moveLateralShips(this.getMovement());
-			}
+		public boolean playerDefeated() {
+			return this._ucmShip.isDefeated() || this._regularShipList.win() || this._destroyerShipList.win();
 		}
-	}
-	public void moveOvni() {
-		if(this.getEnableOvni()) {
-			if(getXOvni() > 0) {
-				setXOvni(getXOvni() - 1);
-			}
-			else setEnableOvni(false);
+		public boolean enemyDefeated() {
+			return this._regularShipList.lose() && this._destroyerShipList.lose();
 		}
-	}
-	public boolean playerDefeated() {
-		if(this.getVidaUCMShip() <= 0 || this.getDestroyerShipList().DestroyershipWins() || this.getRegularShipList().RegularshipWins()) return true;
-		else return false;
-	}
-	public boolean enemyDefeated() {
-		if(this.getRegularShipList().getRegularRemaining() == 0 && this.getDestroyerShipList().getDestroyerRemaining() == 0) return true;
-		else return false;
-	}
 }

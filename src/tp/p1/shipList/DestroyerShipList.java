@@ -3,7 +3,6 @@ package tp.p1.shipList;
 import java.util.Random;
 import tp.p1.game.Game;
 import tp.p1.game.Level;
-import tp.p1.ship.Bomb;
 import tp.p1.ship.DestroyerShip;
 
 public class DestroyerShipList {
@@ -96,57 +95,30 @@ public class DestroyerShipList {
 				}
 			}
 		}
-		public void update() {
-			// Completar
-		}
-	public boolean DestroyershipWins() {
-		boolean win = false;
-			for(int i = 0; i < this.getTam(); i++) {
-				if(this.getVidaPos(i) > 0 && this.getYPos(i) == 7) win = true;
+		public boolean isOnWall() {
+			boolean inWall = false;
+			for(int i = 0; i < this._tam && !inWall; i++) {
+				if(this._list[i] != null) inWall = this._list[i].isOnWall();
 			}
-		return win;
-	}
-	
-	public void damagePos(int i) {
-		this.list[i].damage();
-	}
-	
-	public void damageAll() {
-		for(int i = 0; i < this.getTam(); i++) {
-			this.damagePos(i);
+			return inWall;
 		}
-	}
-	
-	
-	
-	public int calculatePuntuation() {
-		int points = 0;
-		for(int i = 0; i < this.getTam(); i++) {
-			if(this.getVidaPos(i) == 0) {
-				points += this.getPuntPos(i);
+		public void update(boolean movement, boolean down) {
+			for(int i = 0; i < this._tam; i++) {
+				if(this._list[i] != null) this._list[i].update(movement, down);
 			}
 		}
-		return points;
-	}
-
-	public boolean isWall() {
-		boolean wall = false;
-		for(int i = 0; i < this.getTam() && !wall; i++) {
-			if(this.getVidaPos(i) > 0 && (this.getXPos(i) == 0 || this.getXPos(i) == 8)) wall = true;
+		public boolean win() {
+			boolean win = false;
+				for(int i = 0; i < this._tam && !win; i++) {
+					if(this._list[i]!= null) win = this._list[i].win();
+				}
+			return win;
+		}	
+		public boolean lose() {
+			boolean lose = true;
+			for(int i = 0; i < this._tam && lose; i++) {
+				if(this._list[i] != null) lose = false;
+			}
+			return lose;
 		}
-		return wall;
-	}
-	
-	public void moveLateralShips(boolean direction) {
-		int dir = (direction)? 1 : -1;
-		for(int i = 0; i < this.getTam(); i++) {
-			this.setXPos(i, this.getXPos(i) + dir);
-		}
-	}
-	
-	public void moveDownShips() {
-		for(int i = 0; i < this.getTam(); i++) {
-			this.setYPos(i, this.getYPos(i) + 1);
-		}
-	}	
 }

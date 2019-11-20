@@ -15,8 +15,8 @@ public class Ovni {
 
 	// Constructor
 		public Ovni(Game game) {
-			this.setVida(1);
-			this.setPuntos(25);
+			this._vida = 1;
+			this._puntos =25;
 			this._game = game;
 		}
 	
@@ -32,20 +32,6 @@ public class Ovni {
 		}
 		public int getPuntos() {
 			return _puntos;
-		}
-	
-	// Setters
-		public void setX(int x) {
-			this._x = x;
-		}
-		public void setY(int y) {
-			this._y = y;
-		}
-		public void setVida(int vida) {
-			this._vida = vida;
-		}
-		public void setPuntos(int puntos) {
-			this._puntos = puntos;
 		}
 		
 	// Logica
@@ -63,7 +49,7 @@ public class Ovni {
 			else return false;
 		}
 		public void update() {
-			
+			this._x--;
 		}
 
 		

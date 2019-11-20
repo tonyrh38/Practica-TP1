@@ -96,7 +96,7 @@ public class UCMShip {
 		public void update() {
 			
 		}	
-		public void damage() {
-			if(this.getVida() > 0) this.setVida(this.getVida() - 1);
+		public boolean isDefeated() {
+			return this._vida <= 0;
 		}
 }

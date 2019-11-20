@@ -57,7 +57,7 @@ public class DestroyerShip {
 		}
 		public void dropBomb() {
 			if(this._bomb != null) {
-				Bomb bomb = new Bomb(this._x,this._y);
+				Bomb bomb = new Bomb(this._x,this._y,this._game);
 				this._game.insertBomb(bomb);
 			}
 		}
@@ -77,7 +77,15 @@ public class DestroyerShip {
 		public void destroyBomb() {
 			this._bomb = null;
 		}
-		public void update() {
-			
+		public boolean isOnWall() {
+			return this._x == 0 || this._x == this._game.getX_SIZE() - 1;
+		}
+		public void update(boolean movement, boolean down) {
+			if(down) this._y++;
+			else if(movement) this._x++;
+			else this._x--;
+		}
+		public boolean win() {
+			return this._y == this._game.getY_SIZE() - 1;
 		}
 }

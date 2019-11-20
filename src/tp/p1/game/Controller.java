@@ -25,7 +25,7 @@ public class Controller {
 				System.out.print(Controller.PROMPT);
 				String[]  words = this._in.nextLine().toLowerCase().trim().split("\\s+");
 				if(words[0].equals("move") ||words[0].equals("m") && words.length == 3) {
-					command = this._move(words[1],words[2]);
+					this._move(words[1],words[2]);
 				}
 				else if (words[0].equals("shoot") ||words[0].equals("s")) {
 					this._shoot();
@@ -54,10 +54,11 @@ public class Controller {
 			}while(!command);
 			
 		}
-		private boolean _move(String dir, String pos) {
+		private void _move(String dir, String pos) {
 			if((dir.equals("left") || dir.equals("right")) && (pos.equals("1") || pos.equals("2"))) {
 				int move = (dir.equals("left"))? -1 : 1;
 				int num = (pos.equals("1"))? 1 : 2;
+				this._game.move(dir,num);
 				int op = game.getXUCMShip() + move * num;
 				if(op >= 0 && op <= 8) {
 					game.setXUCMShip(op);
@@ -68,9 +69,7 @@ public class Controller {
 				else if(op + 1 == 0) {
 					game.setXUCMShip(op + 1);
 				}				
-				return true;
 			}
-			else return false;
 		}
 		private void _shoot() {
 			int pos = game.getBombList().getTam() - 1;
@@ -128,15 +127,3 @@ public class Controller {
 			}
 		}
 }
-		/*private void computerAction() {
-		game.getDestroyerShipList().dropBomb(game.getRand(), game.getBombList());
-		game.createOvni();		
-	}
-	private void update() {
-		game.moveBombs();
-		game.moveShips();
-		game.moveOvni();
-		game.calculatePuntuation();
-		game.setCycleCounter(game.getCycleCounter() + 1);
-		this.gamePrinter.printGame(game);
-	}*/	

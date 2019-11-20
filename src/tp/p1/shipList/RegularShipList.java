@@ -20,102 +20,79 @@ public class RegularShipList {
 		}
 		
 	// Logica
-	private void _initArray(Level level, Game game) {
-		
-		for(int i = 0; i < 4; i++) {
-			this._list[i] = new RegularShip(3 + i,1, game);
-		}
-		if(level.name() != "EASY") {
+		private void _initArray(Level level, Game game) {
+			
 			for(int i = 0; i < 4; i++) {
-				this._list[4 + i] = new RegularShip(3 + i,2, game);
+				this._list[i] = new RegularShip(3 + i,1, game);
+			}
+			if(level.name() != "EASY") {
+				for(int i = 0; i < 4; i++) {
+					this._list[4 + i] = new RegularShip(3 + i,2, game);
+				}
+			}	
+		}
+		
+		public boolean isShipIn(int i, int j) {
+			int idx = 0;
+			boolean found = false;
+			while(idx < this._tam && !found) {
+				found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
+			}
+			return found;
+		}
+		public String shipInToString(int i, int j) {
+			int idx = 0, position = 0;
+			boolean found = false;
+			while(idx < this._tam && !found) {
+				if(this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i) {
+					position = idx;
+					found = true;
+				}
+			}
+			return this._list[position].toString();
+		}
+		public int getRegularRemaining() {
+			int remaining = 0;
+			for(int i = 0; i < this._tam;i++) {
+				if(this._list[i] != null) remaining++;
+			}
+			return remaining;
+		}
+		public boolean impactLaser(int x, int y) {
+			boolean impacted = false;
+			for(int i = 0; i < this._tam && !impacted; i++) {
+				if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
+					this._list[i].damage();
+					if(this._list[i].isDestroyed()) this._list[i] = null;
+					impacted = true;
+				}
+			}
+			return impacted;
+		}
+		public boolean isOnWall() {
+			boolean inWall = false;
+			for(int i = 0; i < this._tam && !inWall; i++) {
+				if(this._list[i] != null) inWall = this._list[i].isOnWall();
+			}
+			return inWall;
+		}	
+		public void update(boolean movement, boolean down) {
+			for(int i = 0; i < this._tam; i++) {
+				if(this._list[i] != null) this._list[i].update(movement, down);
 			}
 		}	
-	}
-	
-	public boolean isShipIn(int i, int j) {
-		int idx = 0;
-		boolean found = false;
-		while(idx < this._tam && !found) {
-			found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
-		}
-		return found;
-	}
-	public String shipInToString(int i, int j) {
-		int idx = 0, position = 0;
-		boolean found = false;
-		while(idx < this._tam && !found) {
-			if(this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i) {
-				position = idx;
-				found = true;
+		public boolean win() {
+			boolean win = false;
+				for(int i = 0; i < this._tam && !win; i++) {
+					if(this._list[i]!= null) win = this._list[i].win();
+				}
+			return win;
+		}	
+		public boolean lose() {
+			boolean lose = true;
+			for(int i = 0; i < this._tam && lose; i++) {
+				if(this._list[i] != null) lose = false;
 			}
-		}
-		return this._list[position].toString();
-	}
-	public int getRegularRemaining() {
-		int remaining = 0;
-		for(int i = 0; i < this._tam;i++) {
-			if(this._list[i] != null) remaining++;
-		}
-		return remaining;
-	}
-	public boolean impactLaser(int x, int y) {
-		boolean impacted = false;
-		for(int i = 0; i < this._tam && !impacted; i++) {
-			if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
-				this._list[i].damage();
-				if(this._list[i].isDestroyed()) this._list[i] = null;
-				impacted = true;
-			}
-		}
-		return impacted;
-	}
-	public void update() {
-		//Completar
-	}
-	
-	public boolean RegularshipWins() {
-		boolean win = false;
-			for(int i = 0; i < this.getTam(); i++) {
-				if(this.getVidaPos(i) > 0 && this.getYPos(i) == 7) win = true;
-			}
-		return win;
-	}	
-	public void damageAll() {
-		for(int i = 0; i < this.getTam(); i++) {
-			this.damagePos(i);
-		}
-	}
-	
-	public int calculatePuntuation() {
-		int points = 0;
-		for(int i = 0; i < this.getTam(); i++) {
-			if(this.getVidaPos(i) == 0) {
-				points += this.getPuntPos(i);
-			}
-		}
-		return points;
-	}
-
-	
-	
-	public boolean isWall() {
-		boolean wall = false;
-		for(int i = 0; i < this.getTam() && !wall; i++) {
-			if(this.getVidaPos(i) > 0 && (this.getXPos(i) == 0 || this.getXPos(i) == 8)) wall = true;
-		}
-		return wall;
-	}
-	
-	public void moveLateralShips(boolean direction) {
-		int dir = (direction)? 1 : -1;
-		for(int i = 0; i < this.getTam(); i++) {
-			this.setXPos(i, this.getXPos(i) + dir);
-		}
-	}
-	
-	public void moveDownShips() {
-		for(int i = 0; i < this.getTam(); i++) {
-			this.setYPos(i, this.getYPos(i) + 1);
-		}
-	}
+			return lose;
+		}			
 }
