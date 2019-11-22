@@ -47,6 +47,7 @@ public class DestroyerShipList {
 			boolean found = false;
 			while(idx < this._tam && !found) {
 				found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
+				idx++;
 			}
 			return found;
 		}
@@ -58,6 +59,7 @@ public class DestroyerShipList {
 					position = idx;
 					found = true;
 				}
+				idx++;
 			}
 			return this._list[position].toString();
 		}
@@ -68,18 +70,26 @@ public class DestroyerShipList {
 			}
 			return remaining;
 		}
+		public void shockwaveDamage() {
+			for(int i = 0; i < this._tam; i++) {
+				if(this._list[i] != null) {
+					this._list[i].damage(1);
+					if(this._list[i].isDestroyed()) this._list[i] = null;
+				}
+			}
+		}	
 		public void dropBombs(Random rand) {
 			for(int i = 0; i < this._tam; i++ ) {
 				if(rand.nextInt(10) <= this._freq * 10) {
-					this._list[i].dropBomb();
+					if(this._list[i] != null)this._list[i].dropBomb();
 				}
 			}
 		}
-		public boolean impactLaser(int x, int y) {
+		public boolean impactLaser(int x, int y, int damage) {
 			boolean impacted = false;
 			for(int i = 0; i < this._tam && !impacted; i++) {
 				if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
-					this._list[i].damage();
+					this._list[i].damage(damage);
 					if(this._list[i].isDestroyed())	this._list[i] = null;
 					impacted = true;
 				}

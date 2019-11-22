@@ -34,7 +34,7 @@ public class Game {
 		public Game(Level level, long seed) {
 			this._level = level;
 			this._seed = seed;
-			this._reset();
+			this.reset();
 		}
 		
 	// Getters
@@ -46,19 +46,6 @@ public class Game {
 		}
 		
 	// Logica
-		private void _reset() {
-			this._cycleCounter = 0;
-			this._puntuation = 0;
-			this._rand = new Random(this._seed);
-			
-			this._movement = true;
-			this._down = false;
-			
-			this._ucmShip = new UCMShip(this);
-			this._regularShipList = new RegularShipList(this._level, this);
-			this._destroyerShipList = new DestroyerShipList(this._level, this);
-			this._bombList = new BombList(this._level);
-		}
 		private int _getRemaining() {
 			return this._destroyerShipList.getDestroyerRemaining() + this._regularShipList.getRegularRemaining();
 		}
@@ -79,6 +66,19 @@ public class Game {
 			}
 		}
 	
+		public void reset() {
+			this._cycleCounter = 0;
+			this._puntuation = 0;
+			this._rand = new Random(this._seed);
+			
+			this._movement = true;
+			this._down = false;
+			
+			this._ucmShip = new UCMShip(this);
+			this._regularShipList = new RegularShipList(this._level, this);
+			this._destroyerShipList = new DestroyerShipList(this._level, this);
+			this._bombList = new BombList(this._level);
+		}
 		public String characterAtToString(int i, int j) {
 			if(this._ucmShip.isPlayerIn(i,j)) {return this._ucmShip.toString();}
 			else if(this._regularShipList.isShipIn(i,j)) {return this._regularShipList.shipInToString(i, j);}
@@ -91,12 +91,28 @@ public class Game {
 		public void draw() {
 			GamePrinter gp = new GamePrinter(this, Y_SIZE, X_SIZE);
 			
-			System.out.print("Life: " + this._ucmShip.getVida());
-			System.out.print("Number of cycles: " + this._cycleCounter);
-			System.out.print("Points:" + this._puntuation);
-			System.out.print("Remaining aliens: " + this._getRemaining());
-			System.out.print("ShockWave: " + this._ucmShip.getShockwave());
-			System.out.print(gp.toString());
+			System.out.println("Life: " + this._ucmShip.getVida());
+			System.out.println("Number of cycles: " + this._cycleCounter);
+			System.out.println("Points:" + this._puntuation);
+			System.out.println("Remaining aliens: " + this._getRemaining());
+			System.out.println("ShockWave: " + this._ucmShip.getShockwave());
+			System.out.println(gp.toString());
+		}
+		public void move(int move, int num) {
+			this._ucmShip.move(move,num);
+		}
+		public void shoot() {
+			this._ucmShip.shoot();
+		}
+		public void damageAll() {
+			this._regularShipList.shockwaveDamage();
+			this._destroyerShipList.shockwaveDamage();
+			this._ovni.shockwaveDamage();
+			if(this._ovni.isDestroyed()) this._ovni = null;
+			
+		}
+		public void shockwave() {
+			this._ucmShip.shockwave();
 		}
 		public void insertBomb(Bomb bomb) {
 			this._bombList.insert(bomb);
@@ -108,15 +124,15 @@ public class Game {
 		public void updatePuntuation(int points) {
 			this._puntuation+= points;
 		}
-		public boolean impactLaser(int x, int y) {
-			if(this._regularShipList.impactLaser(x,y)) return true;
-			else if(this._destroyerShipList.impactLaser(x,y)) return true;
+		public boolean impactLaser(int x, int y, int damage) {
+			if(this._regularShipList.impactLaser(x,y,damage)) return true;
+			else if(this._destroyerShipList.impactLaser(x,y,damage)) return true;
 			else if(this._bombList.impactLaser(x,y)) {
 				this._destroyerShipList.destroyBombIn(x,y);
 				return true;
 			}
-			else if(this._ovni.impactLaser(x,y)) {
-				this._ovni = null;
+			else if(this._ovni != null && this._ovni.impactLaser(x,y,damage)) {
+				if(this._ovni.isDestroyed()) this._ovni = null;
 				return true;
 			}
 			else return false;
@@ -147,7 +163,7 @@ public class Game {
 			System.out.println("Aliens win.");
 		}
 		public void setPlayerDefeated() {
-			
+			this._ucmShip.setDefeat();
 		}
 		public boolean playerDefeated() {
 			return this._ucmShip.isDefeated() || this._regularShipList.win() || this._destroyerShipList.win();

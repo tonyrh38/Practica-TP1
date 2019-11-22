@@ -24,6 +24,7 @@ public class BombList {
 		boolean found = false;
 		while(idx < this._tam && !found) {
 			found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
+			idx++;
 		}
 		return found;
 	}
@@ -35,6 +36,7 @@ public class BombList {
 				position = idx;
 				found = true;
 			}
+			idx++;
 		}
 		return this._list[position].toString();
 	}	

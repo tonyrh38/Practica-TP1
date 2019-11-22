@@ -54,7 +54,7 @@ public class Laser {
 		this._y--;
 		if(this._y > 0) {
 			// Si el laser sigue vivo, se devuelve true
-			return !this._game.impactLaser(this._x, this._y);
+			return !this._game.impactLaser(this._x, this._y, this._damage);
 		}
 		else {
 			// Si el laser se sale de rango, se devuelve false

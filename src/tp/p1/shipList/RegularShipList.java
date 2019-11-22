@@ -37,6 +37,7 @@ public class RegularShipList {
 			boolean found = false;
 			while(idx < this._tam && !found) {
 				found = this._list[idx] != null && this._list[idx].getX() == j && this._list[idx].getY() == i;
+				idx++;
 			}
 			return found;
 		}
@@ -48,6 +49,7 @@ public class RegularShipList {
 					position = idx;
 					found = true;
 				}
+				idx++;
 			}
 			return this._list[position].toString();
 		}
@@ -58,11 +60,19 @@ public class RegularShipList {
 			}
 			return remaining;
 		}
-		public boolean impactLaser(int x, int y) {
+		public void shockwaveDamage() {
+			for(int i = 0; i < this._tam; i++) {
+				if(this._list[i] != null) {
+					this._list[i].damage(1);
+					if(this._list[i].isDestroyed()) this._list[i] = null;
+				}
+			}
+		}	
+		public boolean impactLaser(int x, int y, int damage) {
 			boolean impacted = false;
 			for(int i = 0; i < this._tam && !impacted; i++) {
 				if(this._list[i] != null && this._list[i].getX() == x && this._list[i].getY() == y) {
-					this._list[i].damage();
+					this._list[i].damage(damage);
 					if(this._list[i].isDestroyed()) this._list[i] = null;
 					impacted = true;
 				}
@@ -94,5 +104,5 @@ public class RegularShipList {
 				if(this._list[i] != null) lose = false;
 			}
 			return lose;
-		}			
+		}		
 }

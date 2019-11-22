@@ -41,8 +41,15 @@ public class Ovni {
 		public String toString() {
 			return "O["+ this._vida +"]";
 		}
-		public boolean impactLaser(int x, int y) {
+		public boolean impactLaser(int x, int y, int damage) {
 			if(this._x == x && this._y == y) {
+				this._vida -= damage;
+				return true;
+			}
+			else return false;
+		}
+		public boolean isDestroyed() {
+			if(this._vida <= 0) {
 				this._game.updatePuntuation(this._puntos);
 				return true;
 			}
@@ -50,6 +57,10 @@ public class Ovni {
 		}
 		public void update() {
 			this._x--;
+		}
+
+		public void shockwaveDamage() {
+			this._vida--;
 		}
 
 		

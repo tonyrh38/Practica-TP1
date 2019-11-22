@@ -69,10 +69,25 @@ public class UCMShip {
 			else return "!xx!";
 		}
 		public boolean isLaserIn(int i, int j) {
-			return this._laser.isLaserIn(i,j);
+			if(this._laser != null) return this._laser.isLaserIn(i,j);
+			else return false;
 		}
 		public String laserToString() {
 			return this._laser.toString();
+		}
+		public void move(int move, int num) {
+			this._x += move * num;
+			if(this._x < 0) this._x = 0;
+			else if(this._x >= this._game.getX_SIZE()) this._x = this._game.getX_SIZE() - 1;
+		}
+		public void shoot() {
+			if(this._laser == null)	this._laser = new Laser(this._x, this._y, this._game);
+		}
+		public void shockwave() {
+			if(this._shockwave) {
+				this._game.damageAll();
+				this._shockwave = false;
+			}
 		}
 		public void updateLaser() {
 			if(this._laser != null)	{
@@ -92,11 +107,11 @@ public class UCMShip {
 				return true;
 			}
 			else return false;
-		}
-		public void update() {
-			
 		}	
 		public boolean isDefeated() {
 			return this._vida <= 0;
+		}
+		public void setDefeat() {
+			this._vida = 0;
 		}
 }

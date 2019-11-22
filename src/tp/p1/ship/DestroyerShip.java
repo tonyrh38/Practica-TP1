@@ -61,8 +61,8 @@ public class DestroyerShip {
 				this._game.insertBomb(bomb);
 			}
 		}
-		public void damage() {
-			this.setVida(this.getVida() - 1);
+		public void damage(int damage) {
+			this._vida -= damage;
 		}
 		public boolean isDestroyed() {
 			if(this._vida <= 0) {

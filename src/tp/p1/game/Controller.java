@@ -1,7 +1,6 @@
 package tp.p1.game;
 
 import java.util.Scanner;
-import tp.p1.ship.Bomb;
 
 public class Controller {
 	// Atributos
@@ -24,7 +23,7 @@ public class Controller {
 				command = true;
 				System.out.print(Controller.PROMPT);
 				String[]  words = this._in.nextLine().toLowerCase().trim().split("\\s+");
-				if(words[0].equals("move") ||words[0].equals("m") && words.length == 3) {
+				if(words[0].equals("move") || words[0].equals("m") && words.length == 3) {
 					this._move(words[1],words[2]);
 				}
 				else if (words[0].equals("shoot") ||words[0].equals("s")) {
@@ -58,40 +57,17 @@ public class Controller {
 			if((dir.equals("left") || dir.equals("right")) && (pos.equals("1") || pos.equals("2"))) {
 				int move = (dir.equals("left"))? -1 : 1;
 				int num = (pos.equals("1"))? 1 : 2;
-				this._game.move(dir,num);
-				int op = game.getXUCMShip() + move * num;
-				if(op >= 0 && op <= 8) {
-					game.setXUCMShip(op);
-				}
-				else if(op - 1 == 8) {
-					game.setXUCMShip(op - 1);
-				}
-				else if(op + 1 == 0) {
-					game.setXUCMShip(op + 1);
-				}				
+				this._game.move(move,num);	
 			}
 		}
 		private void _shoot() {
-			int pos = game.getBombList().getTam() - 1;
-			if(game.getBombList().isPosNull(pos)) {
-				int x = game.getXUCMShip();
-				int y = game.getYUCMShip();
-				Bomb bomb = new Bomb(x,y);
-				game.getBombList().insertIn(pos, bomb);
-			}
+			this._game.shoot();
 		}
 		private void _shockwave() {
-			if(game.getShockwaveUCMShip()) {
-				game.getDestroyerShipList().damageAll();
-				game.getRegularShipList().damageAll();
-				if(game.getEnableOvni()) {
-					game.damageOvni();
-				}
-				game.setShockwaveUCMShip(false);
-			}
+			this._game.shockwave();
 		}
 		private void _reset() {
-			game.reset();
+			this._game.reset();
 		}
 		private void _list() {
 			System.out.println("[R]egular ship: Points: 5 - Harm: 0 - Shield: 2");
@@ -127,3 +103,17 @@ public class Controller {
 			}
 		}
 }
+/*
+ *	while (!game.isFinished()){
+		System.out.println(PROMPT);
+		String[] words = in.nextLine().toLowerCase().trim().split ("\\s+");
+		Command command = CommandGenerator.parse(words);
+		if (command != null) {
+			if (command.execute(game))
+				System.out.println(game);
+			}
+			else {
+				System.out.format(unknownCommandMsg);
+		}
+	}
+*/

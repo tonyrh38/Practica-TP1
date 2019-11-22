@@ -55,8 +55,8 @@ public class RegularShip {
 		public String toString() {
 			return "C["+ this._vida +"]";
 		}
-		public void damage() {
-			this.setVida(this.getVida() - 1);
+		public void damage(int damage) {
+			this._vida -= damage;
 		}
 		public boolean isDestroyed() {
 			if(this._vida <= 0) {
