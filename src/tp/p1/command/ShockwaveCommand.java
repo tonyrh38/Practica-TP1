@@ -19,5 +19,4 @@ public class ShockwaveCommand extends Command {
 		if(this.matchCommandName(commandWords[0])) return this;
 		else return null;
 	}
-
 }
