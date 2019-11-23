@@ -19,7 +19,7 @@ public class ListCommand extends Command {
 
 	@Override
 	public Command parse(String[] commandWords) {
-		if(this.matchCommandName(commandWords[0])) return new ListCommand();
+		if(this.matchCommandName(commandWords[0])) return this;
 		else return null;
 	}
 

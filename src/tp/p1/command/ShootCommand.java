@@ -2,16 +2,16 @@ package tp.p1.command;
 
 import tp.p1.game.Game;
 
-public class HelpCommand extends Command {
+public class ShootCommand extends Command {
 
-	public HelpCommand() {
-		super("help","h","help","Prints this help message.");
+	public ShootCommand() {
+		super("shoot","s","shoot","UCM-Ship launches a missile.");
 	}
 	
 	@Override
 	public boolean execute(Game game) {
-		System.out.println(CommandGenerator.commandHelp());
-		return false;
+		game.shoot();
+		return true;
 	}
 
 	@Override

@@ -109,8 +109,7 @@ public class Controller {
 		String[] words = in.nextLine().toLowerCase().trim().split ("\\s+");
 		Command command = CommandGenerator.parse(words);
 		if (command != null) {
-			if (command.execute(game))
-				System.out.println(game);
+			if (command.execute(game)) System.out.println(game);
 			}
 			else {
 				System.out.format(unknownCommandMsg);

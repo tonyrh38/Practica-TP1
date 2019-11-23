@@ -10,6 +10,7 @@ public class CommandGenerator {
 			new ListCommand(),
 			new NoneCommand(),
 			new MoveCommand(),
+			new ShootCommand(),
 			new ShockwaveCommand()
 		};
 	

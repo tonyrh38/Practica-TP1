@@ -4,16 +4,19 @@ import tp.p1.game.Game;
 
 public class NoneCommand extends Command {
 
+	public NoneCommand() {
+		super("none","n","[none]","Skips one cycle.");
+	}
+	
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.matchCommandName(commandWords[0])) return this;
+		else return null;
 	}
 
 }

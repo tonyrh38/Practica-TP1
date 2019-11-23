@@ -4,16 +4,20 @@ import tp.p1.game.Game;
 
 public class ShockwaveCommand extends Command {
 
+	public ShockwaveCommand() {
+		super("shockwave","w","shockwave","UCM-Ship releases a shock wave.");
+	}
+	
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
-		return false;
+		game.shockwave();
+		return true;
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.matchCommandName(commandWords[0])) return this;
+		else return null;
 	}
 
 }
