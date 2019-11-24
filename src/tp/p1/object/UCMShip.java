@@ -1,4 +1,4 @@
-package tp.p1.ship;
+package tp.p1.object;
 
 import tp.p1.game.Game;
 

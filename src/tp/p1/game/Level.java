@@ -35,12 +35,4 @@ public enum Level {
 	public double getOvni() { 
 		return this.ovni;
 	}
-	
-	/*public static String all(String separator) {
-		StringBuilder sb = new StringBuilder();
-		for (Level l : Level.values())
-			sb.append(l.name() + separator);
-		String r = sb.toString();
-		return r.substring(0, r.length()-separator.length());
-	}*/
 }

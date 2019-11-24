@@ -3,7 +3,7 @@ package tp.p1.shipList;
 import java.util.Random;
 import tp.p1.game.Game;
 import tp.p1.game.Level;
-import tp.p1.ship.DestroyerShip;
+import tp.p1.object.DestroyerShip;
 
 public class DestroyerShipList {
 	

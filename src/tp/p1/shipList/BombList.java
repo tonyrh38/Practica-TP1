@@ -1,7 +1,7 @@
 package tp.p1.shipList;
 
 import tp.p1.game.Level;
-import tp.p1.ship.Bomb;
+import tp.p1.object.Bomb;
 
 
 public class BombList {

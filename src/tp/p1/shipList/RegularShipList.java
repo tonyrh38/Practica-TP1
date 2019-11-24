@@ -2,7 +2,7 @@ package tp.p1.shipList;
 
 import tp.p1.game.Game;
 import tp.p1.game.Level;
-import tp.p1.ship.RegularShip;
+import tp.p1.object.RegularShip;
 
 public class RegularShipList {
 	
