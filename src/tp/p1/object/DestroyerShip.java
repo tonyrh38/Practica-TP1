@@ -1,8 +1,9 @@
 package tp.p1.object;
 
 import tp.p1.game.Game;
+import tp.p1.interfaces.IExecuteRandomActions;
 
-public class DestroyerShip extends AlienShip{
+public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
 		
 	private Bomb bomb;
 

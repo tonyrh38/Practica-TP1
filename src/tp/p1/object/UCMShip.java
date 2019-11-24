@@ -2,31 +2,41 @@ package tp.p1.object;
 
 import tp.p1.game.Game;
 
-public class UCMShip {
+public class UCMShip extends Ship{
 	
-	// Atributos
-		private int _x;
-		private int _y;
-		private int _vida;
-		private int _damage;
-		private boolean _shockwave;
-		private Laser _laser;
+		private Shockwave shockwave;
+		private Laser laser;
 		
-		private Game _game;
-	
-	// Metodos
-	
-	// Constructor
-		public UCMShip(Game game) {
-			this.setX(4);
-			this.setY(7);
-			this.setVida(3);
-			this.setDaño(1);
-			this.setShockwave(false);
-			this._game = game;
+		private Game game;
+
+		public UCMShip(Game game,int x,int y) {
+			super(game,x,y,3,0);
+		}
+
+		@Override
+		public void computerAction() {
+			
+		}
+
+		@Override
+		public void onDelete() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void move() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public String toString() {
+			if(this.isAlive()) return "^__^";
+			else return "!xx!";
 		}
 	
-	// Getters 
+	/*// Getters 
 		public int getX() {
 			return this._x;
 		}
@@ -113,5 +123,5 @@ public class UCMShip {
 		}
 		public void setDefeat() {
 			this._vida = 0;
-		}
+		}*/
 }

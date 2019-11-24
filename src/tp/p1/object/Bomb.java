@@ -2,25 +2,36 @@ package tp.p1.object;
 
 import tp.p1.game.Game;
 
-public class Bomb {
+public class Bomb extends Weapon{
 	
-	// Atributos
-		private int _x;
-		private int _y;
-		private int _damage;
+	public Bomb(Game game, int x, int y) {
+		super(game,x,y,1,1);
+	}
+
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
 		
-		private Game _game;
+	}
+
+	@Override
+	public void onDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String toString() {
+		return ".";
+	}
 	
-	// Metodos
-	
-	// Constructor	
-		public Bomb(int x, int y, Game game) {
-			this._x = x;
-			this._y = y;
-			this._damage = 1;
-			this._game = game;
-		}
-	
+	/*
 	// Getters
 	public int getX() {
 		return _x;
@@ -50,5 +61,5 @@ public class Bomb {
 			return !this._game.impactBomb(this._x, this._y);
 		}
 		else return false;
-	}
+	}*/
 }
