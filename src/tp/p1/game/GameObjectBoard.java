@@ -7,27 +7,46 @@ public class GameObjectBoard {
 	private int currentObjects;
 	
 	public GameObjectBoard (int width, int height) {
-		// TODO implement
+		this.objects = new GameObject[width * height];
+		this.currentObjects = 0;
 	}
 	
 	private int getCurrentObjects () {
-		// TODO implement
+		return this.currentObjects;
 	}
 	
 	public void add (GameObject object) {
-		// TODO implement
+		this.objects[this.currentObjects] = object;
+		this.currentObjects++;
 	}
 	
-	private GameObject getObjectInPosition ( /* coordinadas */ ) {
-		// TODO implement
+	private GameObject getObjectInPosition (int x, int y) {
+		int idx = getIndex(x,y);
+		if(idx != -1) return this.objects[idx];
+		else return null;
 	}
 	
-	private int getIndex( /* coordinadas */ ) {
-		// TODO implement
+	private int getIndex(int x, int y) {
+		boolean found = false;
+		int idx = -1;
+		for(int i = 0; i < this.currentObjects && !found; i++) {
+			if(this.objects[i] != null && this.objects[i].getX() == x && this.objects[i].getY() == y) {
+				idx = i;
+				found = true;
+			}
+		}
+		return idx;
 	}
 
 	private void remove (GameObject object) {
-		// TODO implement
+		boolean removed = false;
+		for(int i = 0; i < this.currentObjects && !removed; i++) {
+			if(this.objects[i].equals(object)) {
+				this.objects[i] = null;
+				this.currentObjects--;
+				removed = true;
+			}
+		}
 	}
 	
 	public void update() {
@@ -46,8 +65,10 @@ public class GameObjectBoard {
 		// TODO implement
 	}
 
-	public String toString( /* coordinadas */ ) {
-		// TODO implement
+	public String toString(int x, int y) {
+		GameObject object = this.getObjectInPosition(x, y);
+		if(object != null) return object.toString();
+		else return "";
 	}
 
 }

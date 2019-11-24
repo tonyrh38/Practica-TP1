@@ -9,7 +9,7 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 
 	public Ovni(Game game) {
 		super(game,8,0,1,25);
-		this.enable = true;
+		this.enable = false;
 	}
 
 	@Override

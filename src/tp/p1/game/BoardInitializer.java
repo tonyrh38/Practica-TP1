@@ -1,5 +1,9 @@
 package tp.p1.game;
 
+import tp.p1.object.DestroyerShip;
+import tp.p1.object.Ovni;
+import tp.p1.object.RegularShip;
+
 public class BoardInitializer {
 	
 	private Level level;
@@ -18,14 +22,35 @@ public class BoardInitializer {
 	}
 	
 	private void initializeOvni () {
-		// TODO implement
+		Ovni ovni = new Ovni(this.game);
+		this.board.add(ovni);
 	}
 
 	private void initializeRegularAliens () {
-		// TODO implement
+		for(int i = 0; i < this.level.getRegularShip(); i++) {
+			RegularShip ship = new RegularShip(this.game,3 + (i % 4),1 + (i / 4));
+			this.board.add(ship);
+		}
 	}
 	
 	private void initializeDestroyerAliens() {
-		// TODO implement
+		if(level.name() == "EASY") {
+			for(int i = 0; i < 2; i++) {
+				DestroyerShip ship = new DestroyerShip(this.game,4 + i,2);
+				this.board.add(ship);
+			}
+		}
+		if(level.name() == "HARD") {
+			for(int i = 0; i < 2; i++) {
+				DestroyerShip ship = new DestroyerShip(this.game,4 + i,3);
+				this.board.add(ship);
+			}
+		}
+		if(level.name() == "INSANE") {
+			for(int i = 0; i < 4; i++) {
+				DestroyerShip ship = new DestroyerShip(this.game,3 + i,3);
+				this.board.add(ship);
+			}
+		}
 	}
 }

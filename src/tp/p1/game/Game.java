@@ -15,7 +15,6 @@ public class Game implements IPlayerController{
 	private Level level;
 
 	GameObjectBoard board;
-
 	private UCMShip player;
 	
 	private boolean doExit;
