@@ -28,15 +28,14 @@ public class Controller {
 				String[] words = this.in.nextLine().toLowerCase().trim().split ("\\s+");
 				Command command = CommandGenerator.parseCommand(words);
 				if (command != null) {
-					if (command.execute(this._game)){
-						this._game.update();
-						this._game.draw();
+					if (command.execute(this.game)){
+						this.game.update();
+						this.game.draw();
 					}
 				}
 				else System.out.format(unknownCommandMsg);
-				if (this._game.playerDefeated()) this._game.printGameOver();
-				else this._game.printWin();
 			}
+			System.out.println(this.game.getWinnerMessage());
 		}
 }
 /*

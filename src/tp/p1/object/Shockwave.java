@@ -34,4 +34,12 @@ public class Shockwave extends Weapon {
 		return "ShockWave: " + this.enable;
 	}
 
+	public boolean attack() {
+		if(this.enable) {
+			
+			this.enable = false;
+		}
+		return false;
+	}
+
 }

@@ -4,7 +4,6 @@ import java.util.*;
 
 import tp.p1.interfaces.IPlayerController;
 import tp.p1.object.*;
-import tp.p1.shipList.*;
 
 public class Game implements IPlayerController{
 	
@@ -81,6 +80,11 @@ public class Game implements IPlayerController{
 		doExit = true;
 	}
 	
+	public String characterAtToString(int x, int y) {
+		if(this.player.isOnPosition(x, y)) return this.player.toString();
+		else return this.board.objectAtToString(x,y);
+	}
+	
 	private void infoToString() {
 		System.out.println("Life: " + this.player.getLive());
 		System.out.println("Number of cycles: " + this.currentCycle);
@@ -89,7 +93,7 @@ public class Game implements IPlayerController{
 		System.out.println(this.player.shockwaveToString());
 	}
 	
-	public String getWinnerMessage () {
+	public String getWinnerMessage() {
 		if (playerWin()) return "Player win!";
 		else if (aliensWin()) return "Aliens win!";
 		else if (doExit) return "Player exits the game";
@@ -101,31 +105,26 @@ public class Game implements IPlayerController{
 		this.infoToString();
 		System.out.println(gp.toString());
 	}
-
-	// TODO implementar los métodos del interfaz IPlayerController
 	
 	@Override
 	public boolean move(int numCells) {
-		// TODO Auto-generated method stub
-		return false;
+		this.player.move(numCells);
+		return true;
 	}
 
 	@Override
 	public boolean shootLaser() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.player.shoot();
 	}
 
 	@Override
 	public boolean shockWave() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.player.shockwave();
 	}
 
 	@Override
 	public void receivePoints(int points) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
@@ -138,11 +137,6 @@ public class Game implements IPlayerController{
 	public void enableMissile() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public String characterAtToString(int x, int y) {
-		if(this.player.isOnPosition(x, y)) return this.player.toString();
-		else return this.board.objectAtToString(x,y);
 	}
 }
 /*public class Game {

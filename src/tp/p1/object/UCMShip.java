@@ -11,7 +11,7 @@ public class UCMShip extends Ship{
 
 		public UCMShip(Game game,int x,int y) {
 			super(game,x,y,3,0);
-			this.shockwave = new Shockwave(game,x,y);
+			this.shockwave = new Shockwave(game,0,0);
 		}
 
 		public int getTotalPuntuation() {
@@ -19,20 +19,18 @@ public class UCMShip extends Ship{
 		}
 		
 		@Override
-		public void computerAction() {
-			
-		}
+		public void computerAction() {}
 
 		@Override
-		public void onDelete() {
-			// TODO Auto-generated method stub
-			
-		}
-
+		public void onDelete() {}
+		
 		@Override
-		public void move() {
-			// TODO Auto-generated method stub
-			
+		public void move() {}
+
+		public void move(int numCells) {
+			this.x += numCells;
+			if(this.x < 0) this.x = 0;
+			else if(this.x >= Game.DIM_X) this.x = Game.DIM_X - 1;
 		}
 
 		@Override
@@ -43,6 +41,18 @@ public class UCMShip extends Ship{
 
 		public String shockwaveToString() {
 			return this.shockwave.toString();
+		}
+
+		public boolean shoot() {
+			if(this.laser == null) {
+				this.laser = new Laser(this.game, this.x, this.y);
+				return true;
+			}
+			else return false;
+		}
+
+		public boolean shockwave() {
+			return this.shockwave.attack();
 		}
 	
 	/*// Getters 
