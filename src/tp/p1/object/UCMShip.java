@@ -11,8 +11,13 @@ public class UCMShip extends Ship{
 
 		public UCMShip(Game game,int x,int y) {
 			super(game,x,y,3,0);
+			this.shockwave = new Shockwave(game,x,y);
 		}
 
+		public int getTotalPuntuation() {
+			return this.points;
+		}
+		
 		@Override
 		public void computerAction() {
 			
@@ -34,6 +39,10 @@ public class UCMShip extends Ship{
 		public String toString() {
 			if(this.isAlive()) return "^__^";
 			else return "!xx!";
+		}
+
+		public String shockwaveToString() {
+			return this.shockwave.toString();
 		}
 	
 	/*// Getters 

@@ -7,6 +7,7 @@ import tp.p1.object.*;
 import tp.p1.shipList.*;
 
 public class Game implements IPlayerController{
+	
 	public final static int DIM_X = 9;
 	public final static int DIM_Y = 8;
 
@@ -27,7 +28,7 @@ public class Game implements IPlayerController{
 		initGame();
 	}
 	
-	public void initGame () {
+	public void initGame (){
 		currentCycle = 0;
 		board = initializer.initialize(this, level);
 		player = new UCMShip(this, DIM_X / 2, DIM_Y - 1);
@@ -50,19 +51,20 @@ public class Game implements IPlayerController{
 		board.add(object);
 	}
 	
-	public String positionToString( /* coordinadas */ ) {
-		return board.toString( /* coordinadas */ );
+	public String positionToString(int x, int y) {
+		return board.toString(x,y);
+	}
 
 	public boolean isFinished() {
 		return playerWin() || aliensWin() || doExit;
 	}
 	
 	public boolean aliensWin() {
-		return !player.isAlive() || AlienShip.haveLanded();
+		return !player.isAlive() || this.board.aliensLanded();
 	}
 	
-	private boolean playerWin () {
-		return AlienShip.allDead();
+	private boolean playerWin() {
+		return this.board.aliensDead();
 	}
 	
 	public void update() {
@@ -72,16 +74,19 @@ public class Game implements IPlayerController{
 	}
 	
 	public boolean isOnBoard(int x, int y) {
-
-		return /* condición de rango sobre las coordenadas */ ;
+		return x >= 0 && x < DIM_X && y >= 0 && y < DIM_Y;
 	}
 	
 	public void exit() {
 		doExit = true;
 	}
 	
-	public String infoToString() {
-		return /* cadena estado-juego para imprimir junto con el tablero */; 
+	private void infoToString() {
+		System.out.println("Life: " + this.player.getLive());
+		System.out.println("Number of cycles: " + this.currentCycle);
+		System.out.println("Points:" + this.player.getTotalPuntuation());
+		System.out.println("Remaining aliens: " + this.board.aliveAliens());
+		System.out.println(this.player.shockwaveToString());
 	}
 	
 	public String getWinnerMessage () {
@@ -89,6 +94,12 @@ public class Game implements IPlayerController{
 		else if (aliensWin()) return "Aliens win!";
 		else if (doExit) return "Player exits the game";
 		else return "This should not happen";
+	}
+	
+	public void draw() {
+		GamePrinter gp = new GamePrinter(this, DIM_Y, DIM_X);
+		this.infoToString();
+		System.out.println(gp.toString());
 	}
 
 	// TODO implementar los métodos del interfaz IPlayerController
@@ -127,6 +138,11 @@ public class Game implements IPlayerController{
 	public void enableMissile() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public String characterAtToString(int x, int y) {
+		if(this.player.isOnPosition(x, y)) return this.player.toString();
+		else return this.board.objectAtToString(x,y);
 	}
 }
 /*public class Game {

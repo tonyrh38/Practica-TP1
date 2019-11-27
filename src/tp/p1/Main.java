@@ -1,5 +1,6 @@
 package tp.p1;
 
+import java.util.Random;
 import tp.p1.game.*;
 
 public class Main {
@@ -12,10 +13,11 @@ public class Main {
 			Level level = Level.valueOf(args[0]);
 		
 			if (args.length == 2) {
-				int seed = Integer.parseInt(args[1]);
+				Random seed = new Random(Integer.parseInt(args[1]));
 				game = new Game(level, seed);
 			} else {
-				game = new Game(level);
+				Random seed = new Random(314);
+				game = new Game(level, seed);
 			}
 		
 			Controller controller = new Controller(game);

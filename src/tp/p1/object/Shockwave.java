@@ -4,9 +4,11 @@ import tp.p1.game.Game;
 
 public class Shockwave extends Weapon {
 
+	private boolean enable;
+	
 	public Shockwave(Game game, int x, int y) {
 		super(game, x, y, 1, 1);
-		// TODO Auto-generated constructor stub
+		this.enable = false;
 	}
 
 	@Override
@@ -29,8 +31,7 @@ public class Shockwave extends Weapon {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		return "ShockWave: " + this.enable;
 	}
 
 }

@@ -1,6 +1,6 @@
 package tp.p1.game;
 
-import tp.p1.object.GameObject;
+import tp.p1.object.*;
 
 public class GameObjectBoard {
 	private GameObject[] objects;
@@ -38,7 +38,7 @@ public class GameObjectBoard {
 		return idx;
 	}
 
-	private void remove (GameObject object) {
+	private void remove(GameObject object) {
 		boolean removed = false;
 		for(int i = 0; i < this.currentObjects && !removed; i++) {
 			if(this.objects[i].equals(object)) {
@@ -71,4 +71,49 @@ public class GameObjectBoard {
 		else return "";
 	}
 
+	public boolean aliensLanded() {
+		boolean landed = false;
+		
+		for(int i = 0; i < this.currentObjects && !landed; i++) {
+			if(this.objects[i] != null && this.objects[i].getClass() == AlienShip.class) {
+				landed = this.objects[i].getX() == Game.DIM_Y - 1;
+			}
+		}
+		
+		return landed;
+	}
+
+	public boolean aliensDead() {
+		boolean dead = true;
+		
+		for(int i = 0; i < this.currentObjects && dead; i++) {
+			dead = !(this.objects[i] != null && this.objects[i].getClass() == AlienShip.class);
+		}
+		
+		return dead;
+	}
+
+	public int aliveAliens() {
+		int alive = 0;
+		
+		for(int i = 0; i < this.currentObjects; i++) {
+			if(this.objects[i] != null && this.objects[i].getClass() == AlienShip.class) alive++;
+		}
+		
+		return alive;
+	}
+
+	public String objectAtToString(int x, int y) {
+		boolean found = false;
+		String str = "";
+		
+		for(int i = 0; i < this.currentObjects && !found; i++) {
+			if(this.objects[i] != null && this.objects[i].isOnPosition(x, y)) {
+				str = this.objects[i].toString();
+				found = true;
+			}
+		}
+		
+		return str;
+	}
 }
