@@ -42,4 +42,8 @@ public class Shockwave extends Weapon {
 		return false;
 	}
 
+	public void enable() {
+		this.enable = true;
+	}
+
 }

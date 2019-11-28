@@ -124,17 +124,16 @@ public class Game implements IPlayerController{
 
 	@Override
 	public void receivePoints(int points) {
-		// TODO Auto-generated method stub	
+		this.player.updatePoints(points);	
 	}
 
 	@Override
 	public void enableShockWave() {
-		// TODO Auto-generated method stub
-		
+		this.player.enableShockwave();
 	}
 
 	@Override
-	public void enableMissile() {
+	public void enableLaser() {
 		// TODO Auto-generated method stub
 		
 	}

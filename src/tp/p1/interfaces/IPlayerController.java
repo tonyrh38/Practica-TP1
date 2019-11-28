@@ -10,6 +10,6 @@ public interface IPlayerController {
 	// CALLBACKS
 	public void receivePoints(int points);
 	public void enableShockWave();
-	public void enableMissile();
+	public void enableLaser();
 	
 }
