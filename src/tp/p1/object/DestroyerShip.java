@@ -13,13 +13,18 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
 
 	@Override
 	public void computerAction() {
-		// TODO Auto-generated method stub
-		
+		if(this.bomb == null && this.game.getRandom().nextInt(9) <= this.game.getLevel().getFreq()) {
+			this.bomb = new Bomb(this.game,this.x,this.y,this);
+		}
 	}
 
 	@Override
 	public String toString() {
 		return "D["+ this.life +"]";
+	}
+
+	public void deleteBomb() {
+		this.bomb = null;
 	}
 		
 	/*// Logica

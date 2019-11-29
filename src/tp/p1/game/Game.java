@@ -23,15 +23,16 @@ public class Game implements IPlayerController{
 	public Game (Level level, Random random){
 		this.rand = random;
 		this.level = level;
-		initializer = new BoardInitializer();
+		this.initializer = new BoardInitializer();
 		initGame();
 	}
 	
 	public void initGame (){
-		currentCycle = 0;
-		board = initializer.initialize(this, level);
-		player = new UCMShip(this, DIM_X / 2, DIM_Y - 1);
-		board.add(player);
+		this.currentCycle = 0;
+		this.board = this.initializer.initialize(this, level);
+		this.player = new UCMShip(this, DIM_X / 2, DIM_Y - 1);
+		this.board.add(player);
+		
 	}
 
 	public Random getRandom() {
@@ -134,8 +135,7 @@ public class Game implements IPlayerController{
 
 	@Override
 	public void enableLaser() {
-		// TODO Auto-generated method stub
-		
+		this.player.enableLaser();
 	}
 }
 /*public class Game {

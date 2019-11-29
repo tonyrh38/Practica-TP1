@@ -46,8 +46,9 @@ public class UCMShip extends Ship{
 		}
 
 		public boolean shoot() {
-			if(!this.laser.isEnable()) {
-				this.laser.enable(this.x,this.y);
+			if(this.laser == null) {
+				this.laser = new Laser(this.game, this.x,this.y);
+				return true;
 			}
 			else return false;
 		}
@@ -62,6 +63,10 @@ public class UCMShip extends Ship{
 
 		public void enableShockwave() {
 			this.shockwave.enable();
+		}
+
+		public void enableLaser() {
+			this.laser = null;
 		}
 	
 	/*// Getters 

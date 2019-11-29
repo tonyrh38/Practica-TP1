@@ -11,13 +11,19 @@ public class GameObjectBoard {
 		this.currentObjects = 0;
 	}
 	
-	private int getCurrentObjects () {
+	private int getCurrentObjects() {
 		return this.currentObjects;
 	}
 	
-	public void add (GameObject object) {
-		this.objects[this.currentObjects] = object;
-		this.currentObjects++;
+	public void add(GameObject object) {
+		boolean added = false;
+		for(int i = 0; i <= this.currentObjects && !added; i++) {
+			if(this.objects[i] == null) {
+				this.objects[i] = object;
+				this.currentObjects++;
+				added = true;
+			}
+		}
 	}
 	
 	private GameObject getObjectInPosition (int x, int y) {
@@ -42,6 +48,7 @@ public class GameObjectBoard {
 		boolean removed = false;
 		for(int i = 0; i < this.currentObjects && !removed; i++) {
 			if(this.objects[i].equals(object)) {
+				this.objects[i].onDelete();
 				this.objects[i] = null;
 				this.currentObjects--;
 				removed = true;
@@ -58,11 +65,18 @@ public class GameObjectBoard {
 	}
 	
 	public void computerAction() {
-		// TODO implement
+		for(int i = 0; i < this.currentObjects; i++) {
+			if(this.objects[i] != null) this.objects[i].computerAction();
+		}
 	}
 	
 	private void removeDead() {
-		// TODO implement
+		for(int i = 0; i < this.currentObjects; i++) {
+			if(this.objects[i] != null && !this.objects[i].isAlive()) {
+				this.objects[i].onDelete();
+				this.objects[i] = null;
+			}
+		}
 	}
 
 	public String toString(int x, int y) {

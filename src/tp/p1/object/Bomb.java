@@ -4,8 +4,11 @@ import tp.p1.game.Game;
 
 public class Bomb extends Weapon{
 	
-	public Bomb(Game game, int x, int y) {
+	private DestroyerShip father;
+	
+	public Bomb(Game game, int x, int y, DestroyerShip father) {
 		super(game,x,y,1,1);
+		this.father = father;
 	}
 
 	@Override
@@ -16,8 +19,7 @@ public class Bomb extends Weapon{
 
 	@Override
 	public void onDelete() {
-		// TODO Auto-generated method stub
-		
+		this.father.deleteBomb();
 	}
 
 	@Override

@@ -3,12 +3,10 @@ package tp.p1.object;
 import tp.p1.game.Game;
 
 public class Laser extends Weapon {
-		
-	private boolean enable;	
 	
 	public Laser(Game game, int x, int y) {
 		super(game,x,y,1,1);
-		this.enable = false;
+		this.game.addObject(this);
 	}
 
 	@Override
@@ -26,10 +24,6 @@ public class Laser extends Weapon {
 	@Override
 	public String toString() {
 		return "oo";
-	}
-
-	public boolean isEnable() {
-		return this.enable;
 	}
 	
 	/*// Getters

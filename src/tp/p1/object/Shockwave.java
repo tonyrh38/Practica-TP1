@@ -12,22 +12,13 @@ public class Shockwave extends Weapon {
 	}
 
 	@Override
-	public void computerAction() {
-		// TODO Auto-generated method stub
-
-	}
+	public void computerAction() {}
 
 	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-
-	}
+	public void onDelete() {}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-
-	}
+	public void move() {}
 
 	@Override
 	public String toString() {
@@ -38,6 +29,7 @@ public class Shockwave extends Weapon {
 		if(this.enable) {
 			
 			this.enable = false;
+			return true;
 		}
 		return false;
 	}
