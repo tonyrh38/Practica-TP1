@@ -12,10 +12,7 @@ public class Bomb extends Weapon{
 	}
 
 	@Override
-	public void computerAction() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void computerAction() {}
 
 	@Override
 	public void onDelete() {
@@ -31,6 +28,12 @@ public class Bomb extends Weapon{
 	@Override
 	public String toString() {
 		return ".";
+	}
+	
+	@Override
+	public boolean performAttack(GameObject other){
+		other.receiveBombAttack(this.damage);
+		return true;
 	}
 	
 	/*

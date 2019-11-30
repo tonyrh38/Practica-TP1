@@ -26,6 +26,12 @@ public class Laser extends Weapon {
 		return "oo";
 	}
 	
+	@Override
+	public boolean performAttack(GameObject other){
+		other.receiveLaserAttack(this.damage);
+		return true;
+	}
+	
 	/*// Getters
 	public int getX() {
 		return _x;

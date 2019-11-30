@@ -15,11 +15,10 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 	@Override
 	public void computerAction() {
 		if(!this.enable && IExecuteRandomActions.canGenerateRandomOvni(this.game)) {
-			
 			this.enable = true;
 		}
 	}
-
+	
 	@Override
 	public void move() {
 		// TODO Auto-generated method stub

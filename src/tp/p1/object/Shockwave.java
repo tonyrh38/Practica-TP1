@@ -15,7 +15,7 @@ public class Shockwave extends Weapon {
 	public void computerAction() {}
 
 	@Override
-	public void onDelete() {}
+	public void onDelete(){}
 
 	@Override
 	public void move() {}

@@ -13,8 +13,9 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
 
 	@Override
 	public void computerAction() {
-		if(this.bomb == null && this.game.getRandom().nextInt(9) <= this.game.getLevel().getFreq()) {
+		if(this.bomb == null && IExecuteRandomActions.canGenerateRandomBomb(this.game)) {
 			this.bomb = new Bomb(this.game,this.x,this.y,this);
+			this.game.addObject(this.bomb);
 		}
 	}
 

@@ -32,7 +32,6 @@ public class Game implements IPlayerController{
 		this.board = this.initializer.initialize(this, level);
 		this.player = new UCMShip(this, DIM_X / 2, DIM_Y - 1);
 		this.board.add(player);
-		
 	}
 
 	public Random getRandom() {

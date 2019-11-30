@@ -57,7 +57,10 @@ public class GameObjectBoard {
 	}
 	
 	public void update() {
-		// TODO implement
+		for(int i = 0; i < this.currentObjects; i++) {
+			if(this.objects[i] != null) this.objects[i].move();
+		}
+		this.removeDead();
 	}
 	
 	private void checkAttacks(GameObject object) {

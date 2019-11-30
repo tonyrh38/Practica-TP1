@@ -21,6 +21,12 @@ public class UCMShip extends Ship{
 		}
 		
 		@Override
+		public boolean receiveBombAttack(int damage){
+			this.getDamage(damage);
+			return true;
+		}
+		
+		@Override
 		public void computerAction() {}
 
 		@Override

@@ -4,7 +4,7 @@ import tp.p1.game.Game;
 
 public abstract class Weapon extends GameObject {
 	
-	private int damage;
+	protected int damage;
 
 	public Weapon(Game game, int x, int y, int life,int damage) {
 		super(game, x, y, life);

@@ -12,4 +12,16 @@ public abstract class EnemyShip extends Ship {
 	public void onDelete() {
 		this.game.receivePoints(this.points);
 	}
+	
+	@Override
+	public boolean receiveLaserAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	 }
+	
+	@Override
+	public boolean receiveShockWaveAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	}
 }
