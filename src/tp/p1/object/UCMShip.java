@@ -6,8 +6,6 @@ public class UCMShip extends Ship{
 	
 		private Shockwave shockwave;
 		private Laser laser;
-		
-		private Game game;
 
 		public UCMShip(Game game,int x,int y) {
 			super(game,x,y,3,0);
@@ -54,6 +52,7 @@ public class UCMShip extends Ship{
 		public boolean shoot() {
 			if(this.laser == null) {
 				this.laser = new Laser(this.game, this.x,this.y);
+				this.game.addObject(this.laser);
 				return true;
 			}
 			else return false;

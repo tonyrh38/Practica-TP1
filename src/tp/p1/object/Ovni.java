@@ -20,6 +20,12 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 	}
 	
 	@Override
+	public void onDelete(){
+		super.onDelete();
+		this.game.enableShockWave();
+	}
+	
+	@Override
 	public void move() {
 		// TODO Auto-generated method stub
 		

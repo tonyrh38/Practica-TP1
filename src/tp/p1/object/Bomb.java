@@ -33,6 +33,7 @@ public class Bomb extends Weapon{
 	@Override
 	public boolean performAttack(GameObject other){
 		other.receiveBombAttack(this.damage);
+		this.onDelete();
 		return true;
 	}
 	

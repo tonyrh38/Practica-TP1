@@ -6,19 +6,19 @@ public class Laser extends Weapon {
 	
 	public Laser(Game game, int x, int y) {
 		super(game,x,y,1,1);
-		this.game.addObject(this);
 	}
 
 	@Override
 	public void computerAction() {}
 
 	@Override
-	public void onDelete() {}
+	public void onDelete() {
+		this.game.enableLaser();
+	}
 
 	@Override
 	public void move() {
-		// TODO Auto-generated method stub
-		
+		this.y--;
 	}
 
 	@Override
@@ -29,6 +29,7 @@ public class Laser extends Weapon {
 	@Override
 	public boolean performAttack(GameObject other){
 		other.receiveLaserAttack(this.damage);
+		this.onDelete();
 		return true;
 	}
 	

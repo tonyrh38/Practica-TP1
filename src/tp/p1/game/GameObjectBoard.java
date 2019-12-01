@@ -58,13 +58,23 @@ public class GameObjectBoard {
 	
 	public void update() {
 		for(int i = 0; i < this.currentObjects; i++) {
-			if(this.objects[i] != null) this.objects[i].move();
+			if(this.objects[i] != null) {
+				this.objects[i].move();
+				if(this.objects[i].getClass() == Weapon.class) checkAttacks(this.objects[i]);
+			}
 		}
 		this.removeDead();
 	}
 	
 	private void checkAttacks(GameObject object) {
-		// TODO implement
+		boolean attacked = false;
+		for(int i = 0; i < this.currentObjects && !attacked; i++) {
+			if(this.objects[i] != null && this.objects[i].isOnPosition(object.getX(),object.getY())) {
+				object.performAttack(this.objects[i]);
+				this.objects[i] = null;
+				attacked = true;
+			}
+		}
 	}
 	
 	public void computerAction() {
