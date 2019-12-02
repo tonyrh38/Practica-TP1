@@ -11,7 +11,8 @@ public class CommandGenerator {
 			new NoneCommand(),
 			new MoveCommand(),
 			new ShootCommand(),
-			new ShockwaveCommand()
+			new ShockwaveCommand(),
+			new BuyCommand()
 		};
 	
 	// Metodos

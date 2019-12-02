@@ -9,7 +9,11 @@ public abstract class AlienShip extends EnemyShip {
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+	public void move(boolean down,boolean movement) {
+		if(this.game.canMove()) {
+			if(down) this.y++;
+			else if(movement) this.x++;
+			else this.x--;
+		}
 	}
 }

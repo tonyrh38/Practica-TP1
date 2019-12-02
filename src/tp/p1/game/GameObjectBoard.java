@@ -56,11 +56,11 @@ public class GameObjectBoard {
 		}
 	}
 	
-	public void update() {
+	public void update(boolean down, boolean movement) {
 		for(int i = 0; i < this.currentObjects; i++) {
 			if(this.objects[i] != null) {
-				this.objects[i].move();
-				if(this.objects[i].getClass() == Weapon.class) checkAttacks(this.objects[i]);
+				this.objects[i].move(down,movement);
+				if(this.objects[i].getClass() == Laser.class || this.objects[i].getClass() == Bomb.class) checkAttacks(this.objects[i]);
 			}
 		}
 		this.removeDead();
@@ -102,7 +102,7 @@ public class GameObjectBoard {
 		boolean landed = false;
 		
 		for(int i = 0; i < this.currentObjects && !landed; i++) {
-			if(this.objects[i] != null && this.objects[i].getClass() == AlienShip.class) {
+			if(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class)) {
 				landed = this.objects[i].getX() == Game.DIM_Y - 1;
 			}
 		}
@@ -114,7 +114,7 @@ public class GameObjectBoard {
 		boolean dead = true;
 		
 		for(int i = 0; i < this.currentObjects && dead; i++) {
-			dead = !(this.objects[i] != null && this.objects[i].getClass() == AlienShip.class);
+			dead = !(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class));
 		}
 		
 		return dead;
@@ -124,7 +124,7 @@ public class GameObjectBoard {
 		int alive = 0;
 		
 		for(int i = 0; i < this.currentObjects; i++) {
-			if(this.objects[i] != null && this.objects[i].getClass() == AlienShip.class) alive++;
+			if(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class)) alive++;
 		}
 		
 		return alive;
@@ -142,5 +142,35 @@ public class GameObjectBoard {
 		}
 		
 		return str;
+	}
+
+	public boolean isOnWall() {
+		boolean wall = false;
+		
+		for(int i = 0; i < this.currentObjects && !wall; i++) {
+			if(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class)) {
+				if(this.objects[i].getX() == 0 || this.objects[i].getX() == Game.DIM_X - 1) wall = true;
+			}
+		}
+		
+		return wall;
+	}
+
+	public boolean shockwaveAttack(int damage) {
+		for(int i = 0; i < this.currentObjects; i++) {
+			if(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class)) {
+				this.objects[i].receiveShockWaveAttack(damage);
+			}
+		}
+		return true;
+	}
+
+	public void damageAround(int x, int y) {
+		for(int i = y - 1; i <= y + 1; i++) {
+			for(int j = x - 1; j <= x + 1; j++) {
+				GameObject object = this.getObjectInPosition(j, i);
+				if(object != null) object.getDamage(1);
+			}
+		}
 	}
 }

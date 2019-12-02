@@ -1,32 +1,35 @@
 package tp.p1.object;
 
 import tp.p1.game.Game;
+import tp.p1.interfaces.IExecuteRandomActions;
 
 public class RegularShip extends AlienShip{
+	
+	private boolean explode;
 		
 	public RegularShip(Game game, int x, int y) {
 		super(game,x,y,2,5);
+		this.explode = false;
 	}
 
 	@Override
 	public void computerAction() {
-		
+		if(!this.explode && IExecuteRandomActions.canBecomeExplosiveShip(this.game)) {
+			this.explode = true;
+		}
+	}
+	
+	@Override
+	public void onDelete() {
+		super.onDelete();
+		if(this.explode) {
+			this.game.ShipExplodesIn(this.x,this.y);
+		}
 	}
 	
 	@Override
 	public String toString() {
-		return "C["+ this.life +"]";
+		if(this.explode) return "E["+ this.life +"]";
+		else return "C["+ this.life +"]";
 	}
-	/*public boolean isOnWall() {
-	return this.x == 0 || this.x == Game.DIM_X - 1;
-	}
-	public void update(boolean movement, boolean down) {
-		if(down) this._y++;
-		else if(movement) this._x++;
-		else this._x--;
-	}
-	public boolean win() {
-		return this._y == this._game.getY_SIZE() - 1;
-	}
-	*/
 }

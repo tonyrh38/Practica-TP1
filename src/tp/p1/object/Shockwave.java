@@ -18,7 +18,7 @@ public class Shockwave extends Weapon {
 	public void onDelete(){}
 
 	@Override
-	public void move() {}
+	public void move(boolean down,boolean movement) {}
 
 	@Override
 	public String toString() {
@@ -27,7 +27,7 @@ public class Shockwave extends Weapon {
 
 	public boolean attack() {
 		if(this.enable) {
-			
+			this.game.shockwaveAttack(this.damage);
 			this.enable = false;
 			return true;
 		}

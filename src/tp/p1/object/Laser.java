@@ -17,8 +17,9 @@ public class Laser extends Weapon {
 	}
 
 	@Override
-	public void move() {
+	public void move(boolean down,boolean movement) {
 		this.y--;
+		if(!this.game.isOnBoard(this.x,this.y)) this.onDelete();
 	}
 
 	@Override

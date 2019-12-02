@@ -20,9 +20,9 @@ public class Bomb extends Weapon{
 	}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
+	public void move(boolean down,boolean movement) {
+		this.y++;
+		if(!this.game.isOnBoard(this.x,this.y)) this.onDelete();
 	}
 
 	@Override

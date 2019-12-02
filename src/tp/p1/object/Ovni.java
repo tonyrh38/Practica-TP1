@@ -23,17 +23,19 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 	public void onDelete(){
 		super.onDelete();
 		this.game.enableShockWave();
+		this.enable = false;
 	}
 	
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
+	public void move(boolean down,boolean movement) {
+		this.x--;
+		if(!this.game.isOnBoard(this.x,this.y)) this.enable = false;
 	}
 
 	@Override
 	public String toString() {
-		return "O["+ this.life +"]";
+		if(this.enable) return "O["+ this.life +"]";
+		else return "";
 	}
 	
 /*// Logica
