@@ -10,7 +10,8 @@ public class BuyCommand extends Command {
 
 	@Override
 	public boolean execute(Game game) {
-		return game.buy();
+		game.buy();
+		return false;
 	}
 
 	@Override
