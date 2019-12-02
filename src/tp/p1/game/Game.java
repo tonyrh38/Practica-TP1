@@ -4,6 +4,7 @@ import java.util.*;
 
 import tp.p1.interfaces.IPlayerController;
 import tp.p1.object.*;
+import tp.p1.printer.BoardPrinter;
 
 public class Game implements IPlayerController{
 	
@@ -122,11 +123,11 @@ public class Game implements IPlayerController{
 		else return "This should not happen";
 	}
 	
-	public void draw() {
-		GamePrinter gp = new GamePrinter(this, DIM_Y, DIM_X);
+	/*public void draw() {
+		BoardPrinter gp = new BoardPrinter(this, DIM_Y, DIM_X);
 		this.infoToString();
 		System.out.println(gp.toString());
-	}
+	}*/
 	
 	@Override
 	public boolean move(int numCells) {

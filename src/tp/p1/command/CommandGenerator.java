@@ -12,7 +12,9 @@ public class CommandGenerator {
 			new MoveCommand(),
 			new ShootCommand(),
 			new ShockwaveCommand(),
-			new BuyCommand()
+			new BuyCommand(),
+			new StringifyCommand(),
+			new ListPrintersCommand()
 		};
 	
 	// Metodos

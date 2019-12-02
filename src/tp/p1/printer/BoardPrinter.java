@@ -1,8 +1,9 @@
-package tp.p1.game;
+package tp.p1.printer;
 
+import tp.p1.game.Game;
 import tp.p1.util.MyStringUtils;
 
-public class GamePrinter {
+public class BoardPrinter extends GamePrinter{
 	
 	int numRows; 
 	int numCols;
@@ -10,10 +11,10 @@ public class GamePrinter {
 	final String space = " ";
 	
 	
-	public GamePrinter (Game game, int x, int y) {
+	public BoardPrinter (int x, int y) {
 		this.numCols = x;	
 		this.numRows = y;
-		encodeGame(game);
+		//encodeGame(game);
 	}
 	
 	private void encodeGame(Game game) {
@@ -25,7 +26,8 @@ public class GamePrinter {
 		}
 	}
 	
-	public String toString() {
+	@Override
+	public String toString(Game game) {
 
 		int cellSize = 7;
 		int marginSize = 2;
@@ -48,5 +50,17 @@ public class GamePrinter {
 				str.append(lineDelimiter);
 		}
 		return str.toString();
+	}
+
+	@Override
+	GamePrinter parse(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	String helpText() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
