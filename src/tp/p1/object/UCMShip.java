@@ -11,8 +11,6 @@ public class UCMShip extends Ship{
 		public UCMShip(Game game,int x,int y) {
 			super(game,x,y,3,0);
 			this.shockwave = new Shockwave(game,0,0);
-			this.laser = new Laser(this.game, this.x, this.y);
-			this.game.addObject(this.laser);
 			this.supermisile = 0;
 		}
 

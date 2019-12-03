@@ -20,7 +20,8 @@ public class Stringifier extends GamePrinter {
 		
 		for(int i = 0; i < Game.DIM_Y; i++) {
 			for(int j = 0; j < Game.DIM_X; j++) {
-				str.append(this.game.characterAtToSerialize(j, i) +"\n");
+				String aux = this.game.characterAtToSerialize(j, i);
+				if(aux != "") str.append(aux +"\n");
 			}
 		}
 		

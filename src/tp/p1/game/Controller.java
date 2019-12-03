@@ -11,7 +11,7 @@ public class Controller {
 		private Scanner in;
 		
 		private static final String PROMPT = "Command > ";	
-		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.";
+		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.\n";
 	
 	// Metodos	
 		

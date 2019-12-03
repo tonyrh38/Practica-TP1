@@ -70,9 +70,11 @@ public class GameObjectBoard {
 		boolean attacked = false;
 		for(int i = 0; i < this.currentObjects && !attacked; i++) {
 			if(this.objects[i] != null && this.objects[i].isOnPosition(object.getX(),object.getY())) {
-				object.performAttack(this.objects[i]);
-				this.objects[i] = null;
-				attacked = true;
+				if(!this.objects[i].equals(object)) {
+					object.performAttack(this.objects[i]);
+					this.objects[i] = null;
+					attacked = true;
+				}
 			}
 		}
 	}
@@ -103,7 +105,7 @@ public class GameObjectBoard {
 		
 		for(int i = 0; i < this.currentObjects && !landed; i++) {
 			if(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class)) {
-				landed = this.objects[i].getX() == Game.DIM_Y - 1;
+				landed = this.objects[i].getX() == Game.DIM_X - 1;
 			}
 		}
 		
