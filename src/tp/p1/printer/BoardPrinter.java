@@ -13,7 +13,6 @@ public class BoardPrinter extends GamePrinter{
 	public BoardPrinter (int x, int y) {
 		this.numCols = x;	
 		this.numRows = y;
-		this.encodeGame();
 	}
 	
 	private void encodeGame() {
@@ -28,6 +27,8 @@ public class BoardPrinter extends GamePrinter{
 	@Override
 	public String toString() {
 
+		this.encodeGame();
+		
 		int cellSize = 7;
 		int marginSize = 2;
 		String vDelimiter = "|";

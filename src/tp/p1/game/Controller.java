@@ -24,7 +24,6 @@ public class Controller {
 	// Logica
 		public void run() {
 			this.game.infoToString();
-			PrinterTypes.BOARDPRINTER.getObject(this.game);
 			System.out.println(PrinterTypes.BOARDPRINTER.getObject(this.game).toString());
 			while (!this.game.isFinished()){
 				System.out.println(PROMPT);
