@@ -21,10 +21,13 @@ public class MoveCommand extends Command {
 	@Override
 	public Command parse(String[] commandWords) {
 		if(commandWords.length == 3 && this.matchCommandName(commandWords[0])) {
-			if((commandWords[1] == "left" || commandWords[1] == "right") && (commandWords[2] == "1" || commandWords[2] == "2")) {
-				this.numCells = (commandWords[2].equals("1"))? 1 : 2;
-				this.numCells *= (commandWords[1].equals("left"))? -1 : 1;
-				return this;
+			if(commandWords[1].equals("left") || commandWords[1].equals("right")){
+				if (commandWords[2].equals("1") || commandWords[2].equals("2")) {
+					this.numCells = (commandWords[2].equals("1"))? 1 : 2;
+					this.numCells *= (commandWords[1].equals("left"))? -1 : 1;
+					return this;
+				}
+				else return null;
 			}
 			else return null;
 		}
