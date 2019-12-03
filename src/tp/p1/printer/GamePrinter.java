@@ -4,11 +4,12 @@ import tp.p1.game.Game;
 
 public abstract class GamePrinter {
 
-	public GamePrinter() {
-		// TODO Auto-generated constructor stub
-	}
+	protected Game game;
+	
+	public GamePrinter() {}
 
-	abstract String toString(Game game);
-	abstract GamePrinter parse(String name);
-	abstract String helpText();
+	protected void setGame(Game game) {
+		this.game = game;
+	}
+	public abstract String toString();
 }

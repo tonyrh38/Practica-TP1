@@ -31,41 +31,14 @@ public class Bomb extends Weapon{
 	}
 	
 	@Override
+	public String toSerialize() {
+		return "B; "+ this.x +";"+ this.y;
+	}
+	
+	@Override
 	public boolean performAttack(GameObject other){
 		other.receiveBombAttack(this.damage);
 		this.onDelete();
 		return true;
 	}
-	
-	/*
-	// Getters
-	public int getX() {
-		return _x;
-	}
-	public int getY() {
-		return _y;
-	}
-	public int getDamage() {
-		return _damage;
-	}
-	
-	// Setters
-	public void setX(int x) {
-		this._x = x;
-	}
-	public void setY(int y) {
-		this._y = y;
-	}
-	
-	// Logica
-	public String toString() {
-		return ".";
-	}
-	public boolean update() {
-		this._y++;
-		if(this._y < this._game.getX_SIZE()) {
-			return !this._game.impactBomb(this._x, this._y);
-		}
-		else return false;
-	}*/
 }

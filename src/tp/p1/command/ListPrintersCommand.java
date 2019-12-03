@@ -1,24 +1,24 @@
 package tp.p1.command;
 
 import tp.p1.game.Game;
+import tp.p1.printer.PrinterTypes;
 
 public class ListPrintersCommand extends Command {
 
 	public ListPrintersCommand() {
-		super(name, shortcut, details, help);
-		// TODO Auto-generated constructor stub
+		super("listprinters", "p","listprinters", "Prints the list of available printers.");
 	}
 
 	@Override
 	public boolean execute(Game game) {
-		// TODO Auto-generated method stub
+		PrinterTypes.printerHelp(game);
 		return false;
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.matchCommandName(commandWords[0])) return this;
+		else return null;
 	}
 
 }

@@ -26,6 +26,11 @@ public class Supermisile extends Weapon {
 	}
 	
 	@Override
+	public String toSerialize() {
+		return "X; "+ this.x +";"+ this.y;
+	}
+	
+	@Override
 	public boolean performAttack(GameObject other){
 		other.receiveLaserAttack(this.damage);
 		this.onDelete();

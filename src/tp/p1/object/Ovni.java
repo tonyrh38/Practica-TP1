@@ -38,34 +38,8 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 		else return "";
 	}
 	
-/*// Logica
-	public boolean isOvniIn(int i, int j) {
-		return this._x == j && this._y == i;
+	@Override
+	public String toSerialize() {
+		return "O; "+ this.x +";"+ this.y +";"+ this.life;
 	}
-	public String toString() {
-		return "O["+ this._vida +"]";
-	}
-	public boolean impactLaser(int x, int y, int damage) {
-		if(this._x == x && this._y == y) {
-			this._vida -= damage;
-			return true;
-		}
-		else return false;
-	}
-	public boolean isDestroyed() {
-		if(this._vida <= 0) {
-			this._game.updatePuntuation(this._puntos);
-			return true;
-		}
-		else return false;
-	}
-	public void update() {
-		this._x--;
-	}
-
-	public void shockwaveDamage() {
-		this._vida--;
-	}
-
-	*/	
 }

@@ -1,6 +1,5 @@
 package tp.p1.printer;
 
-import tp.p1.game.Game;
 import tp.p1.util.MyStringUtils;
 
 public class BoardPrinter extends GamePrinter{
@@ -14,20 +13,20 @@ public class BoardPrinter extends GamePrinter{
 	public BoardPrinter (int x, int y) {
 		this.numCols = x;	
 		this.numRows = y;
-		//encodeGame(game);
+		this.encodeGame();
 	}
 	
-	private void encodeGame(Game game) {
+	private void encodeGame() {
 		board = new String[numRows][numCols];
 		for(int i = 0; i < numRows; i++) {
 			for(int j = 0; j < numCols; j++) {
-				board[i][j] =  game.characterAtToString(j, i);
+				board[i][j] =  this.game.characterAtToString(j, i);
 			}
 		}
 	}
 	
 	@Override
-	public String toString(Game game) {
+	public String toString() {
 
 		int cellSize = 7;
 		int marginSize = 2;
@@ -50,17 +49,5 @@ public class BoardPrinter extends GamePrinter{
 				str.append(lineDelimiter);
 		}
 		return str.toString();
-	}
-
-	@Override
-	GamePrinter parse(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	String helpText() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

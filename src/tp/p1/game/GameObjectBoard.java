@@ -143,6 +143,20 @@ public class GameObjectBoard {
 		
 		return str;
 	}
+	
+	public String objectAtToSerialize(int x, int y) {
+		boolean found = false;
+		String str = "";
+		
+		for(int i = 0; i < this.currentObjects && !found; i++) {
+			if(this.objects[i] != null && this.objects[i].isOnPosition(x, y)) {
+				str = this.objects[i].toSerialize();
+				found = true;
+			}
+		}
+		
+		return str;
+	}
 
 	public boolean isOnWall() {
 		boolean wall = false;

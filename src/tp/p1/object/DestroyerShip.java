@@ -23,44 +23,16 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
 	public String toString() {
 		return "D["+ this.life +"]";
 	}
+	
+	@Override
+	public String toSerialize() {
+		if(this.game.getMovement())	return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
+				(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";right";
+		else  return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
+		(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";left";
+	}
 
 	public void deleteBomb() {
 		this.bomb = null;
 	}
-		
-	/*// Logica
-		
-		public void dropBomb() {
-			if(this._bomb != null) {
-				Bomb bomb = new Bomb(this._x,this._y,this._game);
-				this._game.insertBomb(bomb);
-			}
-		}
-		public void damage(int damage) {
-			this._vida -= damage;
-		}
-		public boolean isDestroyed() {
-			if(this._vida <= 0) {
-				this._game.updatePuntuation(this._puntos);
-				return true;
-			}
-			else return false;
-		}
-		public boolean isBombIn(int x, int y) {
-			return this._bomb.getX() == x && this._bomb.getY() == y;
-		}
-		public void destroyBomb() {
-			this._bomb = null;
-		}
-		public boolean isOnWall() {
-			return this._x == 0 || this._x == this._game.getX_SIZE() - 1;
-		}
-		public void update(boolean movement, boolean down) {
-			if(down) this._y++;
-			else if(movement) this._x++;
-			else this._x--;
-		}
-		public boolean win() {
-			return this._y == this._game.getY_SIZE() - 1;
-		}*/
 }

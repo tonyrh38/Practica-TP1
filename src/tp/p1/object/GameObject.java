@@ -53,6 +53,5 @@ public abstract class GameObject implements IAttack {
 		public abstract void onDelete();
 		public abstract void move(boolean down, boolean movement);
 		public abstract String toString();
-
+		public abstract String toSerialize();
 }
-

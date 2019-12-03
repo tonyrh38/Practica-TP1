@@ -4,7 +4,6 @@ import java.util.*;
 
 import tp.p1.interfaces.IPlayerController;
 import tp.p1.object.*;
-import tp.p1.printer.BoardPrinter;
 
 public class Game implements IPlayerController{
 	
@@ -44,8 +43,16 @@ public class Game implements IPlayerController{
 		return rand;
 	}
 	
+	public int getCurrentCycle() {
+		return this.currentCycle;
+	}
+	
 	public Level getLevel() {
 		return level;
+	}
+	
+	public boolean getMovement() {
+		return this.movement;
 	}
 	
 	public void reset() {
@@ -106,8 +113,12 @@ public class Game implements IPlayerController{
 		if(this.player.isOnPosition(x, y)) return this.player.toString();
 		else return this.board.objectAtToString(x,y);
 	}
+	public String characterAtToSerialize(int x, int y) {
+		if(this.player.isOnPosition(x, y)) return this.player.toSerialize();
+		else return this.board.objectAtToSerialize(x,y);
+	}
 	
-	private void infoToString() {
+	public void infoToString() {
 		System.out.println("Life: " + this.player.getLive());
 		System.out.println("Number of cycles: " + this.currentCycle);
 		System.out.println("Points:" + this.player.getTotalPuntuation());
@@ -122,12 +133,6 @@ public class Game implements IPlayerController{
 		else if (doExit) return "Player exits the game";
 		else return "This should not happen";
 	}
-	
-	/*public void draw() {
-		BoardPrinter gp = new BoardPrinter(this, DIM_Y, DIM_X);
-		this.infoToString();
-		System.out.println(gp.toString());
-	}*/
 	
 	@Override
 	public boolean move(int numCells) {

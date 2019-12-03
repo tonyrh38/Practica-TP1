@@ -93,4 +93,11 @@ public class UCMShip extends Ship{
 			}
 			else return false;
 		}
+
+		public String toSerialize() {
+			if(this.shockwave != null) return "P;"+ this.x +";"+ this.y + ";"+ this.life +
+					";" + this.points +";on;"+ this.supermisile ;
+			else return "P;"+ this.x +";"+ this.y + ";"+ this.life +
+					";" + this.points +";off;"+ this.supermisile ;
+		}
 }

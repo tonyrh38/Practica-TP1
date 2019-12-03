@@ -4,26 +4,26 @@ import tp.p1.game.Game;
 
 public class Stringifier extends GamePrinter {
 
-	public Stringifier() {
-		// TODO Auto-generated constructor stub
-	}
+	public Stringifier() {}
 
+	private static final String title = "— Space Invaders v2.0 —";	
+	
 	@Override
-	String toString(Game game) {
-		// TODO Auto-generated method stub
-		return null;
+	public
+	String toString() {
+		StringBuilder str = new StringBuilder();
+		
+		str.append(title + "\n");
+		str.append("\n");
+		str.append("G;" + this.game.getCurrentCycle() + "\n");
+		str.append("L;" + this.game.getLevel().name() + "\n");
+		
+		for(int i = 0; i < Game.DIM_Y; i++) {
+			for(int j = 0; j < Game.DIM_X; j++) {
+				str.append(this.game.characterAtToSerialize(j, i) +"\n");
+			}
+		}
+		
+		return str.toString();
 	}
-
-	@Override
-	GamePrinter parse(String name) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	String helpText() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

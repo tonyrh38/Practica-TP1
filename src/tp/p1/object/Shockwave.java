@@ -24,6 +24,10 @@ public class Shockwave extends Weapon {
 	public String toString() {
 		return "ShockWave: " + this.enable;
 	}
+	@Override
+	public String toSerialize() {
+		return "";
+	}
 
 	public boolean attack() {
 		if(this.enable) {
@@ -37,5 +41,4 @@ public class Shockwave extends Weapon {
 	public void enable() {
 		this.enable = true;
 	}
-
 }
