@@ -41,4 +41,10 @@ public class Bomb extends Weapon{
 		this.onDelete();
 		return true;
 	}
+	
+	@Override
+	public boolean receiveLaserAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	 }
 }

@@ -60,23 +60,25 @@ public class GameObjectBoard {
 		for(int i = 0; i < this.currentObjects; i++) {
 			if(this.objects[i] != null) {
 				this.objects[i].move(down,movement);
-				if(this.objects[i].getClass() == Laser.class || this.objects[i].getClass() == Bomb.class) checkAttacks(this.objects[i]);
+				if(this.objects[i].getClass() == Laser.class || this.objects[i].getClass() == Bomb.class) {
+					if(checkAttacks(this.objects[i])) this.objects[i] = null;
+				}
 			}
 		}
 		this.removeDead();
 	}
 	
-	private void checkAttacks(GameObject object) {
+	private boolean checkAttacks(GameObject object) {
 		boolean attacked = false;
 		for(int i = 0; i < this.currentObjects && !attacked; i++) {
 			if(this.objects[i] != null && this.objects[i].isOnPosition(object.getX(),object.getY())) {
 				if(!this.objects[i].equals(object)) {
 					object.performAttack(this.objects[i]);
-					this.objects[i] = null;
 					attacked = true;
 				}
 			}
 		}
+		return attacked;
 	}
 	
 	public void computerAction() {
@@ -105,7 +107,7 @@ public class GameObjectBoard {
 		
 		for(int i = 0; i < this.currentObjects && !landed; i++) {
 			if(this.objects[i] != null && (this.objects[i].getClass() == RegularShip.class || this.objects[i].getClass() == DestroyerShip.class)) {
-				landed = this.objects[i].getX() == Game.DIM_X - 1;
+				landed = this.objects[i].getY() == Game.DIM_Y - 1;
 			}
 		}
 		
