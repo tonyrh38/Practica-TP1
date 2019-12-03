@@ -11,13 +11,13 @@ public class BuyCommand extends Command {
 	@Override
 	public boolean execute(Game game) {
 		game.buy();
-		return false;
+		return true;
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
 		if(commandWords.length == 2 && this.matchCommandName(commandWords[0])) {
-			if((commandWords[1] == "supermisil")) return this;
+			if(commandWords[1].equals( "supermisil")) return this;
 			else return null;
 		}
 		else return null;

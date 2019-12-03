@@ -11,7 +11,7 @@ public class ListPrintersCommand extends Command {
 
 	@Override
 	public boolean execute(Game game) {
-		PrinterTypes.printerHelp(game);
+		System.out.println(PrinterTypes.printerHelp(game));
 		return false;
 	}
 

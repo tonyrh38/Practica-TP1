@@ -20,7 +20,7 @@ public class ShootCommand extends Command {
 	public Command parse(String[] commandWords) {
 		if(this.matchCommandName(commandWords[0])) {
 			if(commandWords.length == 2) {
-				if(commandWords[0] == "supermisil") {
+				if(commandWords[1].equals("supermisil")) {
 					this.supermisil = true;
 					return this;
 				}

@@ -36,4 +36,10 @@ public class Supermisile extends Weapon {
 		this.onDelete();
 		return true;
 	}
+	
+	@Override
+	public boolean receiveBombAttack(int damage){
+		this.getDamage(damage);
+		return true;
+	}
 }

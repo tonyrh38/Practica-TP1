@@ -60,7 +60,7 @@ public class GameObjectBoard {
 		for(int i = 0; i < this.currentObjects; i++) {
 			if(this.objects[i] != null) {
 				this.objects[i].move(down,movement);
-				if(this.objects[i].getClass() == Laser.class || this.objects[i].getClass() == Bomb.class) {
+				if(this.objects[i].getClass() == Laser.class || this.objects[i].getClass() == Bomb.class || this.objects[i].getClass() == Supermisile.class) {
 					if(checkAttacks(this.objects[i])) this.objects[i] = null;
 				}
 			}

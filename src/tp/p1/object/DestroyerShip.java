@@ -8,7 +8,7 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
 	private Bomb bomb;
 
 	public DestroyerShip( Game game, int x, int y) {
-		super(game,x,y,2,10);
+		super(game,x,y,1,10);
 	}
 
 	@Override
