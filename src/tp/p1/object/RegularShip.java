@@ -37,13 +37,13 @@ public class RegularShip extends AlienShip{
 	public String toSerialize() {
 		if(this.explode) {
 			if(this.game.getMovement())	return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-					(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";right";
+					(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";right";
 			else  return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-			(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";left";
+			(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";left";
 		}
 		else if(this.game.getMovement())	return "R; "+ this.x +";"+ this.y +";"+ this.life +";"+
-			(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";right";
+			(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";right";
 			else  return "R; "+ this.x +";"+ this.y +";"+ this.life +";"+
-			(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";left";
+			(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";left";
 		}
 }
