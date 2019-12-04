@@ -1,5 +1,6 @@
 package tp.p1.object;
 
+import tp.p1.exception.CommandExecuteException;
 import tp.p1.game.Game;
 
 public class Shockwave extends Weapon {
@@ -29,13 +30,12 @@ public class Shockwave extends Weapon {
 		return "";
 	}
 
-	public boolean attack() {
+	public void attack() throws CommandExecuteException {
 		if(this.enable) {
 			this.game.shockwaveAttack(this.damage);
 			this.enable = false;
-			return true;
 		}
-		return false;
+		else throw new CommandExecuteException("La shockwave no esta disponible");
 	}
 
 	public void enable() {

@@ -1,5 +1,7 @@
 package tp.p1.command;
 
+import tp.p1.exception.CommandParseException;
+
 public class CommandGenerator {
 	// Atributos
 		private static Command[] availableCommands = {
@@ -14,15 +16,18 @@ public class CommandGenerator {
 			new ShockwaveCommand(),
 			new BuyCommand(),
 			new StringifyCommand(),
-			new ListPrintersCommand()
+			new ListPrintersCommand(),
+			new SaveCommand()
 		};
+		
+		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.\n";
 	
 	// Metodos
-		public static Command parseCommand(String[ ] commandWords) {
-			for (Command command : availableCommands) {
-				if (command.parse(commandWords) != null) return command;
-			}
-			return null;
+		public static Command parseCommand(String[ ] commandWords) throws CommandParseException{
+				for (Command command : availableCommands) {
+					if (command.parse(commandWords) != null) return command;
+				}
+				throw new CommandParseException(unknownCommandMsg);
 		}
 		public static String commandHelp() {
 			String str = "";

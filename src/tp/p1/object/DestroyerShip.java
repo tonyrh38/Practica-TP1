@@ -27,9 +27,9 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
 	@Override
 	public String toSerialize() {
 		if(this.game.getMovement())	return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-				(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";right";
+				(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";right";
 		else  return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-		(this.game.getLevel().getVel() -  this.game.getCurrentCycle()) % this.game.getLevel().getVel()+";left";
+		(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";left";
 	}
 
 	public void deleteBomb() {

@@ -3,6 +3,7 @@ package tp.p1.game;
 import java.util.Scanner;
 
 import tp.p1.command.*;
+import tp.p1.exception.*;
 import tp.p1.printer.PrinterTypes;
 
 public class Controller {
@@ -11,7 +12,6 @@ public class Controller {
 		private Scanner in;
 		
 		private static final String PROMPT = "Command > ";	
-		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.\n";
 	
 	// Metodos	
 		
@@ -28,15 +28,17 @@ public class Controller {
 			while (!this.game.isFinished()){
 				System.out.println(PROMPT);
 				String[] words = this.in.nextLine().toLowerCase().trim().split ("\\s+");
-				Command command = CommandGenerator.parseCommand(words);
-				if (command != null) {
+				try {
+					Command command = CommandGenerator.parseCommand(words);
 					if (command.execute(this.game)){
 						this.game.update();
 						this.game.infoToString();
 						System.out.println(PrinterTypes.BOARDPRINTER.getObject(this.game).toString());
 					}
 				}
-				else System.out.format(unknownCommandMsg);
+				catch(CommandParseException | CommandExecuteException ex) {
+					System.out.format(ex.getMessage() + " %n %n");
+				}
 			}
 			System.out.println(this.game.getWinnerMessage());
 		}

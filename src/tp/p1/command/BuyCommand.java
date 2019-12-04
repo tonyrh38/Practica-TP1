@@ -1,6 +1,7 @@
 package tp.p1.command;
 
 import tp.p1.game.Game;
+import tp.p1.exception.*;
 
 public class BuyCommand extends Command {
 
@@ -9,16 +10,16 @@ public class BuyCommand extends Command {
 	}
 
 	@Override
-	public boolean execute(Game game) {
-		game.buy();
-		return true;
+	public boolean execute(Game game) throws CommandExecuteException{
+			game.buy();
+			return true;
 	}
 
 	@Override
-	public Command parse(String[] commandWords) {
+	public Command parse(String[] commandWords) throws CommandParseException {
 		if(commandWords.length == 2 && this.matchCommandName(commandWords[0])) {
 			if(commandWords[1].equals( "supermisil")) return this;
-			else return null;
+			else throw new CommandParseException(incorrectArgsMsg);
 		}
 		else return null;
 	}

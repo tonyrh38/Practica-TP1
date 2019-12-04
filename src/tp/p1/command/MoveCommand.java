@@ -1,5 +1,7 @@
 package tp.p1.command;
 
+import tp.p1.exception.CommandExecuteException;
+import tp.p1.exception.CommandParseException;
 import tp.p1.game.Game;
 
 public class MoveCommand extends Command {
@@ -13,23 +15,31 @@ public class MoveCommand extends Command {
 	}
 	
 	@Override
-	public boolean execute(Game game) {
+	public boolean execute(Game game) throws CommandExecuteException{
 		game.move(this.numCells);
 		return true;
 	}
 
 	@Override
-	public Command parse(String[] commandWords) {
-		if(commandWords.length == 3 && this.matchCommandName(commandWords[0])) {
-			if(commandWords[1].equals("left") || commandWords[1].equals("right")){
-				if (commandWords[2].equals("1") || commandWords[2].equals("2")) {
-					this.numCells = (commandWords[2].equals("1"))? 1 : 2;
-					this.numCells *= (commandWords[1].equals("left"))? -1 : 1;
-					return this;
+	public Command parse(String[] commandWords) throws CommandParseException {
+		if(this.matchCommandName(commandWords[0])) {
+			if(commandWords.length == 3) {
+				if(commandWords[1].equals("left") || commandWords[1].equals("right")){
+					if (commandWords[2].equals("1") || commandWords[2].equals("2")) {
+						try {
+							this.numCells = Integer.parseUnsignedInt(commandWords[2]);
+						} catch (NumberFormatException e) {
+							throw new CommandParseException(incorrectArgsMsg);
+						}
+						this.numCells *= (commandWords[1].equals("left"))? -1 : 1;
+						
+						return this;
+					}
+					else throw new CommandParseException(incorrectArgsMsg);
 				}
-				else return null;
+				else throw new CommandParseException(incorrectArgsMsg);
 			}
-			else return null;
+			else throw new CommandParseException(incorrectNumArgsMsg);
 		}
 		else return null;
 	}
