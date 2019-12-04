@@ -1,238 +1,189 @@
 package tp.p1.game;
 
 import java.util.*;
-import tp.p1.ship.*;
-import tp.p1.shipList.*;
 
-public class Game {
+import tp.p1.interfaces.IPlayerController;
+import tp.p1.object.*;
+
+public class Game implements IPlayerController{
 	
-	private int cycleCounter;
-	private int puntuation;
-	private int ovnisDestroyed;
+	public final static int DIM_X = 9;
+	public final static int DIM_Y = 8;
+
+	private int currentCycle;
+	private Random rand;
 	private Level level;
-	private long seed;
+
+	GameObjectBoard board;
+	private UCMShip player;
+	
 	private boolean movement;
 	private boolean down;
-
-	private UCMShip ucmShip;
-	private RegularShipList regularShipList;
-	private DestroyerShipList destroyerShipList;
-	private BombList bombList;
-	private Ovni ovni;
 	
-	private Random rand;
+	private boolean doExit;
+	private BoardInitializer initializer;
 	
-	public Game(Level level) {
-		this(level, System.currentTimeMillis());
-	}
-	public Game(Level level, long seed) {
-		this.setLevel(level);
-		this.seed = seed;
-		this.reset();
-	}
-	public void reset() {
-		this.setCycleCounter(0);
-		this.setPuntuation(0);
-		this.setOvnisDestroyed(0);
-		this.rand = new Random(this.seed);
-		this.setMovement(true);
+	public Game (Level level, Random random){
+		this.rand = random;
+		this.level = level;
+		this.initializer = new BoardInitializer();
+		initGame();
+		this.movement = true;
 		this.down = false;
-		
-		this.ucmShip = new UCMShip();
-		this.regularShipList = new RegularShipList(this.getLevel());
-		this.destroyerShipList = new DestroyerShipList(this.getLevel());
-		this.bombList = new BombList(this.getLevel());
-		this.ovni = new Ovni();
 	}
 	
-	public DestroyerShipList getDestroyerShipList() {
-		return destroyerShipList;
+	public void initGame (){
+		this.currentCycle = 0;
+		this.board = this.initializer.initialize(this, level);
+		this.player = new UCMShip(this, DIM_X / 2, DIM_Y - 1);
+		this.board.add(player);
 	}
-	public RegularShipList getRegularShipList() {
-		return regularShipList;
-	}
-	public BombList getBombList() {
-		return bombList;
+
+	public Random getRandom() {
+		return rand;
 	}
 	
-	public int getCycleCounter() {
-		return cycleCounter;
+	public int getCurrentCycle() {
+		return this.currentCycle;
 	}
-	public int getPuntuation() {
-		return puntuation;
-	}
+	
 	public Level getLevel() {
 		return level;
 	}
-	public int getOvnisDestroyed() {
-		return this.ovnisDestroyed;
-	}
-	public int getVidaUCMShip() {
-		return this.ucmShip.getVida();
-	}
-	public int getXUCMShip() {
-		return this.ucmShip.getX();
-	}
-	public int getYUCMShip() {
-		return this.ucmShip.getY();
-	}
-	public boolean getShockwaveUCMShip() {
-		return this.ucmShip.getShockwave();
-	}
-	public int getVidaOvni() {
-		return this.ovni.getVida();
-	}
-	public int getXOvni() {
-		return this.ovni.getX();
-	}
-	public int getYOvni() {
-		return this.ovni.getY();
-	}
-	public int getPuntOvni() {
-		return this.ovni.getPuntos();
-	}
-	public double getFreqOvni() {
-		return this.getLevel().getOvni();
-	}
-	public Random getRand() {
-		return this.rand;
-	}
+	
 	public boolean getMovement() {
-		return movement;
-	}
-	public boolean getDown() {
-		return this.down;
+		return this.movement;
 	}
 	
-	public void setCycleCounter(int cycleCounter) {
-		this.cycleCounter = cycleCounter;
-	}
-	public void setPuntuation(int puntuation) {
-		this.puntuation = puntuation;
-	}
-	public void calculatePuntuation() {
-		int points = this.getDestroyerShipList().calculatePuntuation();
-		points += this.getRegularShipList().calculatePuntuation();
-		points += this.getPuntOvni() * this.getOvnisDestroyed();
-		this.setPuntuation(points);
-	}
-	public void setLevel(Level level) {
-		this.level = level;
-	}
-	public void setOvnisDestroyed(int num) {
-		this.ovnisDestroyed = num;
-	}
-	public void setVidaUCMShip(int vida) {
-		this.ucmShip.setVida(vida);
-	}
-	public void setXUCMShip(int x) {
-		this.ucmShip.setX(x);
-	}
-	public void setShockwaveUCMShip(boolean sw) {
-		this.ucmShip.setShockwave(sw);
-	}
-	public boolean getEnableOvni() {
-		 return this.ovni.getEnable();
-	}
-	public void setEnableOvni(boolean set) {
-		this.ovni.setEnable(set);
-	}
-	public void setXOvni(int x) {
-		this.ovni.setX(x);
-	}
-	public void setDown(boolean down) {
-		this.down = down;
-	}
-	public void damageOvni() {
-		this.setEnableOvni(false);
-		this.setOvnisDestroyed(this.getOvnisDestroyed() + 1);
-		this.setShockwaveUCMShip(true);
-	}
-	public void damagePlayer() {
-		this.ucmShip.damage();
-	}
-	public void setPlayerDefeated() {
-		setVidaUCMShip(0);
-	}
-	public void setMovement(boolean movement) {
-		this.movement = movement;
+	public void reset() {
+		initGame();
 	}
 	
-	public int getRemaining() {
-		return this.getDestroyerShipList().getDestroyerRemaining() + this.getRegularShipList().getRegularRemaining();
+	public void addObject(GameObject object) {
+		board.add(object);
 	}
 	
-	public void createOvni() {
-		if(!getEnableOvni() && this.getRand().nextInt(10) <= this.getFreqOvni() * 10) {
-			this.setEnableOvni(true);
+	public String positionToString(int x, int y) {
+		return board.toString(x,y);
+	}
+
+	public boolean isFinished() {
+		return playerWin() || aliensWin() || doExit;
+	}
+	
+	public boolean canMove() {
+		return this.currentCycle % this.level.getVel() == 0;
+	}
+	
+	public boolean aliensWin() {
+		return !player.isAlive() || this.board.aliensLanded();
+	}
+	
+	private boolean playerWin() {
+		return this.board.aliensDead();
+	}
+	
+	private void checkShipMovement() {
+		if(this.board.isOnWall()) {
+			if(this.down) {
+				this.down = false;
+				this.movement = !this.movement;
+			}
+			else {
+				this.down = true;
+			}
 		}
 	}
-	public boolean impactBombOvni(int x, int y) {
-		if(getEnableOvni() && this.getXOvni() == x && this.getYOvni() == y) {
-			this.damageOvni();
+	public void update() {
+		board.computerAction();
+		this.checkShipMovement();
+		board.update(this.down,this.movement);
+		currentCycle += 1;
+	}
+	
+	public boolean isOnBoard(int x, int y) {
+		return x >= 0 && x < DIM_X && y >= 0 && y < DIM_Y;
+	}
+	
+	public void exit() {
+		doExit = true;
+	}
+	
+	public String characterAtToString(int x, int y) {
+		if(this.player.isOnPosition(x, y)) return this.player.toString();
+		else return this.board.objectAtToString(x,y);
+	}
+	public String characterAtToSerialize(int x, int y) {
+		if(this.player.isOnPosition(x, y)) return this.player.toSerialize();
+		else return this.board.objectAtToSerialize(x,y);
+	}
+	
+	public void infoToString() {
+		System.out.println("Life: " + this.player.getLive());
+		System.out.println("Number of cycles: " + this.currentCycle);
+		System.out.println("Points:" + this.player.getTotalPuntuation());
+		System.out.println("Remaining aliens: " + this.board.aliveAliens());
+		System.out.println(this.player.shockwaveToString());
+		System.out.println("Supermisiles: " + this.player.getNumSupermisile());
+	}
+	
+	public String getWinnerMessage() {
+		if (playerWin()) return "Player win!";
+		else if (aliensWin()) return "Aliens win!";
+		else if (doExit) return "Player exits the game";
+		else return "This should not happen";
+	}
+	
+	@Override
+	public boolean move(int numCells) {
+		this.player.move(numCells);
+		return true;
+	}
+
+	@Override
+	public boolean shootLaser() {
+		return this.player.shoot();
+	}
+
+	public boolean shootSupermisile() {
+		return this.player.shootSupermisile();
+	}
+	
+	public void shockwaveAttack(int damage) {
+		this.board.shockwaveAttack(damage);
+	}
+	
+	@Override
+	public boolean shockWave() {
+		return this.player.shockwaveAttack();
+	}
+	
+	@Override
+	public boolean buy() {
+		if(this.player.getTotalPuntuation() >= 20) {
+			this.receivePoints(-20);
+			this.player.addSupermisile();
 			return true;
 		}
 		else return false;
 	}
-	public void moveBombs() {		
-		//Avanzar proyectil del jugador
-		if (!this.getBombList().isPlayerBombNull()) {
-			this.getBombList().movePlayerBomb();
-			int x = this.getBombList().getXBombPlayer();
-			int y = this.getBombList().getYBombPlayer();
-			if(this.getDestroyerShipList().impactBomb(x, y) || this.getRegularShipList().impactBomb(x, y) ||
-			this.impactBombOvni(x, y) || this.getBombList().impactBomb()){
-				this.getBombList().destroyBomb(this.getBombList().getPosPlayer());
-			}
-		}
-		//Avanzar bombas enemigas
-		this.getBombList().moveShipBombs();
-		int x = this.getXUCMShip();
-		int y = this.getYUCMShip();
-		if(this.getBombList().impactBombPlayer(x,y)) {
-			this.damagePlayer();
-		}
+
+	@Override
+	public void receivePoints(int points) {
+		this.player.updatePoints(points);	
 	}
 
-	
-	public void moveShips() {
-		
-		boolean found = this.getRegularShipList().isWall() || this.getDestroyerShipList().isWall();
-		
-		if(this.getCycleCounter() % this.getLevel().getVel() == 0) {
-			if(found) {
-				if(this.getDown()) {
-					this.getRegularShipList().moveLateralShips(this.getMovement());
-					this.getDestroyerShipList().moveLateralShips(this.getMovement());
-					this.setDown(false);
-				}
-				else {
-					this.getRegularShipList().moveDownShips();
-					this.getDestroyerShipList().moveDownShips();
-					this.setDown(true);
-					this.setMovement(!this.getMovement());
-				}
-			}
-			else {
-				this.getRegularShipList().moveLateralShips(this.getMovement());
-				this.getDestroyerShipList().moveLateralShips(this.getMovement());
-			}
-		}
+	@Override
+	public void enableShockWave() {
+		this.player.enableShockwave();
 	}
-	public void moveOvni() {
-		if(this.getEnableOvni()) {
-			if(getXOvni() > 0) {
-				setXOvni(getXOvni() - 1);
-			}
-			else setEnableOvni(false);
-		}
+
+	@Override
+	public void enableLaser() {
+		this.player.enableLaser();
 	}
-	public boolean playerDefeated() {
-		if(this.getVidaUCMShip() <= 0 || this.getDestroyerShipList().DestroyershipWins() || this.getRegularShipList().RegularshipWins()) return true;
-		else return false;
-	}
-	public boolean enemyDefeated() {
-		if(this.getRegularShipList().getRegularRemaining() == 0 && this.getDestroyerShipList().getDestroyerRemaining() == 0) return true;
-		else return false;
+
+	public void ShipExplodesIn(int x, int y) {
+		this.board.damageAround(x,y);
 	}
 }
