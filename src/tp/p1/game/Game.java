@@ -2,6 +2,7 @@ package tp.p1.game;
 
 import java.util.*;
 
+import tp.p1.exception.CommandExecuteException;
 import tp.p1.interfaces.IPlayerController;
 import tp.p1.object.*;
 
@@ -135,18 +136,17 @@ public class Game implements IPlayerController{
 	}
 	
 	@Override
-	public boolean move(int numCells) {
+	public void move(int numCells) throws CommandExecuteException{
 		this.player.move(numCells);
-		return true;
 	}
 
 	@Override
-	public boolean shootLaser() {
-		return this.player.shoot();
+	public void shootLaser() throws CommandExecuteException{
+		this.player.shoot();
 	}
 
-	public boolean shootSupermisile() {
-		return this.player.shootSupermisile();
+	public void shootSupermisile() throws CommandExecuteException{
+		this.player.shootSupermisile();
 	}
 	
 	public void shockwaveAttack(int damage) {
@@ -154,18 +154,17 @@ public class Game implements IPlayerController{
 	}
 	
 	@Override
-	public boolean shockWave() {
-		return this.player.shockwaveAttack();
+	public void shockWave() throws CommandExecuteException{
+		this.player.shockwaveAttack();
 	}
 	
 	@Override
-	public boolean buy() {
+	public void buy() throws CommandExecuteException {
 		if(this.player.getTotalPuntuation() >= 20) {
 			this.receivePoints(-20);
 			this.player.addSupermisile();
-			return true;
 		}
-		else return false;
+		else throw new CommandExecuteException("No tienes suficientes puntos");
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package tp.p1.command;
 
+import tp.p1.exception.CommandExecuteException;
+import tp.p1.exception.CommandParseException;
 import tp.p1.game.Game;
 
 public class ShootCommand extends Command {
@@ -11,20 +13,21 @@ public class ShootCommand extends Command {
 	}
 	
 	@Override
-	public boolean execute(Game game) {
-		if(this.supermisil) return game.shootSupermisile();
-		else return game.shootLaser();	
+	public boolean execute(Game game) throws CommandExecuteException{
+		if(this.supermisil) game.shootSupermisile();
+		else game.shootLaser();	
+		return true;
 	}
 
 	@Override
-	public Command parse(String[] commandWords) {
+	public Command parse(String[] commandWords) throws CommandParseException {
 		if(this.matchCommandName(commandWords[0])) {
 			if(commandWords.length == 2) {
 				if(commandWords[1].equals("supermisil")) {
 					this.supermisil = true;
 					return this;
 				}
-				else return null;
+				else throw new CommandParseException(incorrectArgsMsg);
 			}
 			else {
 				this.supermisil = false;
