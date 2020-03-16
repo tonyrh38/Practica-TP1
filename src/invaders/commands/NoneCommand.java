@@ -4,9 +4,11 @@ import invaders.game.Game;
 
 public class NoneCommand extends Command {
 
+	
 	public NoneCommand() {
 		super("none","n","[none]","Skips one cycle.");
 	}
+	
 	
 	@Override
 	public boolean execute(Game game) {

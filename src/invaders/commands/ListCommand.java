@@ -4,9 +4,11 @@ import invaders.game.Game;
 
 public class ListCommand extends Command {
 
+	
 	public ListCommand() {
 		super("list","l","list","Prints the list of available ships.");
 	}
+	
 	
 	@Override
 	public boolean execute(Game game) {

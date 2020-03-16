@@ -2,46 +2,31 @@ package invaders.model;
 
 import invaders.game.Game;
 
-public class Laser extends Weapon {
+public class Laser {
 	
-	public Laser(Game game, int x, int y) {
-		super(game,x,y,1,1);
+	private int _x;
+	private int _y;
+	private int _life;
+	private int _damage;
+	
+	private Game _game;
+	
+	
+	public Laser(int x, int y, Game game) {
+		_x = x;
+		_y = y;
+		_life = 1;
+		_damage = 1;
+		_game = game;
 	}
 
-	@Override
-	public void computerAction() {}
 
-	@Override
-	public void onDelete() {
-		this.game.enableLaser();
+	public boolean isIn(int row, int col) {
+		return _x == col && _y == row;
 	}
-
-	@Override
-	public void move(boolean down,boolean movement) {
-		this.y--;
-		if(!this.game.isOnBoard(this.x,this.y)) this.onDelete();
-	}
-
-	@Override
+	
 	public String toString() {
 		return "oo";
 	}
-	
-	@Override
-	public String toSerialize() {
-		return "L; "+ this.x +";"+ this.y;
-	}
-	
-	@Override
-	public boolean performAttack(GameObject other){
-		other.receiveLaserAttack(this.damage);
-		this.onDelete();
-		return true;
-	}
-	
-	@Override
-	public boolean receiveBombAttack(int damage){
-		this.getDamage(damage);
-		return true;
-	}
+
 }

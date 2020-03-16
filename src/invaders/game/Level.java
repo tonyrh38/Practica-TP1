@@ -11,7 +11,7 @@ public enum Level {
 	private double freq;
 	private int vel;
 	private double ovni;
-	private double explodeFreq = 0.05;
+	
 	
 	private Level(int regularShip, int destroyerShip, double freq, int vel, double ovni) {
 		this.regularShip = regularShip;
@@ -21,22 +21,25 @@ public enum Level {
 		this.ovni = ovni;
 	}
 	
+	
 	public int getRegularShip() { 
 		return this.regularShip; 
 	}
+	
 	public int getDestroyerShip() { 
 		return this.destroyerShip; 
 	}	
+	
 	public double getFreq() { 
 		return this.freq;
 	}
+	
 	public double getVel() { 
 		return this.vel;
 	}
+	
 	public double getOvni() { 
 		return this.ovni;
 	}
-	public double getExplodeFreq() {
-		return this.explodeFreq;
-	}
+
 }

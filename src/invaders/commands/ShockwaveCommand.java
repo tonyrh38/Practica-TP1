@@ -5,13 +5,15 @@ import invaders.game.Game;
 
 public class ShockwaveCommand extends Command {
 
+	
 	public ShockwaveCommand() {
 		super("shockwave","w","shockwave","UCM-Ship releases a shock wave.");
 	}
 	
+	
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException{
-		game.shockWave();
+		game.shockwave();
 		return true;
 	}
 

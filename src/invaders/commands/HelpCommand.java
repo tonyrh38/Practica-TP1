@@ -4,9 +4,11 @@ import invaders.game.Game;
 
 public class HelpCommand extends Command {
 
+	
 	public HelpCommand() {
 		super("help","h","help","Prints this help message.");
 	}
+	
 	
 	@Override
 	public boolean execute(Game game) {

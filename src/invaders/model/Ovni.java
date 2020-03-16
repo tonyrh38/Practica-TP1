@@ -1,45 +1,36 @@
 package invaders.model;
 
 import invaders.game.Game;
-import invaders.interfaces.IExecuteRandomActions;
 
-public class Ovni extends EnemyShip implements IExecuteRandomActions{
+public class Ovni {
 	
-	private boolean enable;
+	private int _x;
+	private int _y;
+	private int _life;
+	private int _points;
+	
+	private Game _game;
+	
 
 	public Ovni(Game game) {
-		super(game,8,0,1,25);
-		this.enable = false;
+		_x = 8;
+		_y = 0;
+		_life = 1;
+		_points = 25;
+		_game = game;
 	}
 
-	@Override
-	public void computerAction() {
-		if(!this.enable && IExecuteRandomActions.canGenerateRandomOvni(this.game)) {
-			this.enable = true;
-		}
-	}
-	
-	@Override
-	public void onDelete(){
-		super.onDelete();
-		this.game.enableShockWave();
-		this.enable = false;
-	}
-	
-	@Override
-	public void move(boolean down,boolean movement) {
-		this.x--;
-		if(!this.game.isOnBoard(this.x,this.y)) this.enable = false;
-	}
 
-	@Override
+	public boolean isIn(int row, int col) {
+		return _x == col && _y == row;
+	}
+	
+	public void damage(int damage) {
+		_life -= damage;
+	}
+	
 	public String toString() {
-		if(this.enable) return "O["+ this.life +"]";
-		else return "";
+		return "O[" + _life + "]";
 	}
-	
-	@Override
-	public String toSerialize() {
-		return "O; "+ this.x +";"+ this.y +";"+ this.life;
-	}
+
 }

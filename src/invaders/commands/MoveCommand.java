@@ -6,17 +6,17 @@ import invaders.game.Game;
 
 public class MoveCommand extends Command {
 
-	// Atributo
-	private int numCells;
+	private int _numCells;
 	
-	// Metodos
+
 	public MoveCommand() {
 		super("move","m","move <left|right><1|2>","Moves UCM-Ship to the indicated direction.");
 	}
 	
+	
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException{
-		game.move(this.numCells);
+		game.move(_numCells);
 		return true;
 	}
 
@@ -27,11 +27,11 @@ public class MoveCommand extends Command {
 				if(commandWords[1].equals("left") || commandWords[1].equals("right")){
 					if (commandWords[2].equals("1") || commandWords[2].equals("2")) {
 						try {
-							this.numCells = Integer.parseUnsignedInt(commandWords[2]);
+							_numCells = Integer.parseUnsignedInt(commandWords[2]);
 						} catch (NumberFormatException e) {
 							throw new CommandParseException(incorrectArgsMsg);
 						}
-						this.numCells *= (commandWords[1].equals("left"))? -1 : 1;
+						_numCells *= (commandWords[1].equals("left"))? -1 : 1;
 						
 						return this;
 					}

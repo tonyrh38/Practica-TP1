@@ -1,38 +1,42 @@
 package invaders.model;
 
 import invaders.game.Game;
-import invaders.interfaces.IExecuteRandomActions;
 
-public class DestroyerShip extends AlienShip implements IExecuteRandomActions {
-		
+public class DestroyerShip {
+	
+	private int _x;
+	private int _y;
+	private int _life;
+	private int _points;
+	
+	private Game _game;
+	
 	private Bomb bomb;
 
-	public DestroyerShip( Game game, int x, int y) {
-		super(game,x,y,1,10);
+
+	public DestroyerShip(int x, int y, Game game) {
+		_x = x;
+		_y = y;
+		_life = 1;
+		_points = 10;
+		_game = game;
 	}
 
-	@Override
-	public void computerAction() {
-		if(this.bomb == null && IExecuteRandomActions.canGenerateRandomBomb(this.game)) {
-			this.bomb = new Bomb(this.game,this.x,this.y,this);
-			this.game.addObject(this.bomb);
-		}
-	}
 
-	@Override
-	public String toString() {
-		return "D["+ this.life +"]";
+	public boolean isIn(int row, int col) {
+		return _x == col && _y == row;
 	}
 	
-	@Override
-	public String toSerialize() {
-		if(this.game.getMovement())	return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-				(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";right";
-		else  return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-		(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";left";
+	public boolean hasLanded() {
+		return _y >= Game._Y;
+	}
+	
+	public void damage(int damage) {
+		_life -= damage;
+	}
+	
+	public String toString() {
+		return "D[" + _life + "]";
 	}
 
-	public void deleteBomb() {
-		this.bomb = null;
-	}
 }

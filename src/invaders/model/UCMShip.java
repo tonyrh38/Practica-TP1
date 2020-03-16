@@ -3,100 +3,67 @@ package invaders.model;
 import invaders.exceptions.CommandExecuteException;
 import invaders.game.Game;
 
-public class UCMShip extends Ship{
+public class UCMShip {
 	
-		private Shockwave shockwave;
-		private Laser laser;
-		private int supermisile;
+	private int _x;
+	private int _y;
+	private int _life;
+	
+	private Game _game;
+	
+	private Laser _laser;
+	private Shockwave _shockwave;
 
-		public UCMShip(Game game,int x,int y) {
-			super(game,x,y,3,0);
-			this.shockwave = new Shockwave(game,0,0);
-			this.supermisile = 0;
-		}
 
-		public int getTotalPuntuation() {
-			return this.points;
+	public UCMShip(Game game) {
+		_x = 4;
+		_y = 7;
+		_life = 3;
+		_game = game;
+	}
+
+
+	public int getLife() {
+		return _life;
+	}
+	
+	public Laser getLaser() {
+		return _laser;
+	}
+	
+	public boolean isAlive() {
+		return _life > 0;
+	}
+	
+	public boolean hasShockwave() {
+		return _shockwave != null;
+	}
+
+	public boolean isIn(int row, int col) {
+		return _x == col && _y == row;
+	}
+	
+	public void move(int numCells) throws CommandExecuteException {
+		if(_x + numCells < 0 || _x + numCells >= Game._X) throw new CommandExecuteException("No se puede avanzar ese numero de casillas");
+		else _x += numCells;
+	}
+	
+	public void shootLaser() throws CommandExecuteException{
+		if(_laser == null) _laser = new Laser(_x, _y, _game);
+		else throw new CommandExecuteException("Ya se ha disparado el laser");
+	}
+	
+	public void shockwave() throws CommandExecuteException {
+		if(_shockwave != null) {
+			_shockwave.impacts();
+			_shockwave = null;
 		}
+		else throw new CommandExecuteException("El shockwave no esta disponible");
+	}
+	
+	public String toString() {
+		return "^__^";
 		
-		public int getNumSupermisile() {
-			return this.supermisile;
-		}
-		
-		@Override
-		public boolean receiveBombAttack(int damage){
-			this.getDamage(damage);
-			return true;
-		}
-		
-		@Override
-		public void computerAction() {}
+	}
 
-		@Override
-		public void onDelete() {}
-		
-		@Override
-		public void move(boolean down,boolean movement) {}
-
-		public void move(int numCells) throws CommandExecuteException{
-			if(this.x + numCells < 0 || this.x + numCells >= Game.DIM_X) {
-				throw new CommandExecuteException("No se puede avanzar ese numero de casillas");
-			}
-			else this.x += numCells;
-		}
-
-		@Override
-		public String toString() {
-			if(this.isAlive()) return "^__^";
-			else return "!xx!";
-		}
-
-		public String shockwaveToString() {
-			return this.shockwave.toString();
-		}
-
-		public boolean shoot() throws CommandExecuteException{
-			if(this.laser == null) {
-				this.laser = new Laser(this.game, this.x,this.y);
-				this.game.addObject(this.laser);
-				return true;
-			}
-			else throw new CommandExecuteException("Ya se ha disparado el laser");
-		}
-
-		public void shockwaveAttack() throws CommandExecuteException{
-			this.shockwave.attack();
-		}
-		
-		public void addSupermisile() {
-			this.supermisile++;
-		}
-		
-		public void updatePoints(int points) {
-			this.points += points;
-		}
-
-		public void enableShockwave() {
-			this.shockwave.enable();
-		}
-
-		public void enableLaser() {
-			this.laser = null;
-		}
-
-		public void shootSupermisile() throws CommandExecuteException {
-			if(this.supermisile > 0) {
-				Supermisile misil = new Supermisile(this.game,this.x,this.y);
-				this.game.addObject(misil);
-				this.supermisile--;
-			}
-			else throw new CommandExecuteException("No quedan supermisiles");
-		}
-
-		public String toSerialize() {
-			if(this.shockwave != null) return "P;"+ this.x +";"+ this.y + ";"+ this.life +
-					";" + this.points +";on;"+ this.supermisile ;
-			else return "P;"+ this.x +";"+ this.y + ";"+ this.life +
-					";" + this.points +";off;"+ this.supermisile ;
-		}
 }

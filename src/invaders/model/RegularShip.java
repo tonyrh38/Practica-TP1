@@ -1,49 +1,40 @@
 package invaders.model;
 
 import invaders.game.Game;
-import invaders.interfaces.IExecuteRandomActions;
 
-public class RegularShip extends AlienShip{
+public class RegularShip {
 	
-	private boolean explode;
+	private int _x;
+	private int _y;
+	private int _life;
+	private int _points;
+	
+	private Game _game;
+	
 		
-	public RegularShip(Game game, int x, int y) {
-		super(game,x,y,2,5);
-		this.explode = false;
+	public RegularShip(int x, int y, Game game) {
+		_x = x;
+		_y = y;
+		_life = 2;
+		_points = 5;
+		_game = game;
 	}
 
-	@Override
-	public void computerAction() {
-		if(!this.explode && IExecuteRandomActions.canBecomeExplosiveShip(this.game)) {
-			this.explode = true;
-		}
+	
+	public boolean hasLanded() {
+		return _y >= Game._Y;
+	}
+
+	public boolean isIn(int row, int col) {
+		return _x == col && _y == row;
+	}
+
+	public void damage(int damage) {
+		_life -= damage;
 	}
 	
-	@Override
-	public void onDelete() {
-		super.onDelete();
-		if(this.explode) {
-			this.game.ShipExplodesIn(this.x,this.y);
-		}
-	}
-	
-	@Override
 	public String toString() {
-		if(this.explode) return "E["+ this.life +"]";
-		else return "C["+ this.life +"]";
+		return "C[" + _life + "]";
 	}
 	
-	@Override
-	public String toSerialize() {
-		if(this.explode) {
-			if(this.game.getMovement())	return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-					(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";right";
-			else  return "E; "+ this.x +";"+ this.y +";"+ this.life +";"+
-			(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";left";
-		}
-		else if(this.game.getMovement())	return "R; "+ this.x +";"+ this.y +";"+ this.life +";"+
-			(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";right";
-			else  return "R; "+ this.x +";"+ this.y +";"+ this.life +";"+
-			(this.game.getLevel().getVel() -  this.game.getCurrentCycle() % this.game.getLevel().getVel())+";left";
-		}
 }

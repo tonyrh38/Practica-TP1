@@ -2,49 +2,33 @@ package invaders.model;
 
 import invaders.game.Game;
 
-public class Bomb extends Weapon{
+public class Bomb {
 	
-	private DestroyerShip father;
+	private int _x;
+	private int _y;
+	private int _life;
+	private int _damage;
+	private DestroyerShip _father;
 	
-	public Bomb(Game game, int x, int y, DestroyerShip father) {
-		super(game,x,y,1,1);
-		this.father = father;
+	private Game _game;
+	
+	
+	public Bomb(int x, int y, DestroyerShip father, Game game) {
+		_x = x;
+		_y = y;
+		_life = 1;
+		_damage = 1;
+		_father = father;
+		_game  =game;
 	}
 
-	@Override
-	public void computerAction() {}
 
-	@Override
-	public void onDelete() {
-		this.father.deleteBomb();
+	public boolean isIn(int row, int col) {
+		return _x == col && _y == row;
 	}
-
-	@Override
-	public void move(boolean down,boolean movement) {
-		this.y++;
-		if(!this.game.isOnBoard(this.x,this.y)) this.onDelete();
-	}
-
-	@Override
+	
 	public String toString() {
 		return ".";
 	}
-	
-	@Override
-	public String toSerialize() {
-		return "B; "+ this.x +";"+ this.y;
-	}
-	
-	@Override
-	public boolean performAttack(GameObject other){
-		other.receiveBombAttack(this.damage);
-		this.onDelete();
-		return true;
-	}
-	
-	@Override
-	public boolean receiveLaserAttack(int damage) {
-		this.getDamage(damage);
-		return true;
-	 }
+
 }

@@ -13,11 +13,7 @@ public class CommandGenerator {
 			new NoneCommand(),
 			new MoveCommand(),
 			new ShootCommand(),
-			new ShockwaveCommand(),
-			new BuyCommand(),
-			new StringifyCommand(),
-			new ListPrintersCommand(),
-			new SaveCommand()
+			new ShockwaveCommand()
 		};
 		
 		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.\n";

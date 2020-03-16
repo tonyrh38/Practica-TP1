@@ -1,44 +1,22 @@
 package invaders.model;
 
-import invaders.exceptions.CommandExecuteException;
 import invaders.game.Game;
 
-public class Shockwave extends Weapon {
-
-	private boolean enable;
+public class Shockwave{
 	
-	public Shockwave(Game game, int x, int y) {
-		super(game, x, y, 1, 1);
-		this.enable = false;
+	private int _damage;
+	
+	private Game _game;
+	
+	
+	public Shockwave(Game game) {
+		_damage = 1;
+		_game = game;
 	}
 
-	@Override
-	public void computerAction() {}
 
-	@Override
-	public void onDelete(){}
-
-	@Override
-	public void move(boolean down,boolean movement) {}
-
-	@Override
-	public String toString() {
-		return "ShockWave: " + this.enable;
-	}
-	@Override
-	public String toSerialize() {
-		return "";
+	public void impacts() {
+		_game.shockwaveImpacts(_damage);
 	}
 
-	public void attack() throws CommandExecuteException {
-		if(this.enable) {
-			this.game.shockwaveAttack(this.damage);
-			this.enable = false;
-		}
-		else throw new CommandExecuteException("La shockwave no esta disponible");
-	}
-
-	public void enable() {
-		this.enable = true;
-	}
 }
