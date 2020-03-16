@@ -9,12 +9,14 @@ public class UCMShip extends Ship{
 		private Laser laser;
 		private int supermisile;
 
+		
 		public UCMShip(Game game,int x,int y) {
 			super(game,x,y,3,0);
 			this.shockwave = new Shockwave(game,0,0);
 			this.supermisile = 0;
 		}
 
+		
 		public int getTotalPuntuation() {
 			return this.points;
 		}
