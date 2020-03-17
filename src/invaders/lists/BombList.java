@@ -2,7 +2,6 @@ package invaders.lists;
 
 import invaders.game.Game;
 import invaders.model.Bomb;
-import invaders.model.DestroyerShip;
 
 public class BombList {
 
@@ -15,7 +14,18 @@ public class BombList {
 		_list = new Bomb[_size];
 	}
 
-
+	
+	public boolean add(Bomb bomb) {
+		boolean added = false;
+		for(int i = 0; i < _size && !added; i++) {
+			if(_list[i] == null) {
+				_list[i] = bomb;
+				added = true;
+			}
+		}
+		return added;
+	}
+	
 	public Bomb bombIn(int row, int col) {
 		Bomb b = null;
 		for(int i = 0; i < _size && b == null; i++) {

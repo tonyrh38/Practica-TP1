@@ -1,5 +1,7 @@
 package invaders.model;
 
+import java.util.Random;
+
 import invaders.game.Game;
 
 public class DestroyerShip {
@@ -11,7 +13,7 @@ public class DestroyerShip {
 	
 	private Game _game;
 	
-	private Bomb bomb;
+	private Bomb _bomb;
 
 
 	public DestroyerShip(int x, int y, Game game) {
@@ -31,8 +33,23 @@ public class DestroyerShip {
 		return _y >= Game._Y;
 	}
 	
+	public boolean isAlive() {
+		return _life > 0;
+	}
+	
 	public void damage(int damage) {
 		_life -= damage;
+	}
+	
+	public void onDelete() {
+		_game.addPoints(_points);
+	}
+	
+	public void computerAction(Random rand) {
+		if(_bomb == null && rand.nextDouble() < _game.getLevel().getFreq()) {
+			_bomb = new Bomb(_x, _y, this, _game);
+			_game.dropBomb(_bomb);
+		}
 	}
 	
 	public String toString() {

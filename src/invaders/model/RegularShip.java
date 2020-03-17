@@ -29,8 +29,16 @@ public class RegularShip {
 		return _x == col && _y == row;
 	}
 
+	public boolean isAlive() {
+		return _life > 0;
+	}
+	
 	public void damage(int damage) {
 		_life -= damage;
+	}
+	
+	public void onDelete() {
+		_game.addPoints(_points);
 	}
 	
 	public String toString() {

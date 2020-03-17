@@ -30,16 +30,37 @@ public class Game {
 		_rand = random;
 		_level = level;
 		_player = new UCMShip(this);
-		// TODO: Llenar las listas con las naves correspondientes.
-		_regularList = new RegularShipList(this);
-		_destroyerList = new DestroyerShipList(this);
-		_bombList = new BombList(this);
-		_ovni = new Ovni(this);
-		_cycle = 0;
-		_score = 0;
-		_exit = false;
+		reset();
 	}
 	
+	
+	private void initializeRegularList() {
+		for(int i = 0; i < _level.getRegularShip(); i++) {
+			RegularShip ship = new RegularShip(3 + (i % 4), 1 + (i / 4), this);
+			_regularList.add(ship);
+		}
+	}
+
+	private void initializeDestroyerlist() {
+		if(_level.toString() == "EASY") {
+			for(int i = 0; i < 2; i++) {
+				DestroyerShip ship = new DestroyerShip(4 + i, 2, this);
+				_destroyerList.add(ship);
+			}
+		}
+		if(_level.toString() == "HARD") {
+			for(int i = 0; i < 2; i++) {
+				DestroyerShip ship = new DestroyerShip(4 + i, 3, this);
+				_destroyerList.add(ship);
+			}
+		}
+		if(_level.toString() == "INSANE") {
+			for(int i = 0; i < 4; i++) {
+				DestroyerShip ship = new DestroyerShip(3 + i, 3, this);
+				_destroyerList.add(ship);
+			}
+		}
+	}
 	
 	private int remainingAliens() {
 		return _regularList.remainingAliens() + _destroyerList.remainingAliens();
@@ -53,12 +74,45 @@ public class Game {
 		return !_player.isAlive() || _regularList.hasLanded() || _destroyerList.hasLanded();
 	}
 	
+	private void cleanDestroyed() {
+		_player.cleanLaser();
+		_regularList.cleanDestroyed();
+		_destroyerList.cleanDestroyed();
+		if(!_ovni.isAlive()) {
+			_ovni.onDelete();
+			_ovni = null;
+		}
+	}
+	
+	private void computerAction() {
+		_destroyerList.computerAction(_rand);
+		if(_ovni == null && _rand.nextDouble() < _level.getOvni()) _ovni = new Ovni(this);
+	}
+	
+	private void advance() {
+		
+	}
+	
 	public Level getLevel() {
 		return _level;
 	}
 	
 	public void update() {
-		// ComputerAction se incluye aqui
+		cleanDestroyed();
+		computerAction();
+		advance();
+	}
+	
+	public void dropBomb(Bomb bomb) {
+		_bombList.add(bomb);
+	}
+	
+	public void addPoints(int points) {
+		_score += points;
+	}
+	
+	public void addShockwave() {
+		if(!_player.hasShockwave()) _player.addShockwave();
 	}
 	
 	// Command Methods
@@ -86,7 +140,14 @@ public class Game {
 	}
 
 	public void reset() {
-		//TODO: Completar metodo.
+		_regularList = new RegularShipList(this);
+		initializeRegularList();
+		_destroyerList = new DestroyerShipList(this);
+		initializeDestroyerlist();
+		_bombList = new BombList(this);
+		_cycle = 0;
+		_score = 0;
+		_exit = false;
 	}
 
 	// Controller Methods

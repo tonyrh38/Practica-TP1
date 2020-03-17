@@ -25,6 +25,10 @@ public class Laser {
 		return _x == col && _y == row;
 	}
 	
+	public boolean isAlive() {
+		return _life > 0 && _y > 0;
+	}
+	
 	public String toString() {
 		return "oo";
 	}

@@ -61,8 +61,17 @@ public class UCMShip {
 		else throw new CommandExecuteException("El shockwave no esta disponible");
 	}
 	
+	public void cleanLaser() {
+		if(_laser != null && !_laser.isAlive()) _laser = null;
+	}
+	
+	public void addShockwave() {
+		_shockwave = new Shockwave(_game);
+	}
+	
 	public String toString() {
-		return "^__^";
+		if(_life > 0) return "^__^";
+		else return "!xx!";
 		
 	}
 

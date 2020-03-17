@@ -1,8 +1,9 @@
 package invaders.lists;
 
+import java.util.Random;
+
 import invaders.game.Game;
 import invaders.model.DestroyerShip;
-import invaders.model.RegularShip;
 
 public class DestroyerShipList {
 	
@@ -16,6 +17,17 @@ public class DestroyerShipList {
 	}
 	
 
+	public boolean add(DestroyerShip ship) {
+		boolean added = false;
+		for(int i = 0; i < _size && !added; i++) {
+			if(_list[i] == null) {
+				_list[i] = ship;
+				added = true;
+			}
+		}
+		return added;
+	}
+	
 	public int remainingAliens() {
 		int remaining = 0;
 		for(int i = 0; i < _size; i++) {
@@ -40,9 +52,24 @@ public class DestroyerShipList {
 		return ds;
 	}
 	
+	public void computerAction(Random rand) {
+		for(int i = 0; i < _size; i++) {
+			if(_list[i] != null) _list[i].computerAction(rand);
+		}
+	}
+	
 	public void damageAll(int damage) {
 		for(int i = 0; i < _size; i++) {
 			if(_list[i] != null) _list[i].damage(damage);
+		}
+	}
+	
+	public void cleanDestroyed() {
+		for(int i = 0; i < _size; i++) {
+			if(_list[i] != null && !_list[i].isAlive()) {
+				_list[i].onDelete();
+				_list[i] = null;
+			}
 		}
 	}
 	
