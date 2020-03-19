@@ -27,6 +27,23 @@ public class Bomb {
 		return _x == col && _y == row;
 	}
 	
+	public boolean isAlive() {
+		return _life > 0 && _y < Game._Y;
+	}
+	
+	public void damage(int damage) {
+		_life -= damage;
+	}
+	
+	public void advance() {
+		_y++;
+		if(_game.damagePlayer(_x, _y, _damage)) _life--;
+	}
+	
+	public void onDelete() {
+		_father.cleanBomb();
+	}
+	
 	public String toString() {
 		return ".";
 	}

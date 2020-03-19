@@ -52,6 +52,20 @@ public class DestroyerShipList {
 		return ds;
 	}
 	
+	public boolean shipInWall() {
+		boolean inWall = false;
+		for(int i = 0; i < _size && !inWall; i++) {
+			if(_list[i] != null && _list[i].isInWall()) inWall = true;
+		}
+		return inWall;
+	}
+	
+	public void advance(boolean down, boolean movement) {
+		for(int i = 0; i < _size; i++) {
+			if(_list[i] != null) _list[i].advance(down, movement);
+		}
+	}
+	
 	public void computerAction(Random rand) {
 		for(int i = 0; i < _size; i++) {
 			if(_list[i] != null) _list[i].computerAction(rand);
@@ -62,6 +76,17 @@ public class DestroyerShipList {
 		for(int i = 0; i < _size; i++) {
 			if(_list[i] != null) _list[i].damage(damage);
 		}
+	}
+	
+	public boolean damageIn(int x, int y, int damage) {
+		boolean damaged = false;
+		for(int i = 0; i < _size && !damaged; i++) {
+			if(_list[i] != null && _list[i].isIn(y, x)) {
+				_list[i].damage(damage);
+				damaged = true;
+			}
+		}
+		return damaged;
 	}
 	
 	public void cleanDestroyed() {

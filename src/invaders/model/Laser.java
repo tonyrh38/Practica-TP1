@@ -26,7 +26,12 @@ public class Laser {
 	}
 	
 	public boolean isAlive() {
-		return _life > 0 && _y > 0;
+		return _life > 0 && _y >= 0;
+	}
+	
+	public void advance() {
+		_y--;
+		if(_game.damageIn(_x, _y, _damage)) _life--;
 	}
 	
 	public String toString() {

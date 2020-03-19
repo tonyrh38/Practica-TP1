@@ -25,7 +25,7 @@ public class Controller {
 		GamePrinter gp;
 		_game.info();
 		gp = new GamePrinter(_game, Game._Y, Game._X);
-		gp.toString();
+		System.out.println(gp.toString());
 		while (!_game.isFinished()){
 			System.out.println(PROMPT);
 			String[] words = _in.nextLine().toLowerCase().trim().split ("\\s+");
@@ -35,7 +35,7 @@ public class Controller {
 					_game.update();
 					_game.info();
 					gp = new GamePrinter(_game, Game._Y, Game._X);
-					gp.toString();
+					System.out.println(gp.toString());
 				}
 			}
 			catch(CommandParseException | CommandExecuteException ex) {

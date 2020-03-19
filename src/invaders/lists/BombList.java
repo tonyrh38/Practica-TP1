@@ -34,4 +34,31 @@ public class BombList {
 		return b;
 	}
 
+	public void cleanDestroyed() {
+		for(int i = 0; i < _size; i++) {
+			if(_list[i] != null && !_list[i].isAlive()) {
+				_list[i].onDelete();
+				_list[i] = null;
+			}
+		}
+	}
+	
+	public boolean damageIn(int x, int y, int damage) {
+		boolean damaged = false;
+		for(int i = 0; i < _size && !damaged; i++) {
+			if(_list[i] != null && _list[i].isIn(y, x)) {
+				_list[i].damage(damage);
+				damaged = true;
+			}
+		}
+		return damaged;
+	}
+
+	public void advance() {
+		for(int i = 0; i < _size; i++) {
+			if(_list[i] != null) _list[i].advance();
+		}
+		cleanDestroyed();
+	}
+	
 }

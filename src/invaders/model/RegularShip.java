@@ -20,21 +20,31 @@ public class RegularShip {
 		_game = game;
 	}
 
-	
-	public boolean hasLanded() {
-		return _y >= Game._Y;
-	}
 
 	public boolean isIn(int row, int col) {
 		return _x == col && _y == row;
 	}
 
+	public boolean isInWall() {
+		return _x <= 0 || _x >= Game._X;
+	}
+	
+	public boolean hasLanded() {
+		return _y >= Game._Y;
+	}
+	
 	public boolean isAlive() {
 		return _life > 0;
 	}
 	
 	public void damage(int damage) {
 		_life -= damage;
+	}
+	
+	public void advance(boolean down, boolean movement) {
+		if(down) _y++;
+		else if(movement) _x++;
+		else _x--;
 	}
 	
 	public void onDelete() {

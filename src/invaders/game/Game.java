@@ -23,6 +23,9 @@ public class Game {
 	private int _cycle;
 	private int _score;
 	
+	private boolean _down;
+	private boolean _movement;
+	
 	private boolean _exit;
 	
 	
@@ -78,7 +81,8 @@ public class Game {
 		_player.cleanLaser();
 		_regularList.cleanDestroyed();
 		_destroyerList.cleanDestroyed();
-		if(!_ovni.isAlive()) {
+		_bombList.cleanDestroyed();
+		if(_ovni != null && !_ovni.isAlive()) {
 			_ovni.onDelete();
 			_ovni = null;
 		}
@@ -90,15 +94,48 @@ public class Game {
 	}
 	
 	private void advance() {
-		
+		//1)
+		if(_player.getLaser() != null) _player.getLaser().advance();
+		cleanDestroyed();
+		//2)
+		_bombList.advance();
+		//3)
+		checkShipMovement();
+		if(_down || _cycle % _level.getVel() == 0) {
+			_destroyerList.advance(_down, _movement);
+			_regularList.advance(_down, _movement);
+		}
+		//4)
+		if(_ovni != null) {
+			_ovni.advance();
+			if(!_ovni.isAlive()) _ovni = null;
+		}
 	}
 	
+	private void checkShipMovement() {
+		if(shipInWall()) {
+			if(_down) {
+				_down = false;
+				_movement = !_movement;
+			}
+			else _down = true;
+		}
+	}
+	
+	private boolean shipInWall() {
+		if(_regularList.shipInWall()) return true;
+		else if(_destroyerList.shipInWall()) return true;
+		else return false;
+	}
+
+
 	public Level getLevel() {
 		return _level;
 	}
 	
 	public void update() {
 		cleanDestroyed();
+		_cycle++;
 		computerAction();
 		advance();
 	}
@@ -113,6 +150,25 @@ public class Game {
 	
 	public void addShockwave() {
 		if(!_player.hasShockwave()) _player.addShockwave();
+	}
+	
+	public boolean damageIn(int x, int y, int damage) {
+		if(_bombList.damageIn(x, y, damage)) return true;
+		else if(_destroyerList.damageIn(x, y, damage)) return true;
+		else if(_regularList.damageIn(x, y, damage)) return true;
+		else if(_ovni.isIn(y, x)) {
+			_ovni.damage(damage);
+			return true;
+		}
+		else return false;
+	}
+	
+	public boolean damagePlayer(int x, int y, int damage) {
+		if(_player.isIn(y, x)) {
+			_player.damage(damage);
+			return true;
+		}
+		else return false;
 	}
 	
 	// Command Methods
@@ -147,6 +203,8 @@ public class Game {
 		_bombList = new BombList(this);
 		_cycle = 0;
 		_score = 0;
+		_down = false;
+		_movement = false;
 		_exit = false;
 	}
 

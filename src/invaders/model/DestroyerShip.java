@@ -29,6 +29,10 @@ public class DestroyerShip {
 		return _x == col && _y == row;
 	}
 	
+	public boolean isInWall() {
+		return _x <= 0 || _x >= Game._X;
+	}
+	
 	public boolean hasLanded() {
 		return _y >= Game._Y;
 	}
@@ -41,8 +45,10 @@ public class DestroyerShip {
 		_life -= damage;
 	}
 	
-	public void onDelete() {
-		_game.addPoints(_points);
+	public void advance(boolean down, boolean movement) {
+		if(down) _y++;
+		else if(movement) _x++;
+		else _x--;
 	}
 	
 	public void computerAction(Random rand) {
@@ -52,8 +58,16 @@ public class DestroyerShip {
 		}
 	}
 	
+	public void cleanBomb() {
+		_bomb = null;
+	}
+	
+	public void onDelete() {
+		_game.addPoints(_points);
+	}
+	
 	public String toString() {
 		return "D[" + _life + "]";
-	}
+	}	
 
 }

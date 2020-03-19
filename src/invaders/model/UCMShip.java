@@ -43,6 +43,10 @@ public class UCMShip {
 		return _x == col && _y == row;
 	}
 	
+	public void damage(int damage) {
+		_life -= damage;
+	}
+	
 	public void move(int numCells) throws CommandExecuteException {
 		if(_x + numCells < 0 || _x + numCells >= Game._X) throw new CommandExecuteException("No se puede avanzar ese numero de casillas");
 		else _x += numCells;

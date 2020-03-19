@@ -26,13 +26,17 @@ public class Ovni {
 	}
 	
 	public boolean isAlive() {
-		return _life > 0;
+		return _life > 0 && _x >= 0;
 	}
 	
 	public void damage(int damage) {
 		_life -= damage;
 	}
 
+	public void advance() {
+		_x--;
+	}
+	
 	public void onDelete() {
 		_game.addPoints(_points);
 		_game.addShockwave();
