@@ -2,40 +2,34 @@ package invaders.model;
 
 import invaders.game.Game;
 
-public class Laser {
-	
-	private int _x;
-	private int _y;
-	private int _life;
-	private int _damage;
-	
-	private Game _game;
-	
+public class Laser extends Weapon{
+
 	
 	public Laser(int x, int y, Game game) {
-		_x = x;
-		_y = y;
+		super(x, y, game);
 		_life = 1;
 		_damage = 1;
-		_game = game;
 	}
 
 
-	public boolean isIn(int row, int col) {
-		return _x == col && _y == row;
+	// IAttacks Interface Methods
+	@Override
+	public void computerAction() {}
+
+	@Override
+	public void onDelete() {
+		// TODO: Se puede crear un father y llamar en este metodo a father.resetLaser()
 	}
-	
-	public boolean isAlive() {
-		return _life > 0 && _y >= 0;
-	}
-	
-	public void advance() {
+
+	@Override
+	public void move() {
 		_y--;
 		if(_game.damageIn(_x, _y, _damage)) _life--;
 	}
 	
+	@Override
 	public String toString() {
 		return "oo";
 	}
-
+	
 }

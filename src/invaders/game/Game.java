@@ -107,7 +107,7 @@ public class Game {
 		}
 		//4)
 		if(_ovni != null) {
-			_ovni.advance();
+			_ovni.move();
 			if(!_ovni.isAlive()) _ovni = null;
 		}
 	}

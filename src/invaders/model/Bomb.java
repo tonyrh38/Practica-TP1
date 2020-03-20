@@ -2,50 +2,37 @@ package invaders.model;
 
 import invaders.game.Game;
 
-public class Bomb {
+public class Bomb extends Weapon{
 	
-	private int _x;
-	private int _y;
-	private int _life;
-	private int _damage;
 	private DestroyerShip _father;
-	
-	private Game _game;
 	
 	
 	public Bomb(int x, int y, DestroyerShip father, Game game) {
-		_x = x;
-		_y = y;
+		super(x, y, game);
 		_life = 1;
 		_damage = 1;
 		_father = father;
-		_game  =game;
 	}
 
+	
+	// IAttacks Interface Methods
+	@Override
+	public void computerAction() {}
 
-	public boolean isIn(int row, int col) {
-		return _x == col && _y == row;
+	@Override
+	public void onDelete() {
+		_father.resetBomb();
 	}
-	
-	public boolean isAlive() {
-		return _life > 0 && _y < Game._Y;
-	}
-	
-	public void damage(int damage) {
-		_life -= damage;
-	}
-	
-	public void advance() {
+
+	@Override
+	public void move() {
 		_y++;
 		if(_game.damagePlayer(_x, _y, _damage)) _life--;
 	}
 	
-	public void onDelete() {
-		_father.cleanBomb();
-	}
-	
+	@Override
 	public String toString() {
 		return ".";
 	}
-
+	
 }

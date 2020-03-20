@@ -3,48 +3,23 @@ package invaders.model;
 import invaders.exceptions.CommandExecuteException;
 import invaders.game.Game;
 
-public class UCMShip {
-	
-	private int _x;
-	private int _y;
-	private int _life;
-	
-	private Game _game;
+public class UCMShip extends Ship{
 	
 	private Laser _laser;
 	private Shockwave _shockwave;
 
 
 	public UCMShip(Game game) {
-		_x = 4;
-		_y = 7;
-		_life = 3;
-		_game = game;
+		super(Game._X/2, Game._Y - 1, 3, game);
 	}
 
-
-	public int getLife() {
-		return _life;
-	}
 	
 	public Laser getLaser() {
 		return _laser;
 	}
 	
-	public boolean isAlive() {
-		return _life > 0;
-	}
-	
 	public boolean hasShockwave() {
 		return _shockwave != null;
-	}
-
-	public boolean isIn(int row, int col) {
-		return _x == col && _y == row;
-	}
-	
-	public void damage(int damage) {
-		_life -= damage;
 	}
 	
 	public void move(int numCells) throws CommandExecuteException {
@@ -72,11 +47,31 @@ public class UCMShip {
 	public void addShockwave() {
 		_shockwave = new Shockwave(_game);
 	}
+
+	// IAttack Interface Methods
+	@Override
+	public void computerAction() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void move() {
+		// TODO Auto-generated method stub
+		
+	}
 	
+	@Override
 	public String toString() {
 		if(_life > 0) return "^__^";
 		else return "!xx!";
 		
 	}
-
+	
 }
