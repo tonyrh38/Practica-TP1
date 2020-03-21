@@ -1,8 +1,11 @@
 package invaders.model;
 
 import invaders.game.Game;
+import invaders.interfaces.IExecuteRandomActions;
 
 public class Ovni extends EnemyShip{
+	
+	private boolean _enable;
 	
 	
 	public Ovni(Game game) {
@@ -10,19 +13,30 @@ public class Ovni extends EnemyShip{
 		_life = 1;
 		_points = 25;
 		_game = game;
+		_enable = false;
 	}
 	
 	
-	// IAttacks Interface Methods
+	private void reset() {
+		_x = Game._X - 1;
+		_life = 1;
+		_enable = true;
+	}
+	
+	public boolean isEnable() {
+		return _enable;
+	}
+	
+	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {
-		// TODO Auto-generated method stub
-		
+		if(IExecuteRandomActions.canGenerateRandomOvni(_game)) reset();
 	}
 
 	public void onDelete() {
-		_game.addPoints(_points);
-		_game.addShockwave();
+		super.onDelete();
+		_game.enableShockWave();
+		_enable = false;
 	}
 
 	@Override

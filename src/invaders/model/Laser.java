@@ -12,7 +12,7 @@ public class Laser extends Weapon{
 	}
 
 
-	// IAttacks Interface Methods
+	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {}
 

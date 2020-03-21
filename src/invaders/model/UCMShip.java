@@ -10,68 +10,49 @@ public class UCMShip extends Ship{
 
 
 	public UCMShip(Game game) {
-		super(Game._X/2, Game._Y - 1, 3, game);
+		super(Game._X/2, Game._Y - 1, game);
+		_life = 3;
 	}
 
 	
-	public Laser getLaser() {
-		return _laser;
+	public Laser hasLaser() {
+		return _laser.isEnable();
 	}
 	
 	public boolean hasShockwave() {
-		return _shockwave != null;
+		return _shockwave.isEnable();
 	}
 	
+	// IPlayerController Methods
 	public void move(int numCells) throws CommandExecuteException {
 		if(_x + numCells < 0 || _x + numCells >= Game._X) throw new CommandExecuteException("No se puede avanzar ese numero de casillas");
 		else _x += numCells;
 	}
 	
-	public void shootLaser() throws CommandExecuteException{
-		if(_laser == null) _laser = new Laser(_x, _y, _game);
-		else throw new CommandExecuteException("Ya se ha disparado el laser");
+	public void shootLaser() throws CommandExecuteException {
+		if(!_laser.isEnable()) throw new CommandExecuteException("Ya se ha disparado el laser");  
+		else _laser.shoot(_x, _y);
 	}
 	
 	public void shockwave() throws CommandExecuteException {
-		if(_shockwave != null) {
-			_shockwave.impacts();
-			_shockwave = null;
-		}
-		else throw new CommandExecuteException("El shockwave no esta disponible");
+		if(!_shockwave.isEnable()) throw new CommandExecuteException("El shockwave no esta disponible");
+		else _shockwave.shoot();
 	}
 	
-	public void cleanLaser() {
-		if(_laser != null && !_laser.isAlive()) _laser = null;
-	}
-	
-	public void addShockwave() {
-		_shockwave = new Shockwave(_game);
-	}
-
-	// IAttack Interface Methods
+	// GameObject Abstract Methods
 	@Override
-	public void computerAction() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void computerAction() {}
 
 	@Override
-	public void onDelete() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void onDelete() {}
 
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void move() {}
 	
 	@Override
 	public String toString() {
 		if(_life > 0) return "^__^";
-		else return "!xx!";
-		
+		else return "!xx!";	
 	}
 	
 }

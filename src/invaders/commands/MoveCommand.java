@@ -32,7 +32,6 @@ public class MoveCommand extends Command {
 							throw new CommandParseException(incorrectArgsMsg);
 						}
 						_numCells *= (commandWords[1].equals("left"))? -1 : 1;
-						
 						return this;
 					}
 					else throw new CommandParseException(incorrectArgsMsg);

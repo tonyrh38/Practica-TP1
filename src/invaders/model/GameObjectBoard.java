@@ -15,6 +15,26 @@ public class GameObjectBoard {
 	}
 	
 	
+	private GameObject objectIn(int row, int col) {
+		GameObject go = null;
+		for(int i = 0; i < _size && go == null; i++) {
+			go = (_objects[i] != null && _objects[i].isIn(row,col))? _objects[i]:null;
+		}
+		return go;
+	}
+	
+	private void removeDead() {
+		// TODO implement
+	}
+	
+	private int getIndex( /* coordinadas */ ) {
+		// TODO implement
+	}	
+	
+	private void checkAttacks(GameObject object) {
+		// TODO implement
+	}
+	
 	public boolean add(GameObject object) {
 		boolean added = false;
 		for(int i = 0; i < _size && !added; i++) {
@@ -26,45 +46,26 @@ public class GameObjectBoard {
 		return added;
 	}
 	
-	private boolean remove (GameObject object) {
+	public boolean remove(GameObject object) {
 		boolean removed = false;
 		for(int i = 0; i < _size && !removed; i++) {
 			if(_objects[i].equals(object)) {
-				_objects[i] = object;
+				object.onDelete();
+				_objects[i] = null;
 				removed = true;
 			}
 		}
 		return removed;
 	}
 	
-	private GameObject objectIn(int row, int col) {
-		GameObject go = null;
-		for(int i = 0; i < _size && go == null; i++) {
-			go = (_objects[i] != null && _objects[i].isIn(row,col))? _objects[i]:null;
-		}
-		return go;
-	}
-	
-	private int getIndex( /* coordinadas */ ) {
+	public void computerAction() {
 		// TODO implement
-	}	
-	
+	}
+
 	public void update() {
 		// TODO implement
 	}
 	
-	private void checkAttacks(GameObject object) {
-		// TODO implement
-	}
-	
-	public void computerAction() {
-		// TODO implement
-	}
-	
-	private void removeDead() {
-		// TODO implement
-	}
-
 	public String toString( /* coordinadas */ ) {
 		// TODO implement
 	}

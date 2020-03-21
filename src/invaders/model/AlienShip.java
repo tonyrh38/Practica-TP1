@@ -29,12 +29,7 @@ abstract public class AlienShip extends EnemyShip {
 		return _y >= Game._Y - 1;
 	}
 	
-	// IAttack Interface Method
-	@Override
-	public void onDelete() {
-		_game.addPoints(_points);
-	}
-	
+	// GameObject Abstract Methods	
 	@Override
 	public void move() {
 		if(_down) _y++;

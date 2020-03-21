@@ -15,7 +15,7 @@ public class Shockwave extends Weapon{
 		_game.shockwaveImpacts(_damage);
 	}
 
-	// IAttacks Interface Methods
+	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {}
 

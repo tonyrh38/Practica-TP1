@@ -3,10 +3,11 @@ package invaders.game;
 import java.util.*;
 
 import invaders.exceptions.CommandExecuteException;
+import invaders.interfaces.IPlayerController;
 import invaders.lists.*;
 import invaders.model.*;
 
-public class Game {
+public class Game implements IPlayerController {
 	
 	public final static int _X = 9;
 	public final static int _Y = 8;
@@ -14,11 +15,8 @@ public class Game {
 	private Random _rand;
 	private Level _level;
 
+	private GameObjectBoard _board;
 	private UCMShip _player;
-	private RegularShipList _regularList;
-	private DestroyerShipList _destroyerList;
-	private BombList _bombList;
-	private Ovni _ovni;
 	
 	private int _cycle;
 	private int _score;
@@ -32,65 +30,16 @@ public class Game {
 	public Game (Level level, Random random){
 		_rand = random;
 		_level = level;
-		_player = new UCMShip(this);
 		reset();
 	}
 	
 	
-	private void initializeRegularList() {
-		for(int i = 0; i < _level.getRegularShip(); i++) {
-			RegularShip ship = new RegularShip(3 + (i % 4), 1 + (i / 4), this);
-			_regularList.add(ship);
-		}
-	}
-
-	private void initializeDestroyerlist() {
-		if(_level.toString() == "EASY") {
-			for(int i = 0; i < 2; i++) {
-				DestroyerShip ship = new DestroyerShip(4 + i, 2, this);
-				_destroyerList.add(ship);
-			}
-		}
-		if(_level.toString() == "HARD") {
-			for(int i = 0; i < 2; i++) {
-				DestroyerShip ship = new DestroyerShip(4 + i, 3, this);
-				_destroyerList.add(ship);
-			}
-		}
-		if(_level.toString() == "INSANE") {
-			for(int i = 0; i < 4; i++) {
-				DestroyerShip ship = new DestroyerShip(3 + i, 3, this);
-				_destroyerList.add(ship);
-			}
-		}
-	}
-	
-	private int remainingAliens() {
-		return _regularList.remainingAliens() + _destroyerList.remainingAliens();
-	}
-	
 	private boolean playerWin() {
-		return remainingAliens() == 0;
+		return AlienShip.getRemaining() == 0;
 	}
 	
 	private boolean aliensWin() {
-		return !_player.isAlive() || _regularList.hasLanded() || _destroyerList.hasLanded();
-	}
-	
-	private void cleanDestroyed() {
-		_player.cleanLaser();
-		_regularList.cleanDestroyed();
-		_destroyerList.cleanDestroyed();
-		_bombList.cleanDestroyed();
-		if(_ovni != null && !_ovni.isAlive()) {
-			_ovni.onDelete();
-			_ovni = null;
-		}
-	}
-	
-	private void computerAction() {
-		_destroyerList.computerAction(_rand);
-		if(_ovni == null && _rand.nextDouble() < _level.getOvni()) _ovni = new Ovni(this);
+		return !_player.isAlive() || _board.haveLanded();
 	}
 	
 	private void advance() {
@@ -121,31 +70,23 @@ public class Game {
 			else _down = true;
 		}
 	}
-	
-	private boolean shipInWall() {
-		if(_regularList.shipInWall()) return true;
-		else if(_destroyerList.shipInWall()) return true;
-		else return false;
+
+	public Random getRandom() {
+		return _rand;
 	}
-
-
+	
 	public Level getLevel() {
 		return _level;
 	}
 	
 	public void update() {
-		cleanDestroyed();
 		_cycle++;
-		computerAction();
-		advance();
+		_board.computerAction();
+		_board.update();
 	}
 	
 	public void dropBomb(Bomb bomb) {
 		_bombList.add(bomb);
-	}
-	
-	public void addPoints(int points) {
-		_score += points;
 	}
 	
 	public void addShockwave() {
@@ -173,10 +114,6 @@ public class Game {
 	
 	// Command Methods
 	
-	public void move(int numCells) throws CommandExecuteException {
-		_player.move(numCells);		
-	}
-	
 	public void shootLaser() throws CommandExecuteException {
 		_player.shootLaser();
 	}
@@ -196,11 +133,9 @@ public class Game {
 	}
 
 	public void reset() {
-		_regularList = new RegularShipList(this);
-		initializeRegularList();
-		_destroyerList = new DestroyerShipList(this);
-		initializeDestroyerlist();
-		_bombList = new BombList(this);
+		_board = new BoardInitializer().initialize(this, _level);
+		_player = new UCMShip(this);
+		_board.add(_player);
 		_cycle = 0;
 		_score = 0;
 		_down = false;
@@ -213,7 +148,7 @@ public class Game {
 		System.out.println("Life: " + _player.getLife());
 		System.out.println("Number of cycles: " + _cycle);
 		System.out.println("Points: " + _score);
-		System.out.println("Remaining aliens: " + remainingAliens());
+		System.out.println("Remaining aliens: " + AlienShip.getRemaining());
 		System.out.println("ShockWave: " + (_player.hasShockwave()?"YES":"NO"));
 	}
 	
@@ -245,6 +180,46 @@ public class Game {
 				}
 			}
 		}
+	}
+
+	// IPlayerController Methods
+	
+
+	@Override
+	public boolean shootLaser() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean shockWave() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void receivePoints(int points) {
+		_score += points;
+	}
+
+	@Override
+	public void enableShockWave() {
+		// TODO Auto-generated method stub
+		// Lo llama Ovni
+	}
+
+
+	@Override
+	public void move(int numCells) throws CommandExecuteException {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void enableLaser() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

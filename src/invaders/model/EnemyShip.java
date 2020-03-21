@@ -10,4 +10,9 @@ public abstract class EnemyShip extends GameObject {
 		super(x, y, game);
 	}
 
+	@Override
+	public void onDelete() {
+		_game.receivePoints(_points);
+	}
+	
 }

@@ -12,7 +12,7 @@ public class RegularShip extends AlienShip{
 	}
 	
 	
-	// IAttack Interface Methods
+	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {}
 	

@@ -27,7 +27,7 @@ public class DestroyerShip extends AlienShip{
 		_bomb = null;
 	}
 	
-	// IAttack Interface Methods
+	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {
 		// TODO Auto-generated method stub
