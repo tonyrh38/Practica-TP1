@@ -10,6 +10,15 @@ public abstract class EnemyShip extends GameObject {
 		super(x, y, game);
 	}
 
+	
+	// IAttack Interface Method
+	@Override
+	public boolean receiveLaserAttack(int damage) {
+		_life -= damage;
+		return true;
+	}
+	
+	// GameObject Abstract Method
 	@Override
 	public void onDelete() {
 		_game.receivePoints(_points);

@@ -25,11 +25,25 @@ abstract public class AlienShip extends EnemyShip {
 		return _x <= 0 || _x >= Game._X - 1;
 	}
 	
+	@Override
 	public boolean hasLanded() {
 		return _y >= Game._Y - 1;
+	}	
+		
+	// IAttack Interface Method
+	@Override
+	public boolean receiveShockWaveAttack(int damage) {
+		_life -= damage;
+		return true;
 	}
 	
 	// GameObject Abstract Methods	
+	@Override
+	public void onDelete() {
+		super.onDelete();
+		_remaining--;
+	}
+	
 	@Override
 	public void move() {
 		if(_down) _y++;

@@ -23,16 +23,27 @@ public class Ovni extends EnemyShip{
 		_enable = true;
 	}
 	
-	public boolean isEnable() {
-		return _enable;
-	}
+	// IAttack Interface Method
+		@Override
+		public boolean receiveLaserAttack(int damage) {
+			if(_enable) {
+				_life -= damage;
+				if(!isAlive()) {
+					reset();
+					onDelete();					
+				}
+				return true;
+			}
+			else return false;
+		}
 	
 	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {
-		if(IExecuteRandomActions.canGenerateRandomOvni(_game)) reset();
+		if(!_enable && IExecuteRandomActions.canGenerateRandomOvni(_game)) reset();
 	}
-
+	
+	@Override
 	public void onDelete() {
 		super.onDelete();
 		_game.enableShockWave();
@@ -41,12 +52,13 @@ public class Ovni extends EnemyShip{
 
 	@Override
 	public void move() {
-		_x--;
+		if(_enable) _x--;
 	}
 
 	@Override
 	public String toString() {
-		return "O[" + _life + "]";
+		if(_enable) return "O[" + _life + "]";
+		else return "";
 	}
 	
 }

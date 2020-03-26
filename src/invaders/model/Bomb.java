@@ -15,6 +15,19 @@ public class Bomb extends Weapon{
 	}
 
 	
+	// IAttack Interface Methods
+	@Override
+	public boolean performAttack(GameObject other) {
+		if(other.isIn(_y, _x)) return other.receiveBombAttack(_damage);
+		return false;
+	}
+	
+	@Override
+	public boolean receiveLaserAttack(int damage) {
+		_life -= damage;
+		return true;
+	}
+	
 	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {}
@@ -27,7 +40,6 @@ public class Bomb extends Weapon{
 	@Override
 	public void move() {
 		_y++;
-		if(_game.damagePlayer(_x, _y, _damage)) _life--;
 	}
 	
 	@Override

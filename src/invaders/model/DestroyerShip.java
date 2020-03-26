@@ -1,8 +1,7 @@
 package invaders.model;
 
-import java.util.Random;
-
 import invaders.game.Game;
+import invaders.interfaces.IExecuteRandomActions;
 
 public class DestroyerShip extends AlienShip{
 	
@@ -14,14 +13,7 @@ public class DestroyerShip extends AlienShip{
 		_life = 1;
 		_points = 10;
 	}
-	
-	// TODO: comprobar el computerAction
-	public void computerAction(Random rand) {
-		if(_bomb == null && rand.nextDouble() < _game.getLevel().getFreq()) {
-			_bomb = new Bomb(_x, _y, this, _game);
-			_game.dropBomb(_bomb);
-		}
-	}
+
 	
 	public void resetBomb() {
 		_bomb = null;
@@ -30,7 +22,10 @@ public class DestroyerShip extends AlienShip{
 	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {
-		// TODO Auto-generated method stub
+		if(_bomb == null && IExecuteRandomActions.canGenerateRandomBomb(_game)) {
+			_bomb = new Bomb(_x, _y, this, _game);
+			_game.add(_bomb);
+		}
 	}	
 	
 	@Override

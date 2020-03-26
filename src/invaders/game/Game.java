@@ -4,7 +4,6 @@ import java.util.*;
 
 import invaders.exceptions.CommandExecuteException;
 import invaders.interfaces.IPlayerController;
-import invaders.lists.*;
 import invaders.model.*;
 
 public class Game implements IPlayerController {
@@ -20,9 +19,6 @@ public class Game implements IPlayerController {
 	
 	private int _cycle;
 	private int _score;
-	
-	private boolean _down;
-	private boolean _movement;
 	
 	private boolean _exit;
 	
@@ -42,35 +38,6 @@ public class Game implements IPlayerController {
 		return !_player.isAlive() || _board.haveLanded();
 	}
 	
-	private void advance() {
-		//1)
-		if(_player.getLaser() != null) _player.getLaser().advance();
-		cleanDestroyed();
-		//2)
-		_bombList.advance();
-		//3)
-		checkShipMovement();
-		if(_down || _cycle % _level.getVel() == 0) {
-			_destroyerList.advance(_down, _movement);
-			_regularList.advance(_down, _movement);
-		}
-		//4)
-		if(_ovni != null) {
-			_ovni.move();
-			if(!_ovni.isAlive()) _ovni = null;
-		}
-	}
-	
-	private void checkShipMovement() {
-		if(shipInWall()) {
-			if(_down) {
-				_down = false;
-				_movement = !_movement;
-			}
-			else _down = true;
-		}
-	}
-
 	public Random getRandom() {
 		return _rand;
 	}
@@ -79,55 +46,21 @@ public class Game implements IPlayerController {
 		return _level;
 	}
 	
+	public void shockwaveAttack(int damage) {
+		_board.shockwaveAttack(damage);
+	}
+	
+	public void add(GameObject go) {
+		_board.add(go);
+	}
+
 	public void update() {
 		_cycle++;
 		_board.computerAction();
 		_board.update();
 	}
 	
-	public void dropBomb(Bomb bomb) {
-		_bombList.add(bomb);
-	}
-	
-	public void addShockwave() {
-		if(!_player.hasShockwave()) _player.addShockwave();
-	}
-	
-	public boolean damageIn(int x, int y, int damage) {
-		if(_bombList.damageIn(x, y, damage)) return true;
-		else if(_destroyerList.damageIn(x, y, damage)) return true;
-		else if(_regularList.damageIn(x, y, damage)) return true;
-		else if(_ovni.isIn(y, x)) {
-			_ovni.damage(damage);
-			return true;
-		}
-		else return false;
-	}
-	
-	public boolean damagePlayer(int x, int y, int damage) {
-		if(_player.isIn(y, x)) {
-			_player.damage(damage);
-			return true;
-		}
-		else return false;
-	}
-	
 	// Command Methods
-	
-	public void shootLaser() throws CommandExecuteException {
-		_player.shootLaser();
-	}
-	
-	public void shockwave() throws CommandExecuteException {
-		_player.shockwave();
-	}
-	
-	public void shockwaveImpacts(int damage) {
-		_regularList.damageAll(damage);
-		_destroyerList.damageAll(damage);
-		if(_ovni != null) _ovni.damage(damage);
-	}
-	
 	public void exit() {
 		_exit = true;
 	}
@@ -138,8 +71,6 @@ public class Game implements IPlayerController {
 		_board.add(_player);
 		_cycle = 0;
 		_score = 0;
-		_down = false;
-		_movement = false;
 		_exit = false;
 	}
 
@@ -164,37 +95,23 @@ public class Game implements IPlayerController {
 	
 	// GamePrinter Methods
 	public String characterAtToString(int row, int col) {
-		if(_player.isIn(row,col)) return _player.toString();
-		else if(_player.getLaser() != null && _player.getLaser().isIn(row,col)) return _player.getLaser().toString();
-		else {
-			RegularShip rs = _regularList.shipIn(row,col);
-			if(rs != null) return rs.toString();
-			else {
-				DestroyerShip ds = _destroyerList.shipIn(row,col);
-				if(ds != null) return ds.toString();
-				else {
-					Bomb b = _bombList.bombIn(row,col);
-					if(b != null) return b.toString();
-					else if(_ovni != null && _ovni.isIn(row,col)) return _ovni.toString();
-					else return "";
-				}
-			}
-		}
+		return _board.toString(row, col);
 	}
 
 	// IPlayerController Methods
-	
-
 	@Override
-	public boolean shootLaser() {
-		// TODO Auto-generated method stub
-		return false;
+	public void move(int numCells) throws CommandExecuteException {
+		_player.move(numCells);
+	}
+	
+	@Override
+	public void shootLaser() throws CommandExecuteException {
+		_player.shootLaser();
 	}
 
 	@Override
-	public boolean shockWave() {
-		// TODO Auto-generated method stub
-		return false;
+	public void shockwave() throws CommandExecuteException {
+		_player.shockwave();
 	}
 
 	@Override
@@ -204,22 +121,12 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableShockWave() {
-		// TODO Auto-generated method stub
-		// Lo llama Ovni
+		_player.enableShockwave();
 	}
-
-
-	@Override
-	public void move(int numCells) throws CommandExecuteException {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public void enableLaser() {
-		// TODO Auto-generated method stub
-		
+		_player.enableLaser();
 	}
 
 }

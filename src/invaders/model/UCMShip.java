@@ -12,31 +12,49 @@ public class UCMShip extends Ship{
 	public UCMShip(Game game) {
 		super(Game._X/2, Game._Y - 1, game);
 		_life = 3;
+		_shockwave = new Shockwave(game);
 	}
 
 	
-	public Laser hasLaser() {
-		return _laser.isEnable();
+	public boolean hasLaser() {
+		return _laser != null;
 	}
 	
 	public boolean hasShockwave() {
 		return _shockwave.isEnable();
 	}
 	
-	// IPlayerController Methods
+	// IAttack Interface Method
+	public boolean receiveBombAttack(int damage) {
+		_life -= damage;
+		return true;
+	}
+	
+	// IPlayerController Interface Methods
 	public void move(int numCells) throws CommandExecuteException {
 		if(_x + numCells < 0 || _x + numCells >= Game._X) throw new CommandExecuteException("No se puede avanzar ese numero de casillas");
 		else _x += numCells;
 	}
 	
 	public void shootLaser() throws CommandExecuteException {
-		if(!_laser.isEnable()) throw new CommandExecuteException("Ya se ha disparado el laser");  
-		else _laser.shoot(_x, _y);
+		if(_laser == null) throw new CommandExecuteException("Ya se ha disparado el laser");  
+		else {
+			_laser = new Laser(_x, _y, _game);
+			_game.add(_laser);
+		}
 	}
 	
 	public void shockwave() throws CommandExecuteException {
 		if(!_shockwave.isEnable()) throw new CommandExecuteException("El shockwave no esta disponible");
 		else _shockwave.shoot();
+	}
+	
+	public void enableShockwave() {
+		_shockwave.setEnable(true);
+	}
+	
+	public void enableLaser() {
+		_laser = null;
 	}
 	
 	// GameObject Abstract Methods

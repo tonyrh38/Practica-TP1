@@ -5,34 +5,42 @@ public class GameObjectBoard {
 	private GameObject[] _objects;
 	private int _size;
 	
-	private int _currentObjects;
-	
 	
 	public GameObjectBoard (int width, int height) {
 		_size = width * height;
 		_objects = new GameObject[_size];
-		_currentObjects = 0;
 	}
 	
 	
-	private GameObject objectIn(int row, int col) {
-		GameObject go = null;
-		for(int i = 0; i < _size && go == null; i++) {
-			go = (_objects[i] != null && _objects[i].isIn(row,col))? _objects[i]:null;
+	public boolean haveLanded() {
+		boolean landed = false;
+		for(int i = 0; i < _size && !landed; i++) {
+			landed = (_objects[i] != null && _objects[i].hasLanded());
 		}
-		return go;
+		return landed;
 	}
 	
 	private void removeDead() {
-		// TODO implement
-	}
-	
-	private int getIndex( /* coordinadas */ ) {
-		// TODO implement
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null && (!_objects[i].isAlive() || _objects[i].isOut())) {
+				_objects[i].onDelete();
+				_objects[i] = null;
+			}
+		}
 	}	
 	
 	private void checkAttacks(GameObject object) {
-		// TODO implement
+		boolean attacked = false;
+		for(int i = 0; i < _size && !attacked; i++) {
+			attacked = (_objects[i] != null && _objects[i].performAttack(object));
+		}
+	}
+	
+	public void shockwaveAttack(int damage) {
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null) _objects[i].receiveShockWaveAttack(damage);
+		}
+		removeDead();
 	}
 	
 	public boolean add(GameObject object) {
@@ -59,15 +67,30 @@ public class GameObjectBoard {
 	}
 	
 	public void computerAction() {
-		// TODO implement
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null) _objects[i].computerAction();
+		}
 	}
 
 	public void update() {
-		// TODO implement
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null) {
+				//1) Se mueve cada objeto individualmente
+				_objects[i].move();
+				//2) Se comprueba que no recibe ningun ataque
+				checkAttacks(_objects[i]);
+			}
+		}
+		removeDead();
 	}
 	
-	public String toString( /* coordinadas */ ) {
-		// TODO implement
+	// GamePrinter Methods
+	public String toString(int row, int col) {
+		String str = "";
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null && _objects[i].isAlive() && _objects[i].isIn(row, col)) str = _objects[i].toString();
+		}
+		return str;
 	}
 
 }
