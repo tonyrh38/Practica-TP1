@@ -46,6 +46,10 @@ public class Game implements IPlayerController {
 		return _level;
 	}
 	
+	public int getCycle() {
+		return _cycle;
+	}
+	
 	public void shockwaveAttack(int damage) {
 		_board.shockwaveAttack(damage);
 	}

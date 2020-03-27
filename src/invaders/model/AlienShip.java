@@ -5,18 +5,22 @@ import invaders.game.Game;
 abstract public class AlienShip extends EnemyShip {
 
 	private static int _remaining = 0;
+	private static int _counter = 0;
 	
-	// TODO: Arreglar el movimiento de las naves enemigas
 	private static boolean _down;
-	private static boolean _movement;
+	private static boolean _locked;
+	private static boolean _direction;
+	
 	
 	public AlienShip(int x, int y, Game game) {
 		super(x, y, game);
 		_remaining++;
 		_down = false;
-		_movement = false;
+		_locked = false;
+		_direction = false;
 	}
 
+	
 	public static int getRemaining() {
 		return _remaining;
 	}
@@ -46,9 +50,24 @@ abstract public class AlienShip extends EnemyShip {
 	
 	@Override
 	public void move() {
-		if(_down) _y++;
-		else if(_movement) _x++;
-		else _x--;
+		if(_counter == 0 && _down) _locked = true;
+		if(isAlive()) {
+			if(_down && _locked) _y++;
+			else if(_game.getCycle() % _game.getLevel().getVel() == 0) {
+				if(_direction) _x++;
+				else _x--;
+				if(isInWall()) _down = true;
+			}
+		}
+		_counter++;
+		if(_counter == _remaining) {
+			if(_down && _locked) {
+				_down = false;
+				_locked = false;
+				_direction = !_direction;
+			}
+			_counter = 0;
+		}
 	}
 
 }

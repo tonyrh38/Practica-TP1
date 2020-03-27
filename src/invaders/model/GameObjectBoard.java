@@ -12,14 +12,6 @@ public class GameObjectBoard {
 	}
 	
 	
-	public boolean haveLanded() {
-		boolean landed = false;
-		for(int i = 0; i < _size && !landed; i++) {
-			landed = (_objects[i] != null && _objects[i].hasLanded());
-		}
-		return landed;
-	}
-	
 	private void removeDead() {
 		for(int i = 0; i < _size; i++) {
 			if(_objects[i] != null && (!_objects[i].isAlive() || _objects[i].isOut())) {
@@ -32,8 +24,16 @@ public class GameObjectBoard {
 	private void checkAttacks(GameObject object) {
 		boolean attacked = false;
 		for(int i = 0; i < _size && !attacked; i++) {
-			attacked = (_objects[i] != null && _objects[i].performAttack(object));
+			attacked = (_objects[i] != null && (_objects[i].performAttack(object) || object.performAttack(_objects[i])));
 		}
+	}
+	
+	public boolean haveLanded() {
+		boolean landed = false;
+		for(int i = 0; i < _size && !landed; i++) {
+			landed = (_objects[i] != null && _objects[i].hasLanded());
+		}
+		return landed;
 	}
 	
 	public void shockwaveAttack(int damage) {

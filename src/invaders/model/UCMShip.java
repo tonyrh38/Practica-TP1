@@ -37,7 +37,7 @@ public class UCMShip extends Ship{
 	}
 	
 	public void shootLaser() throws CommandExecuteException {
-		if(_laser == null) throw new CommandExecuteException("Ya se ha disparado el laser");  
+		if(_laser != null) throw new CommandExecuteException("Ya se ha disparado el laser");  
 		else {
 			_laser = new Laser(_x, _y, _game);
 			_game.add(_laser);

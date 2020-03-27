@@ -35,9 +35,7 @@ public abstract class GameObject implements IAttack {
 		return _x >= Game._X || _x < 0 || _y < 0 || _y >= Game._Y;
 	}
 	
-	public boolean hasLanded() {
-		return false;
-	}
+	public boolean hasLanded() {return false;}
 
 	public abstract void computerAction();
 	public abstract void onDelete();

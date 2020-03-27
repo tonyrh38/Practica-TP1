@@ -20,7 +20,6 @@ public class Ovni extends EnemyShip{
 	private void reset() {
 		_x = Game._X - 1;
 		_life = 1;
-		_enable = true;
 	}
 	
 	// IAttack Interface Method
@@ -29,8 +28,8 @@ public class Ovni extends EnemyShip{
 			if(_enable) {
 				_life -= damage;
 				if(!isAlive()) {
+					onDelete();
 					reset();
-					onDelete();					
 				}
 				return true;
 			}
@@ -40,19 +39,30 @@ public class Ovni extends EnemyShip{
 	// GameObject Abstract Methods
 	@Override
 	public void computerAction() {
-		if(!_enable && IExecuteRandomActions.canGenerateRandomOvni(_game)) reset();
+		if(!_enable && IExecuteRandomActions.canGenerateRandomOvni(_game)) {
+			reset();
+			_enable = true;
+		}
 	}
 	
 	@Override
 	public void onDelete() {
-		super.onDelete();
-		_game.enableShockWave();
-		_enable = false;
+			if(!isAlive()) {
+				super.onDelete();
+				_game.enableShockWave();
+			}
+			_enable = false;
 	}
 
 	@Override
 	public void move() {
-		if(_enable) _x--;
+		if(_enable) {
+			_x--;
+			if(isOut()) {
+				onDelete();
+				reset();
+			}
+		}
 	}
 
 	@Override
