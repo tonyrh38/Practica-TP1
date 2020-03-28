@@ -7,12 +7,14 @@ public class UCMShip extends Ship{
 	
 	private Laser _laser;
 	private Shockwave _shockwave;
-
+	private int _superlaser;
+	
 
 	public UCMShip(Game game) {
 		super(Game._X/2, Game._Y - 1, game);
 		_life = 3;
 		_shockwave = new Shockwave(game);
+		_superlaser = 0;
 	}
 
 	
@@ -22,6 +24,14 @@ public class UCMShip extends Ship{
 	
 	public boolean hasShockwave() {
 		return _shockwave.isEnable();
+	}
+	
+	public void addSuperLaser() {
+		_superlaser++;
+	}
+	
+	public int getSuperLaser() {
+		return _superlaser;
 	}
 	
 	// IAttack Interface Method
@@ -41,6 +51,14 @@ public class UCMShip extends Ship{
 		else {
 			_laser = new Laser(_x, _y, _game);
 			_game.add(_laser);
+		}
+	}
+	
+	public void shootSuperLaser()throws CommandExecuteException {
+		if(_superlaser <= 0) throw new CommandExecuteException("No te quedan supermisiles");  
+		else {
+			_game.add(new SuperLaser(_x, _y, _game));
+			_superlaser--;
 		}
 	}
 	

@@ -43,6 +43,13 @@ public class GameObjectBoard {
 		removeDead();
 	}
 	
+	public void explosionIn(int x, int y) {
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null) _objects[i].receiveExplosionIn(x, y);
+		}
+		removeDead();
+	}
+	
 	public boolean add(GameObject object) {
 		boolean added = false;
 		for(int i = 0; i < _size && !added; i++) {

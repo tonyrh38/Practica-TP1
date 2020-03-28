@@ -6,6 +6,7 @@ public interface IPlayerController {
 	// Player actions
 	public void move (int numCells) throws CommandExecuteException;
 	public void shootLaser() throws CommandExecuteException;
+	public void shootSuperLaser() throws CommandExecuteException;
 	public void shockwave() throws CommandExecuteException;
 	
 	// Callback

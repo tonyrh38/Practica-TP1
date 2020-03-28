@@ -6,40 +6,45 @@ public enum Level {
 	HARD (8, 2, 0.3, 2, 0.2),
 	INSANE (8, 4, 0.5, 1, 0.1);
 	
-	private int regularShip;
-	private int destroyerShip;
-	private double freq;
-	private int vel;
-	private double ovni;
+	private int _regularShip;
+	private int _destroyerShip;
+	private double _freq;
+	private int _vel;
+	private double _ovni;
+	private double _explosiveFreq = 0.05;
 	
 	
 	private Level(int regularShip, int destroyerShip, double freq, int vel, double ovni) {
-		this.regularShip = regularShip;
-		this.destroyerShip = destroyerShip;
-		this.freq = freq;
-		this.vel = vel;
-		this.ovni = ovni;
+		_regularShip = regularShip;
+		_destroyerShip = destroyerShip;
+		_freq = freq;
+		_vel = vel;
+		_ovni = ovni;
 	}
 	
 	
 	public int getRegularShip() { 
-		return this.regularShip; 
+		return _regularShip; 
 	}
 	
 	public int getDestroyerShip() { 
-		return this.destroyerShip; 
+		return _destroyerShip; 
 	}	
 	
 	public double getFreq() { 
-		return this.freq;
+		return _freq;
 	}
 	
 	public double getVel() { 
-		return this.vel;
+		return _vel;
 	}
 	
 	public double getOvni() { 
-		return this.ovni;
+		return _ovni;
 	}
 
+	public double getExplosive() {
+		return _explosiveFreq;
+	}
+	
 }

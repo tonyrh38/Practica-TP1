@@ -18,8 +18,11 @@ public class Bomb extends Weapon{
 	// IAttack Interface Methods
 	@Override
 	public boolean performAttack(GameObject other) {
-		if(other.isIn(_y, _x)) return other.receiveBombAttack(_damage);
-		return false;
+		if(isAlive() && other.isIn(_y, _x) && other.receiveBombAttack(_damage)) {
+			_life--;
+			return true;
+		}
+		else return false;
 	}
 	
 	@Override

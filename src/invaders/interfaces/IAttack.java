@@ -8,4 +8,5 @@ public interface IAttack {
 	default boolean receiveLaserAttack(int damage) {return false;};
 	default boolean receiveBombAttack(int damage) {return false;};
 	default boolean receiveShockWaveAttack(int damage) {return false;};
+	default boolean receiveExplosionIn(int x, int y) {return false;};
 }

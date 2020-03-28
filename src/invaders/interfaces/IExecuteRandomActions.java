@@ -12,4 +12,8 @@ public interface IExecuteRandomActions {
 		return game.getRandom().nextDouble() < game.getLevel().getFreq();	
 	}
 	
+	static boolean canGenerateExplosiveShip(Game game) {
+		return game.getRandom().nextDouble() < game.getLevel().getExplosive();
+	}
+	
 }

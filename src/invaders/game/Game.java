@@ -54,6 +54,10 @@ public class Game implements IPlayerController {
 		_board.shockwaveAttack(damage);
 	}
 	
+	public void explosionIn(int x, int y) {
+		_board.explosionIn(x, y);
+	}
+	
 	public void add(GameObject go) {
 		_board.add(go);
 	}
@@ -77,6 +81,19 @@ public class Game implements IPlayerController {
 		_score = 0;
 		_exit = false;
 	}
+	
+	public void buy(String weapon) throws CommandExecuteException {
+		switch(weapon) {
+		case "supermisil":
+			if(_score < 20) throw new CommandExecuteException("No dispone de suficientes puntos.");
+			else {
+				_score -= 20;
+				_player.addSuperLaser();
+			}
+			break;
+		default: throw new CommandExecuteException("El arma que desea no puede comprarse.");
+		}
+	}
 
 	// Controller Methods
 	public void info() {
@@ -85,6 +102,7 @@ public class Game implements IPlayerController {
 		System.out.println("Points: " + _score);
 		System.out.println("Remaining aliens: " + AlienShip.getRemaining());
 		System.out.println("ShockWave: " + (_player.hasShockwave()?"YES":"NO"));
+		System.out.println("Supermisiles: " + _player.getSuperLaser());
 	}
 	
 	public boolean isFinished() {
@@ -113,6 +131,11 @@ public class Game implements IPlayerController {
 		_player.shootLaser();
 	}
 
+	@Override
+	public void shootSuperLaser() throws CommandExecuteException {
+		_player.shootSuperLaser();
+	}
+	
 	@Override
 	public void shockwave() throws CommandExecuteException {
 		_player.shockwave();

@@ -37,6 +37,21 @@ public abstract class GameObject implements IAttack {
 	
 	public boolean hasLanded() {return false;}
 
+	// IAttack Interface Method
+	@Override
+	public boolean receiveExplosionIn(int x, int y) {
+		boolean hit = false;
+		for(int i = y - 1; i <= y + 1 && !hit; i++) {
+			for(int j = x - 1; j <= x + 1 && !hit; j++) {
+				if(isIn(i, j)) {
+					_life--;
+					hit = true;
+				}
+			}
+		}
+		return hit;
+	}
+	
 	public abstract void computerAction();
 	public abstract void onDelete();
 	public abstract void move();

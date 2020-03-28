@@ -2,16 +2,14 @@ package invaders.model;
 
 import invaders.game.Game;
 
-public class Laser extends Weapon{
-	
-	
-	public Laser(int x, int y, Game game) {
+public class SuperLaser extends Weapon {
+
+	public SuperLaser(int x, int y, Game game) {
 		super(x, y, game);
 		_life = 1;
-		_damage = 1;
+		_damage = 2;
 	}
 
-	
 	// IAttack Interface Methods
 	@Override
 	public boolean performAttack(GameObject other) {
@@ -32,9 +30,7 @@ public class Laser extends Weapon{
 	public void computerAction() {}
 
 	@Override
-	public void onDelete() {
-		_game.enableLaser();
-	}
+	public void onDelete() {}
 
 	@Override
 	public void move() {
@@ -43,7 +39,7 @@ public class Laser extends Weapon{
 	
 	@Override
 	public String toString() {
-		return "oo";
+		return "A";
 	}
-	
+
 }
