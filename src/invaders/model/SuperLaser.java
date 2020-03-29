@@ -42,4 +42,9 @@ public class SuperLaser extends Weapon {
 		return "A";
 	}
 
+	@Override
+	public String toSerialize() {
+		return "A;"+ _x +","+ _y;
+	}
+	
 }

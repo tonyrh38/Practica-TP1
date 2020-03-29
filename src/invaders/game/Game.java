@@ -31,7 +31,7 @@ public class Game implements IPlayerController {
 	
 	
 	private boolean playerWin() {
-		return AlienShip.getRemaining() == 0;
+		return AlienShip.getRemaining() <= 0;
 	}
 	
 	private boolean aliensWin() {
@@ -48,6 +48,10 @@ public class Game implements IPlayerController {
 	
 	public int getCycle() {
 		return _cycle;
+	}
+	
+	public int getScore() {
+		return _score;
 	}
 	
 	public void shockwaveAttack(int damage) {
@@ -120,6 +124,10 @@ public class Game implements IPlayerController {
 		return _board.toString(row, col);
 	}
 
+	public String characterAtToSerialize(int row, int col) {
+		return _board.toSerialize(row, col);
+	}
+	
 	// IPlayerController Methods
 	@Override
 	public void move(int numCells) throws CommandExecuteException {

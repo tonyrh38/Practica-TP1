@@ -25,13 +25,23 @@ public class RegularShip extends AlienShip{
 	@Override
 	public void onDelete() {
 		super.onDelete();
-		if(_explosive) _game.explosionIn(_x, _y);
+		if(_explosive) {
+			_points = 0;
+			_explosive = false;
+			_game.explosionIn(_x, _y);
+		}
 	}
 	
 	@Override
 	public String toString() {
 		if(_explosive) return "E[" + _life + "]";
 		else return "C[" + _life + "]";
+	}
+	
+	@Override
+	public String toSerialize() {
+		int turn = _game.getLevel().getVel() - _game.getCycle() % _game.getLevel().getVel();
+		return (_explosive?"E":"R") +";"+ _x +","+ _y +";"+ _life +";"+ turn +";"+ (_direction?"right":"left");
 	}
 	
 }

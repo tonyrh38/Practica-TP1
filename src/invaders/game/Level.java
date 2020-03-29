@@ -35,7 +35,7 @@ public enum Level {
 		return _freq;
 	}
 	
-	public double getVel() { 
+	public int getVel() { 
 		return _vel;
 	}
 	

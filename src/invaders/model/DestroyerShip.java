@@ -32,5 +32,11 @@ public class DestroyerShip extends AlienShip{
 	public String toString() {
 		return "D[" + _life + "]";
 	}
+
+	@Override
+	public String toSerialize() {
+		int turn = _game.getLevel().getVel() - _game.getCycle() % _game.getLevel().getVel();
+		return "D;"+ _x +","+ _y +";"+ _life +";"+ turn +";"+ (_direction?"right":"left");
+	}
 	
 }

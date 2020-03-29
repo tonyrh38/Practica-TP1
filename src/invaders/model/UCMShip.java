@@ -91,4 +91,9 @@ public class UCMShip extends Ship{
 		else return "!xx!";	
 	}
 	
+	@Override
+	public String toSerialize() {
+		return "P;"+ _x +","+ _y +";" + _life +";"+ _game.getScore() +";"+ _shockwave.toSerialize() +";"+ _superlaser;
+	}
+	
 }

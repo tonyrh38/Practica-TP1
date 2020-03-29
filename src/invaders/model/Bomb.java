@@ -49,5 +49,10 @@ public class Bomb extends Weapon{
 	public String toString() {
 		return ".";
 	}
+
+	@Override
+	public String toSerialize() {
+		return "B;"+ _x +","+ _y;
+	}
 	
 }

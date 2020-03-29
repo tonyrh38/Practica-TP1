@@ -5,7 +5,7 @@ import java.util.Scanner;
 import invaders.commands.*;
 import invaders.exceptions.*;
 import invaders.game.Game;
-import invaders.printer.GamePrinter;
+import invaders.printer.PrinterTypes;
 
 public class Controller {
 
@@ -22,10 +22,8 @@ public class Controller {
 
 
 	public void run() {
-		GamePrinter gp;
 		_game.info();
-		gp = new GamePrinter(_game, Game._Y, Game._X);
-		System.out.println(gp.toString());
+		System.out.println(PrinterTypes.BOARDPRINTER.getObject().toString(_game));
 		while (!_game.isFinished()){
 			System.out.println(PROMPT);
 			String[] words = _in.nextLine().toLowerCase().trim().split ("\\s+");
@@ -34,8 +32,7 @@ public class Controller {
 				if (command.execute(_game)){
 					_game.update();
 					_game.info();
-					gp = new GamePrinter(_game, Game._Y, Game._X);
-					System.out.println(gp.toString());
+					System.out.println(PrinterTypes.BOARDPRINTER.getObject().toString(_game));
 				}
 			}
 			catch(CommandParseException | CommandExecuteException ex) {

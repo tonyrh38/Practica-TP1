@@ -17,14 +17,14 @@ public class BuyCommand extends Command {
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException {
 			game.buy(_weapon);
-			return false;
+			return true;
 	}
 
 	@Override
 	public Command parse(String[] commandWords) throws CommandParseException {
 		if(this.matchCommandName(commandWords[0])) {
 			if(commandWords.length == 2) {
-				_weapon = commandWords[0];
+				_weapon = commandWords[1];
 				return this;
 			}
 			else throw new CommandParseException(incorrectArgsMsg);

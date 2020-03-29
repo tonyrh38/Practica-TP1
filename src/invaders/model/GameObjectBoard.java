@@ -100,4 +100,12 @@ public class GameObjectBoard {
 		return str;
 	}
 
+	public String toSerialize(int row, int col) {
+		String str = "";
+		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null && _objects[i].isAlive() && _objects[i].isIn(row, col)) str = _objects[i].toSerialize();
+		}
+		return str;
+	}
+
 }

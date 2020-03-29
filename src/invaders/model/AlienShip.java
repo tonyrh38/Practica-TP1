@@ -9,7 +9,7 @@ abstract public class AlienShip extends EnemyShip {
 	
 	private static boolean _down;
 	private static boolean _locked;
-	private static boolean _direction;
+	protected static boolean _direction;
 	
 	
 	public AlienShip(int x, int y, Game game) {
@@ -46,6 +46,7 @@ abstract public class AlienShip extends EnemyShip {
 	public void onDelete() {
 		super.onDelete();
 		_remaining--;
+		if(_remaining < 0) _remaining = 0;
 	}
 	
 	@Override

@@ -71,4 +71,10 @@ public class Ovni extends EnemyShip{
 		else return "";
 	}
 	
+	@Override
+	public String toSerialize() {
+		if(_enable) return "O;"+ _x +","+ _y +";"+ _life;
+		else return "";
+	}
+	
 }

@@ -46,4 +46,9 @@ public class Laser extends Weapon{
 		return "oo";
 	}
 	
+	@Override
+	public String toSerialize() {
+		return "L;"+ _x +","+ _y;
+	}
+	
 }

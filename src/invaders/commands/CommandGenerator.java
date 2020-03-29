@@ -3,7 +3,7 @@ package invaders.commands;
 import invaders.exceptions.CommandParseException;
 
 public class CommandGenerator {
-	// Atributos
+
 		private static Command[] availableCommands = {
 			new ListCommand(),
 			new HelpCommand(),
@@ -14,18 +14,20 @@ public class CommandGenerator {
 			new MoveCommand(),
 			new ShootCommand(),
 			new ShockwaveCommand(),
-			new BuyCommand()
+			new BuyCommand(),
+			new StringifyCommand()
 		};
 		
 		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.\n";
 	
-	// Metodos
+		
 		public static Command parseCommand(String[ ] commandWords) throws CommandParseException{
 				for (Command command : availableCommands) {
 					if (command.parse(commandWords) != null) return command;
 				}
 				throw new CommandParseException(unknownCommandMsg);
 		}
+		
 		public static String commandHelp() {
 			String str = "";
 			for (Command command : availableCommands) {
@@ -33,4 +35,5 @@ public class CommandGenerator {
 			}
 			return str;
 		}
+		
 }

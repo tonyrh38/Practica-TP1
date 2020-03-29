@@ -42,5 +42,11 @@ public class Shockwave extends Weapon{
 	public String toString() {
 		return "";
 	}
+	
+	@Override
+	public String toSerialize() {
+		if(_enable) return "ShockWave";
+		else return "none";
+	}
 
 }
