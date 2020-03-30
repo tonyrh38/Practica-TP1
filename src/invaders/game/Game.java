@@ -1,8 +1,12 @@
 package invaders.game;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.*;
 
+import extra.utils.FileContentsVerifier;
 import invaders.exceptions.CommandExecuteException;
+import invaders.exceptions.FileContentsException;
 import invaders.interfaces.IPlayerController;
 import invaders.model.*;
 
@@ -99,6 +103,28 @@ public class Game implements IPlayerController {
 		}
 	}
 
+	public void load(BufferedReader r) throws IOException, FileContentsException {
+		FileContentsVerifier verifier = null;
+		// TODO: Rehacer con el Verifier
+		String cycles =  r.readLine();
+		if(!cycles.contains("G;")) throw new FileContentsException("El archivo no tiene el formato correcto.");
+		else _cycle = ((int)cycles.charAt(2));
+		String level = r.readLine();
+		if(!level.contains("L;")) throw new FileContentsException("El archivo no tiene el formato correcto.");
+		else _level = Level.valueOf(level.substring(2));
+		
+		boolean loading = false;
+		String line = r.readLine().trim();
+		while(line != null && !line.isEmpty()) {
+			GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
+			if (gameObject == null) throw new FileContentsException("invalid file, unrecognised line prefix");
+			else {
+				_board.add(gameObject);
+				line = r.readLine().trim();
+			}	
+		}
+	}
+	
 	// Controller Methods
 	public void info() {
 		System.out.println("Life: " + _player.getLife());

@@ -1,6 +1,6 @@
 package invaders.exceptions;
 
-public class CommandParseException extends Exception{
+public class CommandParseException extends Exception {
 	
 	private static final long serialVersionUID = 4937770161069345729L;
 	

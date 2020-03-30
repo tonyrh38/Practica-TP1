@@ -4,7 +4,7 @@ import invaders.game.Game;
 
 public class Stringifier extends GamePrinter {
 
-	private static final String title = "— Space Invaders v2.0 —";	
+	private static final String title = "- Space Invaders v2.0 -";	
 	
 	
 	public Stringifier() {}

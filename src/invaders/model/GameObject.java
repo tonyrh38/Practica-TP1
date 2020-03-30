@@ -1,5 +1,6 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 import invaders.interfaces.IAttack;
 
@@ -57,5 +58,6 @@ public abstract class GameObject implements IAttack {
 	public abstract void move();
 	public abstract String toString();
 	public abstract String toSerialize();
+	public abstract GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier);
 	
 }

@@ -15,7 +15,8 @@ public class CommandGenerator {
 			new ShootCommand(),
 			new ShockwaveCommand(),
 			new BuyCommand(),
-			new StringifyCommand()
+			new StringifyCommand(),
+			new SaveCommand()
 		};
 		
 		private static final String unknownCommandMsg = "Comando desconocido, vuelva a intentarlo.\n";
