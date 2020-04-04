@@ -1,11 +1,14 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 
 public class Shockwave extends Weapon{
 
 	private boolean _enable;
 	
+	
+	public Shockwave() {}
 	
 	public Shockwave(Game game) {
 		super(Game._X, Game._Y, game);
@@ -47,6 +50,13 @@ public class Shockwave extends Weapon{
 	public String toSerialize() {
 		if(_enable) return "ShockWave";
 		else return "none";
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

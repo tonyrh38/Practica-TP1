@@ -1,11 +1,14 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 
 public class Bomb extends Weapon{
 	
 	private DestroyerShip _father;
 	
+	
+	public Bomb() {}
 	
 	public Bomb(int x, int y, DestroyerShip father, Game game) {
 		super(x, y, game);
@@ -53,6 +56,13 @@ public class Bomb extends Weapon{
 	@Override
 	public String toSerialize() {
 		return "B;"+ _x +","+ _y;
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

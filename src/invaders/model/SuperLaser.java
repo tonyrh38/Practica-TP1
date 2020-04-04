@@ -1,9 +1,13 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 
 public class SuperLaser extends Weapon {
 
+	
+	public SuperLaser() {}
+	
 	public SuperLaser(int x, int y, Game game) {
 		super(x, y, game);
 		_life = 1;
@@ -45,6 +49,13 @@ public class SuperLaser extends Weapon {
 	@Override
 	public String toSerialize() {
 		return "A;"+ _x +","+ _y;
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

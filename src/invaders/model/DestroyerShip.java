@@ -1,5 +1,6 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 import invaders.interfaces.IExecuteRandomActions;
 
@@ -8,6 +9,8 @@ public class DestroyerShip extends AlienShip{
 	private Bomb _bomb;
 
 
+	public DestroyerShip() {}
+	
 	public DestroyerShip(int x, int y, Game game) {
 		super(x, y, game);
 		_life = 1;
@@ -37,6 +40,13 @@ public class DestroyerShip extends AlienShip{
 	public String toSerialize() {
 		int turn = _game.getLevel().getVel() - _game.getCycle() % _game.getLevel().getVel();
 		return "D;"+ _x +","+ _y +";"+ _life +";"+ turn +";"+ (_direction?"right":"left");
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

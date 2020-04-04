@@ -26,7 +26,7 @@ public class FileContentsVerifier {
 	public boolean verifyLevelString(String levelString) {
 		String[] words = levelString.split(separator1);
 		appendToFoundInFileString(words[0]);
-		if (words.length != 2 || !verifyLevel(Level.parse(words[1]))) return false;
+		if (words.length != 2 || !verifyLevel(Level.valueOf(words[1]))) return false;
 		else return true;
 	}
 	
@@ -69,7 +69,7 @@ public class FileContentsVerifier {
 		if ( !verifyCoords(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game)
 				|| !verifyLives(Integer.parseInt(words[2]), armour)
 				|| !verifyCycleToNextAlienMove(Integer.parseInt(words[3]), game.getLevel())
-				|| !verifyDir(Move.parse(words[4])) ) {
+				|| !verifyDir(words[4])) {
 			return false;
 		}
 		else return true;
@@ -110,8 +110,8 @@ public class FileContentsVerifier {
 		return level != null;
 	}
 	
-	public static boolean verifyDir(Move dir) {
-		return dir != null;
+	public static boolean verifyDir(String dir) {
+		return dir == "left" || dir == "right";
 	}
 	
 	public static boolean verifyLives(int live, int armour) {
@@ -123,7 +123,7 @@ public class FileContentsVerifier {
 	}
 	
 	public static boolean verifyCycleToNextAlienMove(int cycle, Level level) {
-		return 0 <= cycle && cycle <= level.getNumCyclesToMoveOneCell();
+		return 0 <= cycle && cycle <= level.getVel() - cycle % level.getVel();
 	}
 	
 	// parseBoolean converts any string different from "true" to false.
@@ -137,13 +137,13 @@ public class FileContentsVerifier {
 	
 	// Use a regular expression to verify the string of concatenated prefixes found
 	public boolean verifyLines() {
-		// TO DO: compare foundInFileString with a regular expression
+		// TODO: compare foundInFileString with a regular expression
 		return true; 
 	}
 
 	// text explaining allowed concatenated prefixes
 	public String toString() {
-		// TO DO
+		// TODO
 		return "";
 	}
 }

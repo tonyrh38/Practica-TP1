@@ -1,9 +1,12 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 
 public class Laser extends Weapon{
 	
+	
+	public Laser() {}
 	
 	public Laser(int x, int y, Game game) {
 		super(x, y, game);
@@ -49,6 +52,13 @@ public class Laser extends Weapon{
 	@Override
 	public String toSerialize() {
 		return "L;"+ _x +","+ _y;
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 import invaders.interfaces.IExecuteRandomActions;
 
@@ -7,6 +8,8 @@ public class RegularShip extends AlienShip{
 	
 	private boolean _explosive;	
 	
+	
+	public RegularShip() {}
 	
 	public RegularShip(int x, int y, Game game) {
 		super(x, y, game);
@@ -42,6 +45,13 @@ public class RegularShip extends AlienShip{
 	public String toSerialize() {
 		int turn = _game.getLevel().getVel() - _game.getCycle() % _game.getLevel().getVel();
 		return (_explosive?"E":"R") +";"+ _x +","+ _y +";"+ _life +";"+ turn +";"+ (_direction?"right":"left");
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

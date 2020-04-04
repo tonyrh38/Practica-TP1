@@ -1,5 +1,6 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.exceptions.CommandExecuteException;
 import invaders.game.Game;
 
@@ -9,7 +10,9 @@ public class UCMShip extends Ship{
 	private Shockwave _shockwave;
 	private int _superlaser;
 	
-
+	
+	public UCMShip() {}
+	
 	public UCMShip(Game game) {
 		super(Game._X/2, Game._Y - 1, game);
 		_life = 3;
@@ -94,6 +97,13 @@ public class UCMShip extends Ship{
 	@Override
 	public String toSerialize() {
 		return "P;"+ _x +","+ _y +";" + _life +";"+ _game.getScore() +";"+ _shockwave.toSerialize() +";"+ _superlaser;
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

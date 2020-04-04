@@ -13,6 +13,8 @@ public abstract class GameObject implements IAttack {
 	protected Game _game;
 	
 	
+	public GameObject() {}
+	
 	public GameObject(int x, int y, Game game) {
 		_x = x;
 		_y = y;

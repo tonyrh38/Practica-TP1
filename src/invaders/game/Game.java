@@ -34,6 +34,10 @@ public class Game implements IPlayerController {
 	}
 	
 	
+	public boolean isOnBoard(int x, int y) {
+		return x >= 0 && x < _X && y >= 0 && y < _Y ;
+	}
+	
 	private boolean playerWin() {
 		return AlienShip.getRemaining() <= 0;
 	}

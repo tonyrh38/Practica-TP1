@@ -12,6 +12,8 @@ abstract public class AlienShip extends EnemyShip {
 	protected static boolean _direction;
 	
 	
+	public AlienShip() {}
+	
 	public AlienShip(int x, int y, Game game) {
 		super(x, y, game);
 		_remaining++;

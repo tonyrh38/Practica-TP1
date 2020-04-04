@@ -1,5 +1,6 @@
 package invaders.model;
 
+import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 import invaders.interfaces.IExecuteRandomActions;
 
@@ -7,6 +8,8 @@ public class Ovni extends EnemyShip{
 	
 	private boolean _enable;
 	
+	
+	public Ovni() {}
 	
 	public Ovni(Game game) {
 		super(Game._X - 1, 0, game);
@@ -75,6 +78,13 @@ public class Ovni extends EnemyShip{
 	public String toSerialize() {
 		if(_enable) return "O;"+ _x +","+ _y +";"+ _life;
 		else return "";
+	}
+
+	// GameObjectGenerator Method
+	@Override
+	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

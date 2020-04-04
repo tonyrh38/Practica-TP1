@@ -6,6 +6,9 @@ public abstract class EnemyShip extends GameObject {
 
 	protected int _points;
 	
+	
+	public EnemyShip() {}
+	
 	public EnemyShip(int x, int y, Game game) {
 		super(x, y, game);
 	}
