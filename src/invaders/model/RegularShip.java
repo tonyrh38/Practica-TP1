@@ -50,8 +50,10 @@ public class RegularShip extends AlienShip{
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!verifier.verifyAlienShipString(stringFromFile, game, 0)) return null;
+		else {
+			return new RegularShip();
+		}
 	}
 	
 }

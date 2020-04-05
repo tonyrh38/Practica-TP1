@@ -108,7 +108,7 @@ public class Game implements IPlayerController {
 	}
 
 	public void load(BufferedReader r) throws IOException, FileContentsException {
-		FileContentsVerifier verifier = null;
+		FileContentsVerifier verifier = new FileContentsVerifier();
 		// TODO: Rehacer con el Verifier
 		String cycles =  r.readLine();
 		if(!cycles.contains("G;")) throw new FileContentsException("El archivo no tiene el formato correcto.");
