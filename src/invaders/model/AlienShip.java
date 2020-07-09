@@ -1,6 +1,5 @@
 package invaders.model;
 
-import extra.utils.FileContentsVerifier;
 import invaders.game.Game;
 
 abstract public class AlienShip extends EnemyShip {
@@ -71,15 +70,6 @@ abstract public class AlienShip extends EnemyShip {
 				_direction = !_direction;
 			}
 			_counter = 0;
-		}
-	}
-
-	// GameObjectGenerator Method
-	@Override
-	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		if(!verifier.verifyAlienShipString(stringFromFile, game, 0)) return null;
-		else {
-			return new RegularShip();
 		}
 	}
 	

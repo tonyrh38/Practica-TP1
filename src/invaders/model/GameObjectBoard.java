@@ -91,6 +91,13 @@ public class GameObjectBoard {
 		removeDead();
 	}
 	
+	public void clear() {
+		for(int i = 0; i < _size; i++) {
+			_objects[i].onDelete();
+			_objects[i] = null;
+		}
+	}
+	
 	// GamePrinter Methods
 	public String toString(int row, int col) {
 		String str = "";

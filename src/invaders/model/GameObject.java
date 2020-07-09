@@ -6,6 +6,7 @@ import invaders.interfaces.IAttack;
 
 public abstract class GameObject implements IAttack {
 
+	protected int _id;
 	protected int _x;
 	protected int _y;
 	protected int _life;
@@ -16,6 +17,7 @@ public abstract class GameObject implements IAttack {
 	public GameObject() {}
 	
 	public GameObject(int x, int y, Game game) {
+		_id = (int) Math.floor(Math.random() * 10000 + 1);
 		_x = x;
 		_y = y;
 		_game = game;

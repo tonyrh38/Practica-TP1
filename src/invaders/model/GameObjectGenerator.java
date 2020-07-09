@@ -7,14 +7,13 @@ import invaders.game.Game;
 public class GameObjectGenerator {
 	
 	private static GameObject[] availableGameObjects = {
-		new UCMShip(),
 		new Ovni(),
 		new RegularShip(),
 		new DestroyerShip(),
-		new Shockwave(),
 		new Bomb(),
 		new Laser(),
-		new SuperLaser()
+		new SuperLaser(),
+		new UCMShip()
 	};
 	
 	public static GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier)	throws FileContentsException {

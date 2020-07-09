@@ -62,6 +62,22 @@ public class Game implements IPlayerController {
 		return _score;
 	}
 	
+	public void setLevel(Level level) {
+		_level = level;
+	}
+	
+	public void setPlayer(UCMShip player) {
+		_player = player;
+	}
+	
+	public void setCycle(int cycle) {
+		_cycle = cycle;
+	}
+	
+	public void setScore(int score) {
+		_score = score;
+	}
+	
 	public void shockwaveAttack(int damage) {
 		_board.shockwaveAttack(damage);
 	}
@@ -109,23 +125,41 @@ public class Game implements IPlayerController {
 
 	public void load(BufferedReader r) throws IOException, FileContentsException {
 		FileContentsVerifier verifier = new FileContentsVerifier();
-		// TODO: Rehacer con el Verifier
-		String cycles =  r.readLine();
-		if(!cycles.contains("G;")) throw new FileContentsException("El archivo no tiene el formato correcto.");
-		else _cycle = ((int)cycles.charAt(2));
-		String level = r.readLine();
-		if(!level.contains("L;")) throw new FileContentsException("El archivo no tiene el formato correcto.");
-		else _level = Level.valueOf(level.substring(2));
 		
-		boolean loading = false;
-		String line = r.readLine().trim();
-		while(line != null && !line.isEmpty()) {
-			GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
-			if (gameObject == null) throw new FileContentsException("invalid file, unrecognised line prefix");
-			else {
-				_board.add(gameObject);
-				line = r.readLine().trim();
-			}	
+		// Copia de seguridad del juego
+		Game game = null;
+		try {
+			game = (Game) this.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			String cycleString =  r.readLine().trim();
+			if(!verifier.verifyCycleString(cycleString)) throw new FileContentsException("invalid file, unrecognised line prefix");
+			else setCycle(((int)cycleString.charAt(2)));
+			
+			String levelString = r.readLine().trim();
+			if(!verifier.verifyLevelString(levelString)) throw new FileContentsException("invalid file, unrecognised line prefix");
+			else setLevel(Level.valueOf(levelString.substring(2)));
+			
+			_board.clear();
+			String line = r.readLine().trim();
+			while(line != null && !line.isEmpty()) {
+				GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
+				if (gameObject == null) throw new FileContentsException("invalid file, unrecognised line prefix");
+				else {
+					add(gameObject);
+					line = r.readLine().trim();
+				}	
+			}
+		} catch(FileContentsException e) {
+			_level = game._level;
+			_board = game._board;
+			_player = game._player;
+			_cycle = game._cycle;
+			_score = game._score;
+			throw new FileContentsException("invalid file, unrecognised line prefix");
 		}
 	}
 	

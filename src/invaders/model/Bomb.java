@@ -55,14 +55,16 @@ public class Bomb extends Weapon{
 
 	@Override
 	public String toSerialize() {
-		return "B;"+ _x +","+ _y;
+		return "B;"+ _x +","+ _y +";"+ _father.getId();
 	}
 
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!verifier.verifyWeaponString(stringFromFile, game)) return null;
+		else {
+			// TODO: Resolver referencia a la nave padre
+		}
 	}
 	
 }

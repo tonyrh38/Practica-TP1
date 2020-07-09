@@ -17,6 +17,17 @@ public class DestroyerShip extends AlienShip{
 		_points = 10;
 	}
 
+	private DestroyerShip(int x, int y, int life, boolean direction, Game game) {
+		super(x,y,game);
+		_life = life;
+		_points = 10;
+		AlienShip._direction =  direction;
+	}
+	
+	
+	public int getId() {
+		return _id;
+	}
 	
 	public void resetBomb() {
 		_bomb = null;
@@ -39,14 +50,23 @@ public class DestroyerShip extends AlienShip{
 	@Override
 	public String toSerialize() {
 		int turn = _game.getLevel().getVel() - _game.getCycle() % _game.getLevel().getVel();
-		return "D;"+ _x +","+ _y +";"+ _life +";"+ turn +";"+ (_direction?"right":"left");
+		return "D;"+ _x +","+ _y +";"+ _life +";"+ turn +";"+ (_direction?"right":"left")+";"+ _id;
 	}
 
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!verifier.verifyAlienShipString(stringFromFile, game, 10)) return null;
+		else {
+			String [] words = stringFromFile.split(";");
+			if(words[0] != "D") return null;
+			else {
+				String [] coords = words[1].split(",");
+				boolean direction = (words[4] == "right")? true : false;
+				return new DestroyerShip(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]),
+						Integer.parseInt(words[2]),	direction, game);
+			}
+		}
 	}
 	
 }

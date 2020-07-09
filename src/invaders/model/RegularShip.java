@@ -18,6 +18,14 @@ public class RegularShip extends AlienShip{
 		_explosive = false;
 	}
 	
+	private RegularShip(int x, int y, int life, boolean direction, boolean explosive, Game game) {
+		super(x,y,game);
+		_life = life;
+		_points = 5;
+		AlienShip._direction =  direction;
+		_explosive = explosive;
+	}
+	
 	
 	// GameObject Abstract Methods
 	@Override
@@ -50,9 +58,17 @@ public class RegularShip extends AlienShip{
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		if(!verifier.verifyAlienShipString(stringFromFile, game, 0)) return null;
+		if(!verifier.verifyAlienShipString(stringFromFile, game, 10)) return null;
 		else {
-			return new RegularShip();
+			String [] words = stringFromFile.split(";");
+			if(words[0] != "E" || words[0] != "R") return null;
+			else {
+				String [] coords = words[1].split(",");
+				boolean direction = (words[4] == "right")? true : false;
+				boolean explosive = (words[0] == "E")? true: false;
+				return new RegularShip(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]),
+						Integer.parseInt(words[2]),	direction, explosive, game);
+			}
 		}
 	}
 	

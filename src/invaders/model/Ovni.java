@@ -15,8 +15,14 @@ public class Ovni extends EnemyShip{
 		super(Game._X - 1, 0, game);
 		_life = 1;
 		_points = 25;
-		_game = game;
 		_enable = false;
+	}
+	
+	private Ovni(int x, int y, int life, Game game) {
+		super(x,y,game);
+		_life = life;
+		_points = 25;
+		_enable = true;
 	}
 	
 	
@@ -83,8 +89,15 @@ public class Ovni extends EnemyShip{
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!verifier.verifyOvniString(stringFromFile, game, 10)) return null;
+		else {
+			String [] words = stringFromFile.split(";");
+			if(words[0] != "O") return null;
+			else {
+				String [] coords = words[1].split(",");
+				return new Ovni(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(words[2]), game);
+			}
+		}
 	}
 	
 }

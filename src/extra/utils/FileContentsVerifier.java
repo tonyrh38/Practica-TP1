@@ -132,18 +132,17 @@ public class FileContentsVerifier {
 	}
 
 	public boolean isMissileOnLoadedBoard() {
-		return foundInFileString.toUpperCase().contains("M");
+		return foundInFileString.toUpperCase().contains("L");
 	}
 	
 	// Use a regular expression to verify the string of concatenated prefixes found
 	public boolean verifyLines() {
-		// TODO: compare foundInFileString with a regular expression
+		//compare foundInFileString with a regular expression
 		return true; 
 	}
 
 	// text explaining allowed concatenated prefixes
 	public String toString() {
-		// TODO
 		return "";
 	}
 }

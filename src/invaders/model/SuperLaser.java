@@ -54,8 +54,16 @@ public class SuperLaser extends Weapon {
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!verifier.verifyWeaponString(stringFromFile, game)) return null;
+		else {
+			String [] words = stringFromFile.split(";");
+			if(words[0] != "A") return null;
+			else {
+				String [] coords = words[1].split(",");
+				
+				return new SuperLaser(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game);
+			}
+		}
 	}
 	
 }

@@ -24,7 +24,10 @@ public class LoadCommand extends Command {
 		try(BufferedReader r = new BufferedReader(new FileReader(_filename))) {
 			if(r.readLine() != "- Space Invaders v2.0 -") throw new FileContentsException("El archivo no tiene el formato correcto.");
 			else if(!r.readLine().isEmpty()) throw new FileContentsException("El archivo no tiene el formato correcto correcto.");
-			else game.load(r);
+			else {
+				game.load(r);
+				System.out.println("Game successfully loaded from file " + _filename);
+			}
 		} catch(IOException | FileContentsException e) {
 			throw new CommandExecuteException("Cannot load. " + e.getMessage());
 		}

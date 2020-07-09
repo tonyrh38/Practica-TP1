@@ -20,6 +20,16 @@ public class UCMShip extends Ship{
 		_superlaser = 0;
 	}
 
+	private UCMShip(int x, int y, int life, int score,boolean laser, boolean sw, int superlaser, Game game) {
+		super(x,y,game);
+		_life = life;
+		game.setScore(score);
+		if(laser) _laser = new Laser();
+		_shockwave = new Shockwave(game);
+		_shockwave.setEnable(sw);
+		_superlaser = superlaser;
+	}
+	
 	
 	public boolean hasLaser() {
 		return _laser != null;
@@ -102,8 +112,21 @@ public class UCMShip extends Ship{
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
-		return null;
+		if(!verifier.verifyPlayerString(stringFromFile, game, 10)) return null;
+		else {
+			String [] words = stringFromFile.split(";");
+			if(words[0] != "P") return null;
+			else {
+				String [] coords = words[1].split(",");
+				int life = Integer.parseInt(words[2]);
+				int score = Integer.parseInt(words[3]);
+				boolean laser = verifier.isMissileOnLoadedBoard();
+				boolean sw = (words[4] == "none")? false:true;				
+				int superlaser = Integer.parseInt(words[5]);
+				
+				return new UCMShip(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), life, score, laser, sw, superlaser, game);
+			}
+		}
 	}
 	
 }

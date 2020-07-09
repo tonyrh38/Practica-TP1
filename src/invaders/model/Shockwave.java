@@ -55,7 +55,6 @@ public class Shockwave extends Weapon{
 	// GameObjectGenerator Method
 	@Override
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
