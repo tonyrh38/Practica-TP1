@@ -17,13 +17,23 @@ public class DestroyerShip extends AlienShip{
 		_points = 10;
 	}
 
-	private DestroyerShip(int x, int y, int life, boolean direction, Game game) {
+	private DestroyerShip(int x, int y, int life, boolean direction, int id, Game game) {
 		super(x,y,game);
 		_life = life;
 		_points = 10;
 		AlienShip._direction =  direction;
+		_id = id;
 	}
 	
+	
+	@Override
+	public boolean isFather(int id) {
+		if(_id == id) {
+			_bomb = new Bomb();
+			return true;
+		}
+		else return false;
+	}
 	
 	public int getId() {
 		return _id;
@@ -59,12 +69,12 @@ public class DestroyerShip extends AlienShip{
 		if(!verifier.verifyAlienShipString(stringFromFile, game, 10)) return null;
 		else {
 			String [] words = stringFromFile.split(";");
-			if(words[0] != "D") return null;
+			if(!words[0].equals("D")) return null;
 			else {
 				String [] coords = words[1].split(",");
-				boolean direction = (words[4] == "right")? true : false;
+				boolean direction = (words[4].equals("right"))? true : false;
 				return new DestroyerShip(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]),
-						Integer.parseInt(words[2]),	direction, game);
+						Integer.parseInt(words[2]),	direction, Integer.parseInt(words[5]), game);
 			}
 		}
 	}

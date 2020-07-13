@@ -40,7 +40,7 @@ public class Bomb extends Weapon{
 
 	@Override
 	public void onDelete() {
-		_father.resetBomb();
+		if(_father != null) _father.resetBomb();
 	}
 
 	@Override
@@ -63,7 +63,13 @@ public class Bomb extends Weapon{
 	public GameObject parse(String stringFromFile, Game game, FileContentsVerifier verifier) {
 		if(!verifier.verifyWeaponString(stringFromFile, game)) return null;
 		else {
-			// TODO: Resolver referencia a la nave padre
+			String words [] = stringFromFile.split(";");
+			if(!words[0].equals("B")) return null;
+			else {
+				String [] coords = words[1].split(",");
+				DestroyerShip father = game.findFather(Integer.parseInt(words[2]));
+				return new Bomb(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), father, game);
+			}
 		}
 	}
 	

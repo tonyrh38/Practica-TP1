@@ -126,41 +126,29 @@ public class Game implements IPlayerController {
 	public void load(BufferedReader r) throws IOException, FileContentsException {
 		FileContentsVerifier verifier = new FileContentsVerifier();
 		
-		// Copia de seguridad del juego
-		Game game = null;
-		try {
-			game = (Game) this.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
+		String cycleString =  r.readLine().trim();
+		if(!verifier.verifyCycleString(cycleString)) throw new FileContentsException("invalid file, unrecognised line prefix");
+		else setCycle((Integer.parseInt(cycleString.substring(2))));
 		
-		try {
-			String cycleString =  r.readLine().trim();
-			if(!verifier.verifyCycleString(cycleString)) throw new FileContentsException("invalid file, unrecognised line prefix");
-			else setCycle(((int)cycleString.charAt(2)));
-			
-			String levelString = r.readLine().trim();
-			if(!verifier.verifyLevelString(levelString)) throw new FileContentsException("invalid file, unrecognised line prefix");
-			else setLevel(Level.valueOf(levelString.substring(2)));
-			
-			_board.clear();
-			String line = r.readLine().trim();
-			while(line != null && !line.isEmpty()) {
-				GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
-				if (gameObject == null) throw new FileContentsException("invalid file, unrecognised line prefix");
-				else {
-					add(gameObject);
-					line = r.readLine().trim();
-				}	
-			}
-		} catch(FileContentsException e) {
-			_level = game._level;
-			_board = game._board;
-			_player = game._player;
-			_cycle = game._cycle;
-			_score = game._score;
-			throw new FileContentsException("invalid file, unrecognised line prefix");
+		String levelString = r.readLine().trim();
+		if(!verifier.verifyLevelString(levelString)) throw new FileContentsException("invalid file, unrecognised line prefix");
+		else setLevel(Level.valueOf(levelString.substring(2)));
+		
+		_board.clear();
+		String line = r.readLine();
+		while(line != null && !line.isEmpty()) {
+			line = line.trim();
+			GameObject gameObject = GameObjectGenerator.parse(line, this, verifier);
+			if (gameObject == null) throw new FileContentsException("invalid file, unrecognised line prefix");
+			else {
+				add(gameObject);
+				line = r.readLine();
+			}	
 		}
+	}
+	
+	public DestroyerShip findFather(int id) {
+		return _board.findFather(id);
 	}
 	
 	// Controller Methods

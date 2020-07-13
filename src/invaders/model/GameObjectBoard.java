@@ -93,9 +93,23 @@ public class GameObjectBoard {
 	
 	public void clear() {
 		for(int i = 0; i < _size; i++) {
+			if(_objects[i] != null) {
 			_objects[i].onDelete();
 			_objects[i] = null;
+			}
 		}
+	}
+
+	public DestroyerShip findFather(int id) {
+		DestroyerShip father = null;
+		boolean found = false;
+		for(int i = 0; i < _size && !found; i++) {
+			if(_objects[i] != null && _objects[i].isFather(id)) {
+				father = (DestroyerShip) _objects[i];
+				found = true;
+			}
+		}
+		return father;
 	}
 	
 	// GamePrinter Methods

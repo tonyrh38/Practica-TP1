@@ -92,7 +92,7 @@ public class Ovni extends EnemyShip{
 		if(!verifier.verifyOvniString(stringFromFile, game, 10)) return null;
 		else {
 			String [] words = stringFromFile.split(";");
-			if(words[0] != "O") return null;
+			if(!words[0].equals("O")) return null;
 			else {
 				String [] coords = words[1].split(",");
 				return new Ovni(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), Integer.parseInt(words[2]), game);

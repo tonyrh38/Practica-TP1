@@ -115,13 +115,13 @@ public class UCMShip extends Ship{
 		if(!verifier.verifyPlayerString(stringFromFile, game, 10)) return null;
 		else {
 			String [] words = stringFromFile.split(";");
-			if(words[0] != "P") return null;
+			if(!words[0].equals("P")) return null;
 			else {
 				String [] coords = words[1].split(",");
 				int life = Integer.parseInt(words[2]);
 				int score = Integer.parseInt(words[3]);
 				boolean laser = verifier.isMissileOnLoadedBoard();
-				boolean sw = (words[4] == "none")? false:true;				
+				boolean sw = (words[4].equals("false"))? false:true;				
 				int superlaser = Integer.parseInt(words[5]);
 				
 				return new UCMShip(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), life, score, laser, sw, superlaser, game);

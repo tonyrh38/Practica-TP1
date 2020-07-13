@@ -57,6 +57,8 @@ public abstract class GameObject implements IAttack {
 		return hit;
 	}
 	
+	public boolean isFather(int id) {return false;}
+	
 	public abstract void computerAction();
 	public abstract void onDelete();
 	public abstract void move();

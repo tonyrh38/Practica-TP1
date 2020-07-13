@@ -31,9 +31,9 @@ public class Controller {
 				Command command = CommandGenerator.parseCommand(words);
 				if (command.execute(_game)){
 					_game.update();
-					_game.info();
-					System.out.println(PrinterTypes.BOARDPRINTER.getObject().toString(_game));
 				}
+				_game.info();
+				System.out.println(PrinterTypes.BOARDPRINTER.getObject().toString(_game));
 			}
 			catch(CommandParseException | CommandExecuteException ex) {
 				System.out.format(ex.getMessage() + " %n %n");

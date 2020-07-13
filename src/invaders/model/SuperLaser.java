@@ -57,7 +57,7 @@ public class SuperLaser extends Weapon {
 		if(!verifier.verifyWeaponString(stringFromFile, game)) return null;
 		else {
 			String [] words = stringFromFile.split(";");
-			if(words[0] != "A") return null;
+			if(!words[0].equals("A")) return null;
 			else {
 				String [] coords = words[1].split(",");
 				

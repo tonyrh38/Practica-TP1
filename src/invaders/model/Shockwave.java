@@ -48,8 +48,8 @@ public class Shockwave extends Weapon{
 	
 	@Override
 	public String toSerialize() {
-		if(_enable) return "ShockWave";
-		else return "none";
+		if(_enable) return "true";
+		else return "false";
 	}
 
 	// GameObjectGenerator Method

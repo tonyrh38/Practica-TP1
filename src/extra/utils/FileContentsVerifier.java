@@ -46,7 +46,7 @@ public class FileContentsVerifier {
 	public boolean verifyPlayerString(String lineFromFile, Game game, int armour) {
 		String[] words = lineFromFile.split(separator1);
 		appendToFoundInFileString(words[0]);
-		if (words.length != 5) return false;
+		if (words.length != 6) return false;
 
 		String[] coords = words[1].split(separator2);
 		
@@ -62,7 +62,7 @@ public class FileContentsVerifier {
 	public boolean verifyAlienShipString(String lineFromFile, Game game, int armour) {
 		String[] words = lineFromFile.split(separator1);
 		appendToFoundInFileString(words[0]);
-		if (words.length != 5) return false;
+		if (words.length != 5 && words.length != 6) return false;
 
 		String[] coords = words[1].split(separator2);
 		
@@ -78,7 +78,7 @@ public class FileContentsVerifier {
 	// Don't catch NumberFormatException.
 	public boolean verifyWeaponString(String lineFromFile, Game game) {
 		String[] words = lineFromFile.split(separator1);
-		if (words.length != 2) return false;
+		if (words.length != 2 && words.length != 3) return false;
 		
 		appendToFoundInFileString(words[0]);
 		String[] coords = words[1].split(separator2);
@@ -111,7 +111,7 @@ public class FileContentsVerifier {
 	}
 	
 	public static boolean verifyDir(String dir) {
-		return dir == "left" || dir == "right";
+		return dir.equals("left") || dir.equals("right");
 	}
 	
 	public static boolean verifyLives(int live, int armour) {
@@ -123,7 +123,7 @@ public class FileContentsVerifier {
 	}
 	
 	public static boolean verifyCycleToNextAlienMove(int cycle, Level level) {
-		return 0 <= cycle && cycle <= level.getVel() - cycle % level.getVel();
+		return 0 <= cycle && cycle <= level.getVel();
 	}
 	
 	// parseBoolean converts any string different from "true" to false.

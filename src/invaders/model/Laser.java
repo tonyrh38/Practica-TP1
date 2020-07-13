@@ -60,7 +60,7 @@ public class Laser extends Weapon{
 		if(!verifier.verifyWeaponString(stringFromFile, game)) return null;
 		else {
 			String[] words = stringFromFile.split(";");
-			if(words[0] != "L") return null;
+			if(!words[0].equals("L")) return null;
 			else {
 				String [] coords = words[1].split(",");
 				return new Laser(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]), game);

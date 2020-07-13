@@ -61,11 +61,11 @@ public class RegularShip extends AlienShip{
 		if(!verifier.verifyAlienShipString(stringFromFile, game, 10)) return null;
 		else {
 			String [] words = stringFromFile.split(";");
-			if(words[0] != "E" || words[0] != "R") return null;
+			if(!words[0].equals("E") && !words[0].equals("R")) return null;
 			else {
 				String [] coords = words[1].split(",");
-				boolean direction = (words[4] == "right")? true : false;
-				boolean explosive = (words[0] == "E")? true: false;
+				boolean direction = (words[4].equals("right"))? true : false;
+				boolean explosive = (words[0].equals("E"))? true: false;
 				return new RegularShip(Integer.parseInt(coords[0]), Integer.parseInt(coords[1]),
 						Integer.parseInt(words[2]),	direction, explosive, game);
 			}
